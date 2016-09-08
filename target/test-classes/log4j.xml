@@ -11,11 +11,12 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.funtest.analysis">
+	<logger name="com.hexin">
 		<level value="info" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
+	<!-- spring -->
 	<logger name="org.springframework.core">
 		<level value="info" />
 	</logger>	
@@ -31,7 +32,23 @@
 	<logger name="org.springframework.web">
 		<level value="info" />
 	</logger>
+	
+	<logger name="org.springframework.transaction">
+		<level value="info" />
+	</logger>
+	
+	<logger name="org.springframework.aop">
+		<level value="info" />
+	</logger>
+	
+	<logger name="org.springframework.orm">
+		<level value="info" />
+	</logger>
 
+	<!-- hibernate -->
+	<logger name="org.hibernate">
+		<level value="info" />
+	</logger>
 	<!-- Root Logger -->
 	<root>
 		<priority value="info" />

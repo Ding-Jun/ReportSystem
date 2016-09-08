@@ -1,2 +1,0 @@
-# jessica
-for data analysis
