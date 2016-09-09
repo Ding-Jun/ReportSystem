@@ -285,4 +285,22 @@ public class UserController {
 		}
 
 	}
+	
+	@SuppressWarnings("finally")
+	@RequestMapping("test")
+	@ResponseBody
+	public Object test(@RequestParam(value = "dataFiles", required = false) String file) {
+		ReturnMsg rm = new ReturnMsg();
+		try {
+			//System.out.println("file"+file.getOriginalFilename());
+			rm.setData("test");
+			rm.setCode(Constants.RETURN_MSG_SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			rm.setCode(Constants.RETURN_MSG_FAILURE);
+		} finally {
+			return rm;
+		}
+
+	}
 }

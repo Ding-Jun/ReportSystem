@@ -13,6 +13,8 @@
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
+	
+	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<mvc:annotation-driven />
 
@@ -38,12 +40,16 @@
             expression="org.springframework.stereotype.Controller" type="annotation" />
     </context:component-scan>
 
+
+	<!-- 日志 -->
+    <aop:aspectj-autoproxy proxy-target-class="true" />
+    <bean class="com.funtest.aspect.LogAspect" />
  	 <!-- 支持上传文件 -->  
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/> 
  	
 	
-	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
-        depends-on="lifecycleBeanPostProcessor" />
+	<!--  <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+        depends-on="lifecycleBeanPostProcessor" />-->
 <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager" />
 </bean>

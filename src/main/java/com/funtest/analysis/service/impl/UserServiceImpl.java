@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.funtest.analysis.bean.Comment;
 import com.funtest.analysis.bean.User;
 import com.funtest.analysis.dao.UserDao;
 import com.funtest.analysis.service.UserService;
@@ -23,9 +22,6 @@ public class UserServiceImpl implements UserService{
 	@Override
 	
 	public Integer createUser(User user) {
-		if(dao.queryUserByEmployeeId(user.getEmployeeId()) != null){
-			throw new RuntimeException("提示：该工号已注册！");
-		}
 		if(dao.queryUserByName(user.getName()) != null){
 			throw new RuntimeException("提示：该姓名已注册！");
 		}
@@ -34,7 +30,7 @@ public class UserServiceImpl implements UserService{
 		}
 
 		user.setPassword("123456");
-		user.setUserStar(new UserStar());
+		//user.setUserStar(new UserStar());
 		return dao.createUser(user);
 	}
 
@@ -53,11 +49,11 @@ public class UserServiceImpl implements UserService{
 	public void updateUser(User user) {
 		User u =dao.queryUser(user.getId());
 		u.setName(user.getName());
-		u.setEmployeeId(user.getEmployeeId());
+		//u.setEmployeeId(user.getEmployeeId());
 		u.setPhoneNo(user.getPhoneNo());
 		u.setAvatar(user.getAvatar());
-		u.setUserRegion(user.getUserRegion());
-		u.setUserServiceItem(user.getUserServiceItem());
+		//u.setUserRegion(user.getUserRegion());
+		//u.setUserServiceItem(user.getUserServiceItem());
 		dao.updateUser(u);
 	}
 
@@ -93,9 +89,9 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public String queryCanRegister(User user) {
-		if(dao.queryUserByEmployeeId(user.getEmployeeId()) != null){
-			return "该工号已注册！";
-		}
+		//if(dao.queryUserByEmployeeId(user.getEmployeeId()) != null){
+		//	return "该工号已注册！";
+		//}
 		if(dao.queryUserByName(user.getName()) != null){
 			return "该姓名已注册！";
 		}
@@ -108,16 +104,12 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public Integer updateAddStar(Integer id) {
 		User user = dao.queryUser(id);
-		Integer starCount = user.getUserStar().getStarCount();
+		Integer starCount = 0;//user.getUserStar().getStarCount();
 		starCount+=1;
-		user.getUserStar().setStarCount(starCount);
+		//user.getUserStar().setStarCount(starCount);
 		dao.updateUser(user);
 		return starCount;
 	}
 
-	@Override
-	public Integer createComment(Integer userId, Comment comment) {
-		return null;
-	}
 
 }

@@ -10,6 +10,9 @@ public class Constants {
 	public static final int CHART_FAIL=-1;
 	public static final int CHART_ALL=1;
 	
+	public static final int PROCESS_MODE_NORMAL=0;
+	public static final int PROCESS_MODE_DELETE_FT_FAIL=1;
+	
     public static final String SESSION_USER_KEY = "curUser";
     public static final String SESSION_USER_NAME_KEY = "curUserId";
     public static final Object SESSION_FORCED_LOGOUT_KEY = "forcedLogout";

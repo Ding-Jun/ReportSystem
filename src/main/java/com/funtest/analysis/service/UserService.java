@@ -2,7 +2,6 @@ package com.funtest.analysis.service;
 
 import java.math.BigInteger;
 
-import com.funtest.analysis.bean.Comment;
 import com.funtest.analysis.bean.User;
 import com.funtest.core.bean.page.Page;
 import com.funtest.core.bean.page.PageCondition;
@@ -81,14 +80,7 @@ public interface UserService {
 	 * @return 更新后的点赞数
 	 */
 	public Integer updateAddStar(Integer id);
-	
-	/**
-	 * 创建评论
-	 * @param userId	用户Id
-	 * @param comment	评论
-	 * @return	评论Id
-	 */
-	public Integer createComment(Integer userId, Comment comment);
+
 
 
 }
