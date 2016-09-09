@@ -13,14 +13,16 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name="t_dataConfig")
 public class DataConfig {
 	private int id;
-	private String reportItemLineFlag ="Dut_No";
-	private String limitMinLineFlag="-1,Min";
-	private String limitMaxLineFlag="0,Max";
+	private String dutNoColumnFlag ="Dut_No";
+	private String limitMinLineFlag="^(-1|Min),";
+	private String limitMaxLineFlag="^(0|Max),";
 	private String dutPassTrueString="TRUE";
 	private String dutPassFalseString="FALSE";
 	private String dutPassColumnFlag="Dut_Pass";
 	private String siteNoColumnFlag="Site_No";
 	private String password="joulwatt";
+	private String testItemColumnFlag=",(OS|PIN)";
+	
 	
 	@Column(name="id")
 	@Id
@@ -34,11 +36,11 @@ public class DataConfig {
 	}
 	
 	@Column
-	public String getReportItemLineFlag() {
-		return reportItemLineFlag;
+	public String getDutNoColumnFlag() {
+		return dutNoColumnFlag;
 	}
-	public void setReportItemLineFlag(String reportItemLineFlag) {
-		this.reportItemLineFlag = reportItemLineFlag;
+	public void setDutNoColumnFlag(String dutNoColumnFlag) {
+		this.dutNoColumnFlag = dutNoColumnFlag;
 	}
 	
 	@Column
@@ -97,6 +99,12 @@ public class DataConfig {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+	@Column
+	public String getTestItemColumnFlag() {
+		return testItemColumnFlag;
+	}
+	public void setTestItemColumnFlag(String testItemColumnFlag) {
+		this.testItemColumnFlag = testItemColumnFlag;
+	}
 
 }

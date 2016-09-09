@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -52,6 +53,17 @@ public class ReportServiceImpl implements ReportService {
 		}
 		
 		//2.找到数据文件里的测试项信息
+		DataConfig config= configDao.queryDataConfig(1);
+		//各种判断的正则表达式
+		Pattern patternDutNoColumn = Pattern.compile(config.getDutNoColumnFlag());
+		Pattern patternSiteNoColumn = Pattern.compile(config.getSiteNoColumnFlag());
+		Pattern patternDutPassColumn = Pattern.compile(config.getDutPassColumnFlag());
+		Pattern patternTestItemColumnFlag = Pattern.compile(config.getTestItemColumnFlag());
+		Pattern patternDutPassTrue = Pattern.compile(config.getDutPassTrueString());
+		Pattern patternDutPassFalse = Pattern.compile(config.getDutPassFalseString());
+		Pattern patternLimitMaxLine = Pattern.compile(config.getLimitMaxLineFlag());
+		Pattern patternLimitMinLine = Pattern.compile(config.getLimitMinLineFlag());
+		
 		StringBuilder message=new StringBuilder();
 		List<ColumnInfo> columns=new ArrayList<DataInfo.ColumnInfo>();
 		for(int i=0;i<fileNames.length;i++){
@@ -68,10 +80,17 @@ public class ReportServiceImpl implements ReportService {
 			BufferedReader br= new BufferedReader(new InputStreamReader(ins[i]));
 			try {
 				while((str = br.readLine() )!= null){
+					
 					if(line >10){
 						break;
 					}
 					System.out.println("line"+(line++)+": "+str);
+					if(patternDutNoColumn.matcher(str).find()
+							&& patternDutPassColumn.matcher(str).find()
+							&& patternSiteNoColumn.matcher(str).find()
+							&& patternTestItemColumnFlag.matcher(str).find()){
+						logger.info("测试项所在行："+(line-1));
+					}
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
