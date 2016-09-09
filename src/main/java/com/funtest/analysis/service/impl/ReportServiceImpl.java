@@ -10,11 +10,14 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.funtest.analysis.bean.DataConfig;
 import com.funtest.analysis.bean.DataInfo;
 import com.funtest.analysis.bean.Report;
+import com.funtest.analysis.dao.DataConfigDao;
 import com.funtest.analysis.bean.DataInfo.ColumnInfo;
 import com.funtest.analysis.service.ReportService;
 import com.funtest.core.bean.constant.Constants;
@@ -24,11 +27,16 @@ import com.google.gson.Gson;
 @Transactional
 public class ReportServiceImpl implements ReportService {
 	private static Logger logger = LoggerFactory.getLogger(ReportServiceImpl.class);
+	
+	@Autowired 
+	DataConfigDao configDao; 
+	
 	public Report createReport(InputStream in){
 		return null;
 		
 	}
 	public DataInfo createReportSnaps(String[] fileNames, InputStream[] ins,String reportName,String chipName,Integer mode){
+		
 		//1.非空验证
 		if(ins==null ||ins.length ==0){
 			throw new RuntimeException("没有提供数据文件~");
