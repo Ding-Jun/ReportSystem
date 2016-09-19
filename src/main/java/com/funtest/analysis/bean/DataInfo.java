@@ -7,97 +7,12 @@ public class DataInfo {
 	private String reportName;//报告名
 	private String chipName;//芯片名
 	private Integer mode;//处理模式 FT   or  FT&RT
-	private List<ColumnInfo> columns;
-	
-	private List<FileInfo> files;
-	private String testItemStr;
-	private String limitMinStr;
-	private String limitMaxStr;
-	private String limitUnitStr;
-	
-	public class FileInfo{
-		private String fileName;
-		private String  postFileName;
-		private String message;
-		private Integer status;
-		private Integer rawDataLine;
-		public String getFileName() {
-			return fileName;
-		}
-		public void setFileName(String fileName) {
-			this.fileName = fileName;
-		}
-		public String getPostFileName() {
-			return postFileName;
-		}
-		public void setPostFileName(String postFileName) {
-			this.postFileName = postFileName;
-		}
-		public String getMessage() {
-			return message;
-		}
-		public void setMessage(String message) {
-			this.message = message;
-		}
-		public Integer getStatus() {
-			return status;
-		}
-		public void setStatus(Integer status) {
-			this.status = status;
-		}
-		public Integer getRawDataLine() {
-			return rawDataLine;
-		}
-		public void setRawDataLine(Integer rawDataLine) {
-			this.rawDataLine = rawDataLine;
-		}
-	}
-	public class ColumnInfo{
-		Integer id;//第几列
-		String name;//列名称
-		Double max;//判限最大值
-		Double min;//判限最小值
-		String unit;//单位
-		Boolean isProcess;//是否要处理该列
-		
-		public Integer getId() {
-			return id;
-		}
-		public void setId(Integer id) {
-			this.id = id;
-		}
-		public String getName() {
-			return name;
-		}
-		public void setName(String name) {
-			this.name = name;
-		}
-		public Double getMax() {
-			return max;
-		}
-		public void setMax(Double max) {
-			this.max = max;
-		}
-		
-		public void setMin(Double min) {
-			this.min = min;
-		}
-		public Double getMin() {
-			return min;
-		}
-		public String getUnit() {
-			return unit;
-		}
-		public void setUnit(String unit) {
-			this.unit = unit;
-		}
-		public Boolean getIsProcess() {
-			return isProcess;
-		}
-		public void setIsProcess(Boolean isProcess) {
-			this.isProcess = isProcess;
-		}
-	}
+	private List<ColumnInfo> columns;	//测试项字段信息
+	private List<FileInfo> files;		//数据文件信息
+	private String testItemStr;	//测试项所在行
+	private String limitMinStr;//判限最小值所在行 字符串形式
+	private String limitMaxStr;//判限最大值所在行 字符串形式
+	private String limitUnitStr;//判限单位所在行 字符串形式
 	
 	public String getId() {
 		return id;

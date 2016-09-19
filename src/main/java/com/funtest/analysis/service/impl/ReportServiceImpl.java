@@ -20,14 +20,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
+import com.funtest.analysis.bean.ColumnInfo;
 import com.funtest.analysis.bean.DataConfig;
 import com.funtest.analysis.bean.DataInfo;
+import com.funtest.analysis.bean.FileInfo;
 import com.funtest.analysis.bean.Report;
 import com.funtest.analysis.dao.DataConfigDao;
-import com.funtest.analysis.bean.DataInfo.ColumnInfo;
-import com.funtest.analysis.bean.DataInfo.FileInfo;
 import com.funtest.analysis.service.ReportService;
 import com.funtest.core.bean.constant.Constants;
 import com.google.gson.Gson;
@@ -65,11 +64,11 @@ public class ReportServiceImpl implements ReportService {
 		dataInfo.setReportName(reportName);
 		dataInfo.setChipName(chipName);
 		dataInfo.setMode(mode);
-		dataInfo.setFiles(new ArrayList<DataInfo.FileInfo>());
+		dataInfo.setFiles(new ArrayList<com.funtest.analysis.bean.FileInfo>());
 		DataConfig config= configDao.queryDataConfig(1);
 		for(int i=0;i<fileNames.length;i++){
 			//查找文件中的数据信息
-			FileInfo fileInfo=dataInfo.new FileInfo();
+			FileInfo fileInfo=new FileInfo();
 			fileInfo.setFileName(fileNames[i]);
 			if(!fileNames[i].endsWith(".csv")){
 				logger.info("{} skipped in createReportSnaps..",fileNames[i]);
@@ -120,7 +119,7 @@ public class ReportServiceImpl implements ReportService {
 			dirFile.mkdir();
 		}
 		
-		
+		System.out.println(new Gson().toJson(config));
 		//各种判断的正则表达式
 		Pattern patternDutNoColumn = Pattern.compile(config.getDutNoColumnFlag());
 		Pattern patternSiteNoColumn = Pattern.compile(config.getSiteNoColumnFlag());
@@ -133,7 +132,7 @@ public class ReportServiceImpl implements ReportService {
 		Pattern patternLimitLine=Pattern.compile(config.getLimitMinLineFlag()+"|"+config.getLimitMaxLineFlag());
 		Pattern patternLimitUnitLine=Pattern.compile("^\\D");
 		
-		Integer line=0;
+		long line=0;
 		String str=null;
 		BufferedReader br= new BufferedReader(new InputStreamReader(in));
 		String postFileName=dir+"\\"+UUID.randomUUID().toString()+".csv";
@@ -213,9 +212,9 @@ public class ReportServiceImpl implements ReportService {
 											return (Constants.PROCESS_STATUS_UNIT_NOT_MATCH);
 										}
 									}
-									fileInfo.setRawDataLine(line);
+									fileInfo.setDataStartLine(line);
 								}else{
-									fileInfo.setRawDataLine(line-1);
+									fileInfo.setDataStartLine(line-1);
 								}
 								break;
 							}
@@ -247,7 +246,7 @@ public class ReportServiceImpl implements ReportService {
 		
 		
 		
-		fileInfo.setPostFileName(postFileName);
+		fileInfo.setLocalFileName(postFileName);
 		return Constants.PROCESS_STATUS_DONE;
 	}
 	public List<ColumnInfo> _findColumnInfo(DataInfo dataInfo,DataConfig config){
@@ -260,7 +259,7 @@ public class ReportServiceImpl implements ReportService {
 				|| dataInfo.getLimitMinStr() ==null){
 			return null;
 		}
-		List<ColumnInfo> columns=new ArrayList<DataInfo.ColumnInfo>();
+		List<ColumnInfo> columns=new ArrayList<ColumnInfo>();
 		Boolean osOcurred=false;
 		String[] testItems=dataInfo.getTestItemStr().split(",");
 		String[] limitMaxs=dataInfo.getLimitMaxStr().split(",");
@@ -281,14 +280,14 @@ public class ReportServiceImpl implements ReportService {
 				min=new Double((limitMins.length<i)?"-9999.9999":limitMins[i]);
 				max=new Double((limitMaxs.length<i)?"-9999.9999":limitMaxs[i]);
 				unit=(limitUnits.length<i)?"":limitUnits[i];
-				ColumnInfo info=dataInfo.new ColumnInfo();
+				ColumnInfo info=new ColumnInfo();
 				info.setId(i);
 				//不处理的策略
 				info.setIsProcess(!patternIgnoreColumnFlag.matcher(testItems[i]).find());
-				info.setMin(min);
-				info.setMax(max);
-				info.setUnit(unit);
-				info.setName(testItems[i]);
+				info.setLimitMin(min);
+				info.setLimitMax(max);
+				info.setLimitUnit(unit);
+				info.setColumnName(testItems[i]);
 				columns.add(info);
 			}
 		}

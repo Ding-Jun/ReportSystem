@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-@Entity
+@Entity   
 @Table(name="t_dataConfig")
 public class DataConfig {
 	private int id;
