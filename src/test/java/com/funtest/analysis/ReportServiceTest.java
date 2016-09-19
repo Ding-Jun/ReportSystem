@@ -1,10 +1,12 @@
 package com.funtest.analysis;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +19,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.funtest.analysis.bean.DataInfo;
+import com.funtest.analysis.bean.Report;
 import com.funtest.analysis.service.impl.ReportServiceImpl;
 import com.funtest.core.bean.constant.Constants;
 import com.google.gson.Gson;
@@ -48,7 +51,14 @@ public class ReportServiceTest {
 			String[] fileNames={fileName1,fileName2,fileName3};
 			InputStream[] ins={in1,in2,in3};
 			DataInfo dataInfo= service.createReportSnaps(fileNames, ins, "JW0909", "JW1111", Constants.PROCESS_MODE_NORMAL);
-			//System.out.println("dataInfo: "+ new Gson().toJson(dataInfo));
+			System.out.println("dataInfo: "+ new Gson().toJson(dataInfo));
+			for(InputStream in:ins){
+				if(in !=null){
+					in.close();
+					
+				}
+			}
+			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -56,6 +66,14 @@ public class ReportServiceTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
 	}
 
+	public Report testGenerateReport(String[] fileNames,InputStream[] ins, DataInfo dataInfo) throws IOException{
+		BufferedReader br= new BufferedReader(new InputStreamReader(ins[1]));
+		System.out.println("RRRRRRRRead:"+br.readLine()+br.readLine());
+		logger.info("测试项信息: {}",new Gson().toJson(dataInfo));
+		return null;
+	}
 }

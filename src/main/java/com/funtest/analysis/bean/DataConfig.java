@@ -22,7 +22,7 @@ public class DataConfig {
 	private String siteNoColumnFlag="Site_No";
 	private String password="joulwatt";
 	private String testItemColumnFlag=",(OS|PIN)";
-	
+	private String ignoreColumnFlag="(?i)_debug$";
 	
 	@Column(name="id")
 	@Id
@@ -98,6 +98,14 @@ public class DataConfig {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	@Column
+	public String getIgnoreColumnFlag() {
+		return ignoreColumnFlag;
+	}
+	public void setIgnoreColumnFlag(String ignoreColumnFlag) {
+		this.ignoreColumnFlag = ignoreColumnFlag;
 	}
 	@Column
 	public String getTestItemColumnFlag() {

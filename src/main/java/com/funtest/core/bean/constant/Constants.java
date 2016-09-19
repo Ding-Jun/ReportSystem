@@ -12,6 +12,13 @@ public class Constants {
 	
 	public static final int PROCESS_MODE_NORMAL=0;
 	public static final int PROCESS_MODE_DELETE_FT_FAIL=1;
+	public static final int PROCESS_STATUS_ERROR_FORMAT=1001;
+	public static final int PROCESS_STATUS_CANT_FIND_TESTITEM=1002;
+	public static final int PROCESS_STATUS_CANT_FIND_LIMIT=1003;
+	public static final int PROCESS_STATUS_TESTITEM_NOT_MATCH=1004;
+	public static final int PROCESS_STATUS_LIMIT_NOT_MATCH=1005;
+	public static final int PROCESS_STATUS_UNIT_NOT_MATCH=1006;
+	public static final int PROCESS_STATUS_DONE=1111;
 	
     public static final String SESSION_USER_KEY = "curUser";
     public static final String SESSION_USER_NAME_KEY = "curUserId";
