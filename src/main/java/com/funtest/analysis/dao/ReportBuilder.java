@@ -301,12 +301,16 @@ public class ReportBuilder {
 			}
 		}else if(failPattern.matcher(curLine).find()){
 			//如果是fail的double limitMin=
+			boolean isFailFind=false;
 			for(int i=0;i<length;i++){
 				ColumnInfo columnInfo = columnInfoList.get(i);
 				if(datas.length <= columnInfo.getId()){
 					break;
 				}
-				System.out.println("ccccc:"+datas.length+curLine);
+				if(isFailFind){
+					datas[columnInfo.getId()]="";
+					
+				}
 				String colDataStr=datas[columnInfo.getId()];
 				double colData=0.0;
 				
