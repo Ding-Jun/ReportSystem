@@ -18,6 +18,9 @@ public class Constants {
 	public static final int PROCESS_STATUS_TESTITEM_NOT_MATCH=1004;
 	public static final int PROCESS_STATUS_LIMIT_NOT_MATCH=1005;
 	public static final int PROCESS_STATUS_UNIT_NOT_MATCH=1006;
+	public static final int PROCESS_STATUS_INITIAL_STATE=1007;
+	public static final int PROCESS_STATUS_HEAD_DONE_WITH_UNIT=1008;
+	public static final int PROCESS_STATUS_HEAD_DONE_WITHOUT_UNIT=1009;
 	public static final int PROCESS_STATUS_DONE=1111;
 	
     public static final String SESSION_USER_KEY = "curUser";

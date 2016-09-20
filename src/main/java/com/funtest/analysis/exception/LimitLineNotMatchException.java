@@ -17,4 +17,9 @@ public class LimitLineNotMatchException extends AnalysisException {
 		// TODO Auto-generated constructor stub
 	}
 
+	public LimitLineNotMatchException(String expect ,String actual) {
+		super("LimitLine not match:\n"+
+				"expect was:"+expect+"\n"+
+				"actually was:"+actual);
+	}
 }

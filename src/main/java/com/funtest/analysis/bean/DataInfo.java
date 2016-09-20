@@ -9,11 +9,15 @@ public class DataInfo {
 	private Integer mode;//处理模式 FT   or  FT&RT
 	private List<ColumnInfo> columns;	//测试项字段信息
 	private List<FileInfo> files;		//数据文件信息
+	
+	//辅助信息
 	private String testItemStr;	//测试项所在行
 	private String limitMinStr;//判限最小值所在行 字符串形式
 	private String limitMaxStr;//判限最大值所在行 字符串形式
 	private String limitUnitStr;//判限单位所在行 字符串形式
-	
+	private Integer dutPassCol;//dut_pass所在列
+	private Integer indexCol;//dut_No所在列
+	private Integer siteCol;//site_No所在列
 	public String getId() {
 		return id;
 	}
@@ -64,6 +68,24 @@ public class DataInfo {
 		this.limitUnitStr = limitUnitStr;
 	}
 
+	public Integer getDutPassCol() {
+		return dutPassCol;
+	}
+	public void setDutPassCol(Integer dutPassCol) {
+		this.dutPassCol = dutPassCol;
+	}
+	public Integer getIndexCol() {
+		return indexCol;
+	}
+	public void setIndexCol(Integer indexCol) {
+		this.indexCol = indexCol;
+	}
+	public Integer getSiteCol() {
+		return siteCol;
+	}
+	public void setSiteCol(Integer siteCol) {
+		this.siteCol = siteCol;
+	}
 	public List<ColumnInfo>  getColumns() {
 		return columns;
 	}
