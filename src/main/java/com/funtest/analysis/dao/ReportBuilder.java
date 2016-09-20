@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
@@ -252,6 +253,16 @@ public class ReportBuilder {
 				}
 			}
 		}//循环结束
+		//补充总数和平均数
+		for(ColumnInfo columnInfo:columnInfoList){
+			long total=columnInfo.getTotalCountInLimit()+columnInfo.getTotalCountOutOfLimit();
+			double average=0.0;
+			if(total !=0){
+				average= columnInfo.getTotalValue()/(double)total;
+			}
+			columnInfo.setTotalCountAll(total);
+			columnInfo.setRealAverage(average);
+		}
 		dataInfo.setFiles(fileInfoList);
 		dataInfo.setColumns(columnInfoList);
 		return dataInfo;
@@ -308,8 +319,8 @@ public class ReportBuilder {
 					break;
 				}
 				if(isFailFind){
-					datas[columnInfo.getId()]="";
-					
+					datas[columnInfo.getId()]="2";
+					continue;
 				}
 				String colDataStr=datas[columnInfo.getId()];
 				double colData=0.0;
@@ -320,22 +331,51 @@ public class ReportBuilder {
 				
 				double limitMin=columnInfo.getLimitMin();
 				double limitMax=columnInfo.getLimitMax();
-				//如果 数据在判限内且xia'yi'l
-				if(colData >=limitMin && colData <=limitMax){
-					if(  (columnInfo.getId()+1)<datas.length && ){
-						
-					}
+				
+				if(colData >limitMin && colData <limitMax){
+					//如果 数据在判限内
+					continue;
 				}
-				double realMax=columnInfo.getRealMaxInLimit();
+				else if(colData <limitMin || colData >limitMax){
+					//如果数据在判限外
+					isFailFind=true;
+				}else{
+					//如果数据等于判限 那么情况就比较复杂了     SB chuangchuan 的坑
+					//如果下一列有没有数据 在不在判限内 有且在就continue 
+					//否则这就是fail列了
+					int id=columnInfo.getId()+1;
+					String nextColDataStr=datas[columnInfo.getId()];
+					double nextColData=0.0;
+					if(StringUtils.isNotEmpty(nextColDataStr)){
+						nextColData=Double.parseDouble(nextColDataStr) ;
+					}
+					if((datas.length > id)
+							&& length>id){
+						ColumnInfo nextColumn= columnInfoList.get(id);
+						if(nextColData >=nextColumn.getLimitMin() 
+								&& nextColData <= nextColumn.getLimitMax()){
+							continue;
+						}
+					}
+					isFailFind=true;
+				}
+				double realMax=columnInfo.getRealMaxOutOfLimit();
+				double realMin=columnInfo.getRealMinOutOfLimit();
+				long totalCountOutOfLimit=columnInfo.getTotalCountOutOfLimit()+1;
 				double totalValue=columnInfo.getTotalValue()+colData;
 				
+				realMin=colData < realMin ? colData : realMin;
+				realMax=colData > realMax ? colData : realMax;
+				
 				columnInfo.setTotalValue(totalValue);
+				columnInfo.setTotalCountOutOfLimit(totalCountOutOfLimit);
+				columnInfo.setRealMinOutOfLimit(realMin);
+				columnInfo.setRealMaxOutOfLimit(realMax);
 			}
 		}else{
 			//anything else   do nothing
 		}
-			
-		return curLine+",p";
+		return StringUtils.join(datas, ",");
 	}
 	
 	/**
@@ -524,7 +564,7 @@ public class ReportBuilder {
 		}
 	}
 	
-	
+
 	public DataConfig getDataConfig() {
 		return dataConfig;
 	}
