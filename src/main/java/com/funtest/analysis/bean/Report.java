@@ -26,9 +26,11 @@ public class Report {
 	private int id;
 	//private int testNo;
 	private String reportname="untitled";
+	private String srcFile="";
+	private Integer mode;
 	//private String testItem;
 	private List<ReportItem> reportItems=new ArrayList<ReportItem>();
-
+	
 	private Date time;
 	
 	//private int dataTableId;
@@ -93,7 +95,20 @@ public class Report {
 	
 */
 
-	
+	@Column
+	public String getSrcFile() {
+		return srcFile;
+	}
+	public void setSrcFile(String srcFile) {
+		this.srcFile = srcFile;
+	}
+	@Column
+	public Integer getMode() {
+		return mode;
+	}
+	public void setMode(Integer mode) {
+		this.mode = mode;
+	}
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column
 	public Date getTime() {
@@ -346,5 +361,6 @@ public class Report {
 	public void setOsFailRate(String osFailRate) {
 		this.osFailRate = osFailRate;
 	}
+
 
 }

@@ -1,10 +1,13 @@
 package com.funtest.analysis.bean;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -13,17 +16,19 @@ import org.hibernate.annotations.GenericGenerator;
 public class Chart {
 	private Integer id;
 	private String title;
-	private String datas="";
+	private String datas="";//柱状图数据Series
+	private List<Bar> bars;//柱状图柱子
+	private Double spacing;//柱状图柱子间距
 	private Double realMax;
 	private Double realMin;
-	private Double realAverage;
+	private double realAverage;
 	private Integer groupCnt=500;			//分组数  
 	private Double limitMin;
 	private Double limitMax;
 	private Double rangeMin;
 	private Double rangeMax;
-	private Double sigma;
-	private Integer totalCnt=0;				//该测试项Pass/Fail总颗数   即样本数
+	private double sigma=0;
+	private long totalCnt=0;				//该测试项Pass/Fail总颗数   即样本数
 	private Integer quantityMax=0;			//数量最多的柱子
 	private Double cpk;
 	private Double cpu;
@@ -31,12 +36,16 @@ public class Chart {
 	private Double cp;
 	private String chartImg="no img";	//fomat:base64
 	private Integer chartType;
-	private Boolean visible;
-	private Boolean isDeleted;
+	private Boolean visible=Boolean.TRUE;
+	private Boolean isDeleted=Boolean.FALSE;
 	public Chart(){
 		
 	}
 
+	public Chart(Integer chartType,Integer groupCnt){
+		this.chartType=chartType;
+		this.groupCnt=groupCnt;
+	}
 	@Column(name="id")
 	@Id
 	@GeneratedValue(generator="increment")
@@ -66,6 +75,24 @@ public class Chart {
 		this.datas = datas;
 	}
 	
+	@Transient
+	public List<Bar> getBars() {
+		return bars;
+	}
+
+	public void setBars(List<Bar> bars) {
+		this.bars = bars;
+	}
+
+	@Column
+	public Double getSpacing() {
+		return spacing;
+	}
+
+	public void setSpacing(Double spacing) {
+		this.spacing = spacing;
+	}
+
 	@Column
 	public Double getRealMax() {
 		return realMax;
@@ -126,10 +153,10 @@ public class Chart {
 
 
 	@Column
-	public Double getRealAverage() {
+	public double getRealAverage() {
 		return realAverage;
 	}
-	public void setRealAverage(Double realAverage) {
+	public void setRealAverage(double realAverage) {
 		this.realAverage = realAverage;
 	}
 	
@@ -142,10 +169,10 @@ public class Chart {
 	}
 	
 	@Column
-	public Double getSigma() {
+	public double getSigma() {
 		return sigma;
 	}
-	public void setSigma(Double sigma) {
+	public void setSigma(double sigma) {
 		this.sigma = sigma;
 	}
 	
@@ -157,11 +184,11 @@ public class Chart {
 		this.chartType = chartType;
 	}
 	@Column
-	public Integer getTotalCnt() {
+	public long getTotalCnt() {
 		return totalCnt;
 	}
 
-	public void setTotalCnt(Integer totalCnt) {
+	public void setTotalCnt(long totalCnt) {
 		this.totalCnt = totalCnt;
 	}
 	@Column

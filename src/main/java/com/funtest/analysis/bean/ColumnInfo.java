@@ -18,9 +18,9 @@ public class ColumnInfo {
 	private Integer passGroups;//pass的分组数量
 	private Integer failGroups;//fail的分组数量
 	private double totalValue;//总的值
-	private long totalCountAll;//总的数量 =pass+fail
-	private long totalCountInLimit;//Pass的数量
-	private long totalCountOutOfLimit;//Fail的数量
+	private long totalCountAll=0;//总的数量 =pass+fail
+	private long totalCountInLimit=0;//Pass的数量
+	private long totalCountOutOfLimit=0;//Fail的数量
 	public Integer getId() {
 		return id;
 	}

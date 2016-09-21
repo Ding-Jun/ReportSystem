@@ -18,16 +18,18 @@ public class ReportItem {
 	private int id;
 	private int testNo;
 	private String columnname;	
-	private int failCount=3344;
-	private String failRate="-1%";
-	private double limitMin=-1;
-	private double limitMax=-1;
-	private String limitUnit="?";
+	private long failCount;
+	private long passCount;
+	private long totalCount;
+	private String failRate;
+	private double limitMin;
+	private double limitMax;
+	private String limitUnit;
 	private Chart passChart;
 	private Chart failChart;
 	//private int reportId;
-	private Boolean visible;
-	private Boolean isDeleted;
+	private Boolean visible=Boolean.TRUE;
+	private Boolean isDeleted=Boolean.FALSE;
 	
 	public ReportItem(){
 		
@@ -100,13 +102,27 @@ public class ReportItem {
 	}
 	
 	@Column
-	public int getFailCount() {
+	public long getFailCount() {
 		return failCount;
 	}
-	public void setFailCount(int failCount) {
+	public void setFailCount(long failCount) {
 		this.failCount = failCount;
 	}
 	
+	@Column
+	public long getPassCount() {
+		return passCount;
+	}
+	public void setPassCount(long passCount) {
+		this.passCount = passCount;
+	}
+	@Column
+	public long getTotalCount() {
+		return totalCount;
+	}
+	public void setTotalCount(long totalCount) {
+		this.totalCount = totalCount;
+	}
 	@Column
 	public String getFailRate() {
 		return failRate;

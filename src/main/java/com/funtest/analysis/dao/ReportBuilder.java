@@ -3,30 +3,43 @@ package com.funtest.analysis.dao;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
+import org.apache.commons.collections.functors.FalsePredicate;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.util.ResourceUtils;
 
+import com.funtest.analysis.bean.Bar;
+import com.funtest.analysis.bean.Chart;
 import com.funtest.analysis.bean.ColumnInfo;
 import com.funtest.analysis.bean.DataConfig;
 import com.funtest.analysis.bean.DataInfo;
 import com.funtest.analysis.bean.FileInfo;
 import com.funtest.analysis.bean.Report;
+import com.funtest.analysis.bean.ReportItem;
 import com.funtest.analysis.exception.AnalysisException;
 import com.funtest.analysis.exception.DataNotFoundException;
 import com.funtest.analysis.exception.LimitLineNotMatchException;
 import com.funtest.analysis.exception.TestItemLineNotMatchException;
 import com.funtest.core.bean.constant.Constants;
 import com.google.gson.Gson;
+import com.mysql.jdbc.Buffer;
 
 public class ReportBuilder {
 	DataInfo dataInfo;
@@ -76,6 +89,265 @@ public class ReportBuilder {
 		
 	}
 	
+	/**
+	 * 根据dataInfo的信息处理数据文件，生成报告
+	 * @param dataInfo  用户确认后的dataInfo
+	 * @return Report 报告包含测试项 图表元数据
+	 */
+	public Report buildReport(DataInfo dataInfo){
+		//TODO
+		Report report=new Report();
+		List<ColumnInfo> columnInfos=dataInfo.getColumns();
+		List<FileInfo> files=dataInfo.getFiles();
+		List<String> srcFiles=new ArrayList<String>();
+		//2.0 reportItem信息填充 Chart的数据列柱子就位 初始高度为零
+		List<ReportItem> reportItems = getInitialReportItems(columnInfos);
+		
+		//2.1 遍历fileInfoList
+		for(int i=0;i<files.size();i++){
+			FileInfo fileInfo=files.get(i);
+			//2.2 判断数据文件的处理结果是不是成功，不成功则跳过，成功则继续
+			if(!Constants.PROCESS_STATUS_DONE.equals(fileInfo.getStatus()) ){
+				continue;
+			}
+			srcFiles.add(fileInfo.getFileName());
+			
+			try {
+				//处理当前数据文件
+				processFile(fileInfo,reportItems);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				
+				e.printStackTrace();
+			}catch(ArrayIndexOutOfBoundsException e){
+				throw new AnalysisException(e.getMessage(),e);
+			}
+			
+		}
+		this.doBuildBars(reportItems);
+		
+		report.setReportname(dataInfo.getReportName());
+		report.setSrcFile(StringUtils.join(srcFiles, ","));
+		report.setChipName(dataInfo.getChipName());
+		report.setMode(dataInfo.getMode());
+		report.setReportItems(reportItems);
+		report.setTime(new Date());
+		System.out.println(new Gson().toJson(report));
+		
+		return report;
+		
+	}
+	private List<ReportItem> doBuildBars(List<ReportItem> reportItems) {
+		DecimalFormat df = new DecimalFormat("#0.####");
+		for(int i=0;i<reportItems.size();i++){
+			ReportItem reportItem=reportItems.get(i);
+			Chart passChart=reportItem.getPassChart();
+			Chart failChart=reportItem.getFailChart();
+			
+			if(passChart!=null){
+				List<Bar> bars=passChart.getBars();
+				for(int j=0;j<bars.size();j++){
+					Bar bar=bars.get(j);
+					if(bar.getHeight()==0){
+						bars.remove(j);
+						j--;
+					}else{
+						double axis = bar.getAxis();
+						bar.setAxis(0.0);
+						bar.setAxisStr(df.format(axis));
+					}
+				}
+			}
+			if(failChart!=null){
+				List<Bar> bars=failChart.getBars();
+				for(int j=0;j<bars.size();j++){
+					Bar bar=bars.get(j);
+					if(bar.getHeight()==0){
+						bars.remove(j);
+						j--;
+					}else{
+						double axis = bar.getAxis();
+						bar.setAxis(0.0);
+						bar.setAxisStr(df.format(axis));
+					}
+				}
+			}
+		}
+		return reportItems;
+	}
+
+	/**
+	 * 处理单个数据文件
+	 * @param fileInfo 文件信息
+	 * @param reportItems 测试项信息
+	 * @return reportItems 测试项信息 没想到还有什么要返回的
+	 * @throws FileNotFoundException
+	 */
+	private List<ReportItem> processFile(FileInfo fileInfo,List<ReportItem> reportItems) throws FileNotFoundException{
+		//TODO
+		if(dataConfig == null){
+			throw new AnalysisException("DataConfig不存在");
+		}
+		Pattern passPattern = Pattern.compile(dataConfig.getDutPassTrueString());
+		Pattern failPattern = Pattern.compile(dataConfig.getDutPassFalseString());
+		
+		String fileName=fileInfo.getLocalFileName();
+		Resource dataFile=new FileSystemResource(fileName);
+		long startline=fileInfo.getDataStartLine();
+		long lineNumber=-1;
+		String curLine=null;
+		BufferedReader br=null;
+		try {
+			br=new BufferedReader(new InputStreamReader(dataFile.getInputStream()));
+			//2.3 读取数据文件并跳转到数据行
+			for(;startline>0;startline--){
+				br.readLine();
+				lineNumber++;
+			}
+			//2.4 逐行读取数据 判断true还是false
+			while((curLine=br.readLine()) !=null){
+				lineNumber++;
+				
+				if(passPattern.matcher(curLine).find()){
+					//若pass  逐列测试项与判限比较 PassChart对应柱子数量+1,pass数量+1 计算标准差
+					String[] datas=curLine.split(",");
+					int length=reportItems.size();
+					for(int i=0;i<length;i++){
+						ReportItem reportItem=reportItems.get(i);
+						Chart passChart=reportItem.getPassChart();
+						String colDataStr=datas[reportItem.getId()];
+						double colData=0.0;
+						if(StringUtils.isNotEmpty(colDataStr)){
+							colData=Double.parseDouble(colDataStr) ;
+						}
+						//求对应柱子下标
+						double spacing=passChart.getSpacing();
+						double rangeMin=passChart.getRangeMin();
+						long index=Math.round((colData-rangeMin)/spacing);
+						//pass数量+1
+						long passCount=reportItem.getPassCount()+1;
+						//标准差
+						double average=passChart.getRealAverage();
+						double sigma=passChart.getSigma()+Math.pow((colData-average), 2);
+						
+						//zhuzi +1
+						passChart.getBars().get((int)index).increase();
+						passChart.setSigma(sigma);
+						reportItem.setPassCount(passCount);
+					}
+				}else if(failPattern.matcher(curLine).find()){
+					//若fail  仅fail的测试项的fail数量+1 FailChart对应柱子数量+1  （已经预处理so fail的就是最后一项）
+					//TODO
+					String[] datas=curLine.split(",");
+					int lastData=datas.length-1;
+					String colDataStr=datas[lastData];
+					boolean isFailFind=false;
+					for(int i=0;i<reportItems.size();i++){
+						ReportItem reportItem=reportItems.get(i);
+						//zhaodao fail data
+						if(lastData==reportItem.getId()){
+							Chart failChart=reportItem.getFailChart();
+							double colData=Double.parseDouble(colDataStr) ;
+							double spacing=failChart.getSpacing();
+							double rangeMin=failChart.getRangeMin();
+							long index=Math.round((colData-rangeMin)/spacing);
+							//fail的测试项的fail数量+1
+							long failCount = reportItem.getFailCount()+1;
+							//FailChart对应柱子数量+1
+							System.out.println("debug:curLine:"+curLine);
+							System.out.println("debug: lineNumber"+lineNumber+" col:"+reportItem.getColumnname()+" index:"+index+" rangeMin:"+rangeMin+" spacing:"+spacing);
+							failChart.getBars().get((int)index).increase();
+							reportItem.setFailCount(failCount);
+							isFailFind=true;
+						}
+					}
+				}
+				else{
+					//do nothing
+				}
+						
+				
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return reportItems;
+		
+	}
+	private List<ReportItem> getInitialReportItems(List<ColumnInfo> columnInfos) {
+		List<ReportItem> reportItemList=new ArrayList<ReportItem>();
+		for(ColumnInfo columnInfo: columnInfos){
+			//Pass Chart
+			
+			Chart passChart=null;
+			if(columnInfo.getTotalCountInLimit() >0){
+				Integer passGroups=columnInfo.getPassGroups();
+				passChart =new Chart(Constants.CHART_PASS,passGroups);
+				double pRealMin=columnInfo.getRealMinInLimit();
+				double pRealMax=columnInfo.getRealMaxInLimit();
+				double limitMin=columnInfo.getLimitMin();
+				double limitMax=columnInfo.getLimitMax();
+				double rangeMin=Math.floor(pRealMin);
+				double rangeMax=Math.ceil(pRealMax);
+				double spacing=(rangeMax-rangeMin)/(double)passGroups;
+				if(spacing<0.001) spacing=0.001;
+				List<Bar> bars=new ArrayList<Bar>();
+				for(double value=rangeMin;value<=rangeMax;value+=spacing){
+					Bar bar=new Bar(value,0);
+					bars.add(bar);
+				}
+				passChart.setBars(bars);
+				passChart.setSpacing(spacing);
+				passChart.setRealMin(pRealMin);
+				passChart.setRealMax(pRealMax);
+				passChart.setRangeMin(rangeMin);
+				passChart.setRangeMax(rangeMax);
+				passChart.setLimit(limitMin, limitMax);
+			}
+			
+			//Fail Chart
+			Chart failChart=null;
+			if(columnInfo.getTotalCountOutOfLimit()>0){
+				Integer failGroups=columnInfo.getFailGroups();
+				failChart=new Chart(Constants.CHART_FAIL, failGroups);
+				double fRealMin=columnInfo.getRealMinOutOfLimit();
+				double fRealMax=columnInfo.getRealMaxOutOfLimit();
+				double limitMin=columnInfo.getLimitMin();
+				double limitMax=columnInfo.getLimitMax();
+				double rangeMin=Math.floor(fRealMin);
+				double rangeMax=Math.ceil(fRealMax);
+				double spacing=(rangeMax-rangeMin)/(double)failGroups;
+				if(spacing<0.001) spacing=0.001;
+				List<Bar> bars=new ArrayList<Bar>();
+				for(double value=rangeMin;value<=rangeMax;value+=spacing){
+					Bar bar=new Bar(value,0);
+					bars.add(bar);
+				}
+				failChart.setBars(bars);
+				failChart.setSpacing(spacing);
+				failChart.setRealMin(fRealMin);
+				failChart.setRealMax(fRealMax);
+				failChart.setRangeMin(rangeMin);
+				failChart.setRangeMax(rangeMax);
+				failChart.setLimit(limitMin, limitMax);
+				
+			}
+			
+			
+			ReportItem reportItem=new ReportItem();
+			reportItem.setId(columnInfo.getId());
+			reportItem.setColumnname(columnInfo.getColumnName());
+			reportItem.setLimitMin(columnInfo.getLimitMin());
+			reportItem.setLimitMax(columnInfo.getLimitMax());
+			reportItem.setLimitUnit(columnInfo.getLimitUnit());
+			reportItem.setPassChart(passChart);
+			reportItem.setFailChart(failChart);
+			reportItemList.add(reportItem);
+		}
+		return reportItemList;
+	}
+
 	private DataInfo doBuildDataInfo(String[] fileNames,InputStream[] ins) throws IOException{
 		if(dataInfo==null){
 			throw new AnalysisException("DataInfo not set");
@@ -319,7 +591,7 @@ public class ReportBuilder {
 					break;
 				}
 				if(isFailFind){
-					datas[columnInfo.getId()]="2";
+					datas[columnInfo.getId()]="";
 					continue;
 				}
 				String colDataStr=datas[columnInfo.getId()];
@@ -509,16 +781,6 @@ public class ReportBuilder {
 		return columns;
 	}
 
-	/**
-	 * 根据dataInfo的信息处理数据文件，生成报告
-	 * @param dataInfo  用户确认后的dataInfo
-	 * @return Report 报告包含测试项 图表元数据
-	 */
-	public Report buildReport(DataInfo dataInfo){
-		//todo
-		return null;
-		
-	}
 	
 
 	private void recordTestItemStr(String str){
