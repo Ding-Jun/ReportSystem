@@ -16,15 +16,23 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name="t_reportItem")
 public class ReportItem {
 	private int id;
+	private int col;
 	private int testNo;
 	private String columnname;	
 	private long failCount;
 	private long passCount;
 	private long totalCount;
-	private String failRate;
+	private String failRate="0.0";
+	private double totalValue;//相对于 pass and fail
+	private double realAverage;//相对于 pass and fail
 	private double limitMin;
 	private double limitMax;
 	private String limitUnit;
+	private double sigma=0; //相对于pass
+	private Double cpk=0.0;		//相对于pass
+	private Double cpu=0.0;		//相对于pass
+	private Double ca=0.0;		//相对于pass
+	private Double cp=0.0;		//相对于pass
 	private Chart passChart;
 	private Chart failChart;
 	//private int reportId;
@@ -60,6 +68,13 @@ public class ReportItem {
 		this.id = id;
 	}
 	
+	@Column
+	public int getCol() {
+		return col;
+	}
+	public void setCol(int col) {
+		this.col = col;
+	}
 	@Column
 	public String getColumnname() {
 		return columnname;
@@ -130,6 +145,19 @@ public class ReportItem {
 	public void setFailRate(String failRate) {
 		this.failRate = failRate;
 	}
+	public double getTotalValue() {
+		return totalValue;
+	}
+	public void setTotalValue(double totalValue) {
+		this.totalValue = totalValue;
+	}
+	@Column
+	public double getRealAverage() {
+		return realAverage;
+	}
+	public void setRealAverage(double realAverage) {
+		this.realAverage = realAverage;
+	}
 	
 	@Column
 	public double getLimitMin() {
@@ -152,7 +180,49 @@ public class ReportItem {
 	public void setLimitUnit(String limitUnit) {
 		this.limitUnit = limitUnit;
 	}
+	@Column
+	public double getSigma() {
+		return sigma;
+	}
+	public void setSigma(double sigma) {
+		this.sigma = sigma;
+	}
 	
+	@Column
+	public Double getCpk() {
+		return cpk;
+	}
+
+	public void setCpk(Double cpk) {
+		this.cpk = cpk;
+	}
+	@Column
+	public Double getCpu() {
+		return cpu;
+	}
+
+	public void setCpu(Double cpu) {
+		this.cpu = cpu;
+	}
+
+	@Column
+	public Double getCa() {
+		return ca;
+	}
+
+	public void setCa(Double ca) {
+		this.ca = ca;
+	}
+
+	@Column
+	public Double getCp() {
+		return cp;
+	}
+
+	public void setCp(Double cp) {
+		this.cp = cp;
+	}
+
 	@Column
 	public Boolean getVisible() {
 		return visible;

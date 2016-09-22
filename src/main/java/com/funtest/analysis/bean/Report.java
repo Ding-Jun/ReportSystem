@@ -37,7 +37,7 @@ public class Report {
 	private User user;
 	
 	//private int userId;
-	private Boolean isDeleted=false;
+	private Boolean isDeleted=Boolean.FALSE;
 
     private String title="成品测试报告";
     private String chipName="JPXXXX";
@@ -63,7 +63,7 @@ public class Report {
     private String reportPreparedBy="";
     private String testManagerName="";
     private String testManagerDate="";
-    private int osFailCount=0;
+    private long osFailCount=0;
     private String osFailRate="";
 	
 	@Column(name="id")
@@ -347,10 +347,10 @@ public class Report {
 	}
 	
 	@Column
-	public int getOsFailCount() {
+	public long getOsFailCount() {
 		return osFailCount;
 	}
-	public void setOsFailCount(int osFailCount) {
+	public void setOsFailCount(long osFailCount) {
 		this.osFailCount = osFailCount;
 	}
 	

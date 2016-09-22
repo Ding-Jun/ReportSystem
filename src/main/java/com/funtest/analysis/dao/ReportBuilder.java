@@ -37,6 +37,7 @@ import com.funtest.analysis.exception.AnalysisException;
 import com.funtest.analysis.exception.DataNotFoundException;
 import com.funtest.analysis.exception.LimitLineNotMatchException;
 import com.funtest.analysis.exception.TestItemLineNotMatchException;
+import com.funtest.analysis.util.CpkUtils;
 import com.funtest.core.bean.constant.Constants;
 import com.google.gson.Gson;
 import com.mysql.jdbc.Buffer;
@@ -102,7 +103,7 @@ public class ReportBuilder {
 		List<String> srcFiles=new ArrayList<String>();
 		//2.0 reportItem信息填充 Chart的数据列柱子就位 初始高度为零
 		List<ReportItem> reportItems = getInitialReportItems(columnInfos);
-		
+		long totalCount=0;
 		//2.1 遍历fileInfoList
 		for(int i=0;i<files.size();i++){
 			FileInfo fileInfo=files.get(i);
@@ -114,7 +115,7 @@ public class ReportBuilder {
 			
 			try {
 				//处理当前数据文件
-				processFile(fileInfo,reportItems);
+				totalCount+=processFile(fileInfo,reportItems);
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				
@@ -122,7 +123,6 @@ public class ReportBuilder {
 			}catch(ArrayIndexOutOfBoundsException e){
 				throw new AnalysisException(e.getMessage(),e);
 			}
-			
 		}
 		this.doBuildBars(reportItems);
 		
@@ -130,13 +130,74 @@ public class ReportBuilder {
 		report.setSrcFile(StringUtils.join(srcFiles, ","));
 		report.setChipName(dataInfo.getChipName());
 		report.setMode(dataInfo.getMode());
+		report.setTestCount(Long.toString(totalCount));
 		report.setReportItems(reportItems);
+		
+		doBuildReportMeta(report);
 		report.setTime(new Date());
-		System.out.println(new Gson().toJson(report));
+		//System.out.println(new Gson().toJson(report));
 		
 		return report;
 		
 	}
+	/**
+	 * 填充剩余的可直接计算的report信息
+	 * @param report
+	 */
+	private void doBuildReportMeta(Report report){
+		Pattern osPattern=Pattern.compile(dataConfig.getTestItemColumnFlag().replace(",", "^"));//以OS或者PIN开头的测试巷
+		DecimalFormat df = new DecimalFormat("#0.####");
+		List<ReportItem> reportItems=report.getReportItems();
+		long osFailCount=0;
+		long totalFailCount=0;
+		int testNo=1;
+		double totalCount = Double.parseDouble(report.getTestCount());
+		for(ReportItem reportItem:reportItems){
+			String failRate=df.format(reportItem.getFailCount()/(double)reportItem.getPassCount());
+			if(Long.compare(reportItem.getPassCount(), 0) <=0){
+				failRate="0.0";
+			}else{
+				reportItem.setFailRate(failRate);
+				if(osPattern.matcher(reportItem.getColumnname()).find()){
+					osFailCount+=reportItem.getFailCount();
+				}
+				totalFailCount=reportItem.getFailCount();
+				double sigma=Math.sqrt(reportItem.getSigma()/totalCount);
+				double limitMin=reportItem.getLimitMin();
+				double limitMax=reportItem.getLimitMax();
+				if(!Double.isInfinite(limitMax-limitMin)){
+					double ca=CpkUtils.calculateCa(limitMin, limitMax, reportItem.getRealAverage());
+					double cp=CpkUtils.calculateCp(limitMin, limitMax, sigma);
+					double cpk=CpkUtils.calculateCpk(cp, ca);
+					if(Double.isInfinite(ca)) ca=99.99;
+					if(Double.isInfinite(cp)) cp=99.99;
+					if(Double.isInfinite(cpk)) cpk=99.99;
+					reportItem.setCa(ca);
+					reportItem.setCp(cp);
+					reportItem.setCpk(cpk);
+				}
+				//System.out.println("debug col:"+reportItem.getColumnname()+" :"+cp+" "+ca+" "+cpk);
+				reportItem.setSigma(sigma);
+				
+			}
+			
+			
+			reportItem.setTestNo(testNo++);
+			//totalCount  totalValue 没必要  就不算了
+		}
+		//Report osfailCount
+		report.setOsFailCount(osFailCount);
+		//Report osFailRate
+		String passRate=df.format(1-totalFailCount/totalCount);
+		String osFailRate=df.format(osFailCount/totalCount);
+		report.setOsFailRate(osFailRate);
+		report.setPassPercent(passRate);
+	}
+	/**
+	 * 根据reportItem画图
+	 * @param reportItems
+	 * @return
+	 */
 	private List<ReportItem> doBuildBars(List<ReportItem> reportItems) {
 		DecimalFormat df = new DecimalFormat("#0.####");
 		for(int i=0;i<reportItems.size();i++){
@@ -146,31 +207,37 @@ public class ReportBuilder {
 			
 			if(passChart!=null){
 				List<Bar> bars=passChart.getBars();
+				long maxHeight=0;
 				for(int j=0;j<bars.size();j++){
 					Bar bar=bars.get(j);
 					if(bar.getHeight()==0){
 						bars.remove(j);
 						j--;
 					}else{
+						maxHeight=Math.max(maxHeight, bar.getHeight());
 						double axis = bar.getAxis();
 						bar.setAxis(0.0);
 						bar.setAxisStr(df.format(axis));
 					}
 				}
+				passChart.setQuantityMax(maxHeight);
 			}
 			if(failChart!=null){
 				List<Bar> bars=failChart.getBars();
+				long maxHeight=0;
 				for(int j=0;j<bars.size();j++){
 					Bar bar=bars.get(j);
 					if(bar.getHeight()==0){
 						bars.remove(j);
 						j--;
 					}else{
+						maxHeight=Math.max(maxHeight, bar.getHeight());
 						double axis = bar.getAxis();
 						bar.setAxis(0.0);
 						bar.setAxisStr(df.format(axis));
 					}
 				}
+				failChart.setQuantityMax(maxHeight);
 			}
 		}
 		return reportItems;
@@ -180,10 +247,10 @@ public class ReportBuilder {
 	 * 处理单个数据文件
 	 * @param fileInfo 文件信息
 	 * @param reportItems 测试项信息
-	 * @return reportItems 测试项信息 没想到还有什么要返回的
+	 * @return totalCount 总棵树
 	 * @throws FileNotFoundException
 	 */
-	private List<ReportItem> processFile(FileInfo fileInfo,List<ReportItem> reportItems) throws FileNotFoundException{
+	private long processFile(FileInfo fileInfo,List<ReportItem> reportItems) throws FileNotFoundException{
 		//TODO
 		if(dataConfig == null){
 			throw new AnalysisException("DataConfig不存在");
@@ -195,6 +262,7 @@ public class ReportBuilder {
 		Resource dataFile=new FileSystemResource(fileName);
 		long startline=fileInfo.getDataStartLine();
 		long lineNumber=-1;
+		long totalCount=0;
 		String curLine=null;
 		BufferedReader br=null;
 		try {
@@ -215,26 +283,31 @@ public class ReportBuilder {
 					for(int i=0;i<length;i++){
 						ReportItem reportItem=reportItems.get(i);
 						Chart passChart=reportItem.getPassChart();
-						String colDataStr=datas[reportItem.getId()];
+						String colDataStr=datas[reportItem.getCol()];
 						double colData=0.0;
-						if(StringUtils.isNotEmpty(colDataStr)){
-							colData=Double.parseDouble(colDataStr) ;
+						if(StringUtils.isEmpty(colDataStr)){
+							continue;
 						}
+						colData=Double.parseDouble(colDataStr) ;
 						//求对应柱子下标
 						double spacing=passChart.getSpacing();
 						double rangeMin=passChart.getRangeMin();
 						long index=Math.round((colData-rangeMin)/spacing);
 						//pass数量+1
 						long passCount=reportItem.getPassCount()+1;
+						long chartCount=passChart.getTotalCnt()+1;
 						//标准差
-						double average=passChart.getRealAverage();
-						double sigma=passChart.getSigma()+Math.pow((colData-average), 2);
+						double average=reportItem.getRealAverage();
+						double sigma=reportItem.getSigma()+Math.pow((colData-average), 2);
 						
 						//zhuzi +1
 						passChart.getBars().get((int)index).increase();
-						passChart.setSigma(sigma);
+						passChart.setTotalCnt(chartCount);
+						reportItem.setSigma(sigma);
 						reportItem.setPassCount(passCount);
 					}
+
+					totalCount++;
 				}else if(failPattern.matcher(curLine).find()){
 					//若fail  仅fail的测试项的fail数量+1 FailChart对应柱子数量+1  （已经预处理so fail的就是最后一项）
 					//TODO
@@ -245,7 +318,7 @@ public class ReportBuilder {
 					for(int i=0;i<reportItems.size();i++){
 						ReportItem reportItem=reportItems.get(i);
 						//zhaodao fail data
-						if(lastData==reportItem.getId()){
+						if(lastData==reportItem.getCol()){
 							Chart failChart=reportItem.getFailChart();
 							double colData=Double.parseDouble(colDataStr) ;
 							double spacing=failChart.getSpacing();
@@ -253,14 +326,15 @@ public class ReportBuilder {
 							long index=Math.round((colData-rangeMin)/spacing);
 							//fail的测试项的fail数量+1
 							long failCount = reportItem.getFailCount()+1;
+							long chartCount=failChart.getTotalCnt()+1;
 							//FailChart对应柱子数量+1
-							System.out.println("debug:curLine:"+curLine);
-							System.out.println("debug: lineNumber"+lineNumber+" col:"+reportItem.getColumnname()+" index:"+index+" rangeMin:"+rangeMin+" spacing:"+spacing);
 							failChart.getBars().get((int)index).increase();
+							failChart.setTotalCnt(chartCount);
 							reportItem.setFailCount(failCount);
 							isFailFind=true;
 						}
 					}
+					totalCount++;
 				}
 				else{
 					//do nothing
@@ -272,7 +346,7 @@ public class ReportBuilder {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return reportItems;
+		return totalCount;
 		
 	}
 	private List<ReportItem> getInitialReportItems(List<ColumnInfo> columnInfos) {
@@ -297,6 +371,7 @@ public class ReportBuilder {
 					Bar bar=new Bar(value,0);
 					bars.add(bar);
 				}
+				
 				passChart.setBars(bars);
 				passChart.setSpacing(spacing);
 				passChart.setRealMin(pRealMin);
@@ -304,6 +379,7 @@ public class ReportBuilder {
 				passChart.setRangeMin(rangeMin);
 				passChart.setRangeMax(rangeMax);
 				passChart.setLimit(limitMin, limitMax);
+				passChart.setTitle(columnInfo.getColumnName()+"的良品分布图");
 			}
 			
 			//Fail Chart
@@ -331,16 +407,17 @@ public class ReportBuilder {
 				failChart.setRangeMin(rangeMin);
 				failChart.setRangeMax(rangeMax);
 				failChart.setLimit(limitMin, limitMax);
-				
+				failChart.setTitle(columnInfo.getColumnName()+"的不良品分布图");
 			}
 			
 			
 			ReportItem reportItem=new ReportItem();
-			reportItem.setId(columnInfo.getId());
+			reportItem.setCol(columnInfo.getId());
 			reportItem.setColumnname(columnInfo.getColumnName());
 			reportItem.setLimitMin(columnInfo.getLimitMin());
 			reportItem.setLimitMax(columnInfo.getLimitMax());
 			reportItem.setLimitUnit(columnInfo.getLimitUnit());
+			reportItem.setRealAverage(columnInfo.getRealAverage());
 			reportItem.setPassChart(passChart);
 			reportItem.setFailChart(failChart);
 			reportItemList.add(reportItem);
@@ -565,10 +642,10 @@ public class ReportBuilder {
 				ColumnInfo columnInfo = columnInfoList.get(i);
 				String colDataStr=datas[columnInfo.getId()];
 				double colData=0.0;
-				if(StringUtils.isNotEmpty(colDataStr)){
-					colData=Double.parseDouble(colDataStr) ;
+				if(StringUtils.isEmpty(colDataStr)){
+					continue;
 				}
-				
+				colData=Double.parseDouble(colDataStr);
 				long totalCountInLimit=columnInfo.getTotalCountInLimit()+1;
 				double totalValue=columnInfo.getTotalValue()+colData;
 				double realMin=columnInfo.getRealMinInLimit();

@@ -21,19 +21,16 @@ public class Chart {
 	private Double spacing;//柱状图柱子间距
 	private Double realMax;
 	private Double realMin;
-	private double realAverage;
+	
 	private Integer groupCnt=500;			//分组数  
 	private Double limitMin;
 	private Double limitMax;
 	private Double rangeMin;
 	private Double rangeMax;
-	private double sigma=0;
+	
 	private long totalCnt=0;				//该测试项Pass/Fail总颗数   即样本数
-	private Integer quantityMax=0;			//数量最多的柱子
-	private Double cpk;
-	private Double cpu;
-	private Double cpi;
-	private Double cp;
+	private long quantityMax=0;			//数量最多的柱子
+	
 	private String chartImg="no img";	//fomat:base64
 	private Integer chartType;
 	private Boolean visible=Boolean.TRUE;
@@ -152,29 +149,17 @@ public class Chart {
 	}
 
 
-	@Column
-	public double getRealAverage() {
-		return realAverage;
-	}
-	public void setRealAverage(double realAverage) {
-		this.realAverage = realAverage;
-	}
+
 	
 	@Column
-	public Integer getQuantityMax() {
+	public long getQuantityMax() {
 		return quantityMax;
 	}
-	public void setQuantityMax(Integer quantityMax) {
+	public void setQuantityMax(long quantityMax) {
 		this.quantityMax = quantityMax;
 	}
 	
-	@Column
-	public double getSigma() {
-		return sigma;
-	}
-	public void setSigma(double sigma) {
-		this.sigma = sigma;
-	}
+
 	
 	@Column
 	public Integer getChartType() {
@@ -190,40 +175,6 @@ public class Chart {
 
 	public void setTotalCnt(long totalCnt) {
 		this.totalCnt = totalCnt;
-	}
-	@Column
-	public Double getCpk() {
-		return cpk;
-	}
-
-	public void setCpk(Double cpk) {
-		this.cpk = cpk;
-	}
-	@Column
-	public Double getCpu() {
-		return cpu;
-	}
-
-	public void setCpu(Double cpu) {
-		this.cpu = cpu;
-	}
-
-	@Column
-	public Double getCpi() {
-		return cpi;
-	}
-
-	public void setCpi(Double cpi) {
-		this.cpi = cpi;
-	}
-
-	@Column
-	public Double getCp() {
-		return cp;
-	}
-
-	public void setCp(Double cp) {
-		this.cp = cp;
 	}
 
 	@Column(length=655350)
