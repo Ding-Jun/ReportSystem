@@ -7,7 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +18,7 @@ import com.funtest.analysis.bean.DataInfo;
 import com.funtest.analysis.service.ReportService;
 import com.funtest.core.bean.ReturnMsg;
 import com.funtest.core.bean.constant.Constants;
+import com.google.gson.Gson;
 
 @Controller
 @RequestMapping(value = "report")
@@ -36,9 +39,12 @@ public class ReportController {
 	@ResponseBody
 	public Object buildDataInfo(@RequestParam(value="files",required = true) MultipartFile[] files,
 			@RequestParam(value = "reportName", required = true) String reportName,
-			@RequestParam(value = "chipName", required = true) String chipName,
-			@RequestParam(value = "mode", required = false) Integer mode) {
-
+			@RequestParam(value = "chipName", required = false) String chipName,
+			@RequestParam(value = "mode", required = false) String mode) {
+		Integer processMode=null;
+		if(mode!=null){
+			processMode=Constants.PROCESS_MODE_DELETE_FT_FAIL;
+		}
 		ReturnMsg rm = new ReturnMsg();
 		try {
 			String[] fileNames=new String[files.length];
@@ -47,7 +53,7 @@ public class ReportController {
 				fileNames[i]=files[i].getOriginalFilename();
 				ins[i]=files[i].getInputStream();
 			}
-			DataInfo dataInfo = service.createDataInfo(fileNames, ins, reportName, chipName, mode);
+			DataInfo dataInfo = service.createDataInfo(fileNames, ins, reportName, chipName, processMode);
 			rm.setData(dataInfo);
 			rm.setCode(Constants.RETURN_MSG_SUCCESS);
 		} catch (Exception e) {
@@ -63,11 +69,13 @@ public class ReportController {
 	 * @param dataInfo
 	 * @return ReportId
 	 */
-	@RequestMapping(value="buildReport")
+	@RequestMapping(value="buildReport",method = RequestMethod.POST)
 	@ResponseBody
-	public Object buildReport(@RequestParam(value="dataInfo",required=true)DataInfo dataInfo){
+	public Object buildReport(@RequestParam(value="dataInfo",required=true) String dataInfoStr){
+		
 		ReturnMsg rm = new ReturnMsg();
 		try {
+			DataInfo dataInfo=new Gson().fromJson(dataInfoStr,DataInfo.class);
 			Integer id = service.createReport(dataInfo);
 			rm.setData(id);
 			rm.setCode(Constants.RETURN_MSG_SUCCESS);

@@ -609,6 +609,9 @@ public class ReportBuilder {
 			if(total !=0){
 				average= columnInfo.getTotalValue()/(double)total;
 			}
+			else{
+				columnInfo.setIsProcess(false);
+			}
 			columnInfo.setTotalCountAll(total);
 			columnInfo.setRealAverage(average);
 		}
@@ -753,7 +756,7 @@ public class ReportBuilder {
 		String[] limitMaxs=limitMaxStr.split(",");
 		String[] limitUnits=null;
 		if(limitUnitStr!=null) limitUnits=limitUnitStr.split(",");
-		Pattern osPattern=Pattern.compile(dataConfig.getTestItemColumnFlag().replace(",", ""));
+		Pattern osPattern=Pattern.compile(dataConfig.getTestItemColumnFlag().replace(",", "^"));
 		Pattern passPattern=Pattern.compile(dataConfig.getDutPassColumnFlag().replace(",", ""));
 		Pattern sitePattern=Pattern.compile(dataConfig.getSiteNoColumnFlag().replace(",", ""));
 		Pattern indexPattern=Pattern.compile(dataConfig.getDutNoColumnFlag().replace(",", ""));
@@ -825,7 +828,8 @@ public class ReportBuilder {
 					unit="";
 				}
 				//判断是否要处理
-				if(ignorePattern.matcher(testItems[i]).find()){
+				if(ignorePattern.matcher(testItems[i]).find()
+						|| osPattern.matcher(testItems[i]).find()){
 					isProcess=Boolean.FALSE;
 				}
 				else{
