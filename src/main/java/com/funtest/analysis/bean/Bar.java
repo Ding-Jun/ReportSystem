@@ -42,5 +42,10 @@ public class Bar {
 	public void setHeight(long height) {
 		this.height = height;
 	}
+
+	@Override
+	public String toString() {
+		return "[" + axisStr + "," + height + "]";
+	}
 	
 }

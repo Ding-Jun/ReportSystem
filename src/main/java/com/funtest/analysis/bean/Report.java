@@ -25,7 +25,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class Report {
 	private int id;
 	//private int testNo;
-	private String reportname="untitled";
+	private String reportName="untitled";
 	private String srcFile="";
 	private Integer mode;
 	//private String testItem;
@@ -78,11 +78,11 @@ public class Report {
 	}
 	
 	@Column
-	public String getReportname() {
-		return reportname;
+	public String getReportName() {
+		return reportName;
 	}
-	public void setReportname(String reportname) {
-		this.reportname = reportname;
+	public void setReportName(String reportName) {
+		this.reportName = reportName;
 	}
 	/*
 	@Column

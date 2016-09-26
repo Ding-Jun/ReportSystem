@@ -18,7 +18,7 @@ public class ReportItem {
 	private int id;
 	private int col;
 	private int testNo;
-	private String columnname;	
+	private String columnName;	
 	private long failCount;
 	private long passCount;
 	private long totalCount;
@@ -42,17 +42,17 @@ public class ReportItem {
 	public ReportItem(){
 		
 	}
-	public ReportItem(String columnname){
-		this.columnname=columnname;
+	public ReportItem(String columnName){
+		this.columnName=columnName;
 	}
 	
-	public ReportItem(String columnname,String unit){
-		this.columnname=columnname;
+	public ReportItem(String columnName,String unit){
+		this.columnName=columnName;
 		this.limitUnit=unit;
 	}
 	
-	public ReportItem(int testNo,String columnname,String unit){
-		this.columnname=columnname;
+	public ReportItem(int testNo,String columnName,String unit){
+		this.columnName=columnName;
 		this.limitUnit=unit;
 		this.testNo=testNo;
 	}
@@ -76,11 +76,11 @@ public class ReportItem {
 		this.col = col;
 	}
 	@Column
-	public String getColumnname() {
-		return columnname;
+	public String getColumnName() {
+		return columnName;
 	}
-	public void setColumnname(String columnname) {
-		this.columnname = columnname;
+	public void setColumnName(String columnName) {
+		this.columnName = columnName;
 	}
 	/*
 	@Column

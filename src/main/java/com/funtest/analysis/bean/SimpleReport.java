@@ -14,6 +14,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 public class SimpleReport {
 	Integer id;
+	String reportName;
 	String chipName;
 	Boolean isDeleted;
 	String lotNo;
@@ -36,7 +37,13 @@ public class SimpleReport {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+	@Column
+	public String getReportName() {
+		return reportName;
+	}
+	public void setReportName(String reportName) {
+		this.reportName = reportName;
+	}
 	@Column
 	public String getChipName() {
 		return chipName;

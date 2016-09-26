@@ -70,6 +70,6 @@ public class ReportServiceTest {
 	public void queryReport(){
 		Report report = service.queryReport(2);
 		//logger.info("null?{}",report==null);
-		logger.info("queryReport() Report: id：{},name: '{}'",report.getId(),report.getReportname());
+		logger.info("queryReport() Report: id：{},name: '{}'",report.getId(),report.getReportName());
 	}
 }

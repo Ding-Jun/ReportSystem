@@ -126,7 +126,7 @@ public class ReportBuilder {
 		}
 		this.doBuildBars(reportItems);
 		
-		report.setReportname(dataInfo.getReportName());
+		report.setReportName(dataInfo.getReportName());
 		report.setSrcFile(StringUtils.join(srcFiles, ","));
 		report.setChipName(dataInfo.getChipName());
 		report.setMode(dataInfo.getMode());
@@ -158,7 +158,7 @@ public class ReportBuilder {
 				failRate="0.0";
 			}else{
 				reportItem.setFailRate(failRate);
-				if(osPattern.matcher(reportItem.getColumnname()).find()){
+				if(osPattern.matcher(reportItem.getColumnName()).find()){
 					osFailCount+=reportItem.getFailCount();
 				}
 				totalFailCount=reportItem.getFailCount();
@@ -207,6 +207,7 @@ public class ReportBuilder {
 			
 			if(passChart!=null){
 				List<Bar> bars=passChart.getBars();
+				StringBuilder sb=new StringBuilder("[");
 				long maxHeight=0;
 				for(int j=0;j<bars.size();j++){
 					Bar bar=bars.get(j);
@@ -218,12 +219,17 @@ public class ReportBuilder {
 						double axis = bar.getAxis();
 						bar.setAxis(0.0);
 						bar.setAxisStr(df.format(axis));
+						sb.append(bar.toString()+",");
 					}
 				}
 				passChart.setQuantityMax(maxHeight);
+				sb.deleteCharAt(sb.length()-1);
+				sb.append("]");
+				passChart.setDatas(sb.toString());
 			}
 			if(failChart!=null){
 				List<Bar> bars=failChart.getBars();
+				StringBuilder sb=new StringBuilder("[");
 				long maxHeight=0;
 				for(int j=0;j<bars.size();j++){
 					Bar bar=bars.get(j);
@@ -235,9 +241,13 @@ public class ReportBuilder {
 						double axis = bar.getAxis();
 						bar.setAxis(0.0);
 						bar.setAxisStr(df.format(axis));
+						sb.append(bar.toString()+",");
 					}
 				}
 				failChart.setQuantityMax(maxHeight);
+				sb.deleteCharAt(sb.length()-1);
+				sb.append("]");
+				failChart.setDatas(sb.toString());
 			}
 		}
 		return reportItems;
@@ -413,7 +423,7 @@ public class ReportBuilder {
 			
 			ReportItem reportItem=new ReportItem();
 			reportItem.setCol(columnInfo.getId());
-			reportItem.setColumnname(columnInfo.getColumnName());
+			reportItem.setColumnName(columnInfo.getColumnName());
 			reportItem.setLimitMin(columnInfo.getLimitMin());
 			reportItem.setLimitMax(columnInfo.getLimitMax());
 			reportItem.setLimitUnit(columnInfo.getLimitUnit());
