@@ -1,20 +1,19 @@
 package com.hexin.dl.util;
 
-import java.security.MessageDigest;
-
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-
 import com.funtest.core.bean.constant.Constants;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sun.misc.BASE64Encoder;
+
+import java.security.MessageDigest;
 /**
  * MD5加密
  * 类DigestUtil.java的实现描述：TODO 类实现描述 
  * @author ZhengTianyu 2016年1月22日 下午5:23:05
  */
 public class DigestUtil {
-    private static final Logger logger = LogManager.getLogger(DigestUtil.class);
+    private final Logger logger  =  LoggerFactory.getLogger(DigestUtil.class );
+
     private static final String ALGORITHM = "AES";
     private static final String ENCODING = "utf-8";
 

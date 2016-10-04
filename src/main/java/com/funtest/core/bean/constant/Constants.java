@@ -9,8 +9,9 @@ public class Constants {
 	public static final Integer CHART_PASS=0;
 	public static final Integer CHART_FAIL=-1;
 	public static final Integer CHART_ALL=1;
-	public static final Integer CHART_GROUPS_PASS_DEFAULT=500;
-	public static final Integer CHART_GRUOPS_FAIL_DEFAULT=50;
+	public static final Integer CHART_GROUPS_PASS_DEFAULT=100;
+	public static final Integer CHART_GRUOPS_FAIL_DEFAULT=20;
+    public static final String FILE_UPLOAD_DIR="upload";
 	
 	public static final Integer PROCESS_MODE_NORMAL=0;
 	public static final Integer PROCESS_MODE_DELETE_FT_FAIL=1;

@@ -18,84 +18,121 @@ public class DataInfo {
 	private Integer dutPassCol;//dut_pass所在列
 	private Integer indexCol;//dut_No所在列
 	private Integer siteCol;//site_No所在列
+
 	public String getId() {
 		return id;
 	}
-	public void setId(String id) {
+
+	public DataInfo setId(String id) {
 		this.id = id;
+		return this;
 	}
+
 	public String getReportName() {
 		return reportName;
 	}
-	public void setReportName(String reportName) {
+
+	public DataInfo setReportName(String reportName) {
 		this.reportName = reportName;
+		return this;
 	}
+
 	public String getChipName() {
 		return chipName;
 	}
-	public void setChipName(String chipName) {
+
+	public DataInfo setChipName(String chipName) {
 		this.chipName = chipName;
+		return this;
 	}
+
 	public Integer getMode() {
 		return mode;
 	}
-	public void setMode(Integer mode) {
+
+	public DataInfo setMode(Integer mode) {
 		this.mode = mode;
+		return this;
+	}
+
+	public List<ColumnInfo> getColumns() {
+		return columns;
+	}
+
+	public DataInfo setColumns(List<ColumnInfo> columns) {
+		this.columns = columns;
+		return this;
+	}
+
+	public List<FileInfo> getFiles() {
+		return files;
+	}
+
+	public DataInfo setFiles(List<FileInfo> files) {
+		this.files = files;
+		return this;
 	}
 
 	public String getTestItemStr() {
 		return testItemStr;
 	}
-	public void setTestItemStr(String testItemStr) {
+
+	public DataInfo setTestItemStr(String testItemStr) {
 		this.testItemStr = testItemStr;
+		return this;
 	}
+
 	public String getLimitMinStr() {
 		return limitMinStr;
 	}
-	public void setLimitMinStr(String limitMinStr) {
+
+	public DataInfo setLimitMinStr(String limitMinStr) {
 		this.limitMinStr = limitMinStr;
+		return this;
 	}
+
 	public String getLimitMaxStr() {
 		return limitMaxStr;
 	}
-	public void setLimitMaxStr(String limitMaxStr) {
+
+	public DataInfo setLimitMaxStr(String limitMaxStr) {
 		this.limitMaxStr = limitMaxStr;
+		return this;
 	}
+
 	public String getLimitUnitStr() {
 		return limitUnitStr;
 	}
-	public void setLimitUnitStr(String limitUnitStr) {
+
+	public DataInfo setLimitUnitStr(String limitUnitStr) {
 		this.limitUnitStr = limitUnitStr;
+		return this;
 	}
 
 	public Integer getDutPassCol() {
 		return dutPassCol;
 	}
-	public void setDutPassCol(Integer dutPassCol) {
+
+	public DataInfo setDutPassCol(Integer dutPassCol) {
 		this.dutPassCol = dutPassCol;
+		return this;
 	}
+
 	public Integer getIndexCol() {
 		return indexCol;
 	}
-	public void setIndexCol(Integer indexCol) {
+
+	public DataInfo setIndexCol(Integer indexCol) {
 		this.indexCol = indexCol;
+		return this;
 	}
+
 	public Integer getSiteCol() {
 		return siteCol;
 	}
-	public void setSiteCol(Integer siteCol) {
+
+	public DataInfo setSiteCol(Integer siteCol) {
 		this.siteCol = siteCol;
-	}
-	public List<ColumnInfo>  getColumns() {
-		return columns;
-	}
-	public void setColumns(List<ColumnInfo> columns) {
-		this.columns = columns;
-	}
-	public List<FileInfo>  getFiles() {
-		return files;
-	}
-	public void setFiles(List<FileInfo> files) {
-		this.files = files;
+		return this;
 	}
 }
