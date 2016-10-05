@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
+import static com.sun.org.apache.xerces.internal.impl.xpath.regex.CaseInsensitiveMap.get;
+
 public class ReportBuilder {
     private final Logger logger = LoggerFactory.getLogger(ReportBuilder.class);
     DataInfo dataInfo;
@@ -92,7 +94,7 @@ public class ReportBuilder {
             FileInfo fileInfo = files.get(i);
             //2.2 判断数据文件的处理结果是不是成功，不成功则跳过，成功则继续
             if (!Constants.PROCESS_STATUS_DONE.equals(fileInfo.getStatus())) {
-                logger.info("跳过文件 {}",fileInfo.getFileName());
+                logger.info("跳过文件 {}", fileInfo.getFileName());
                 continue;
             }
             srcFiles.add(fileInfo.getFileName());
@@ -118,6 +120,8 @@ public class ReportBuilder {
         report.setReportItems(reportItems);
 
         calculateRestReport(report);
+        //remove  reportitem which don't need analysis
+        this.removeExtraReportItems(reportItems, columnInfos);
         report.setTime(new Date());
         //System.out.println(new Gson().toJson(report));
 
@@ -174,11 +178,37 @@ public class ReportBuilder {
         //Report osfailCount
         report.setOsFailCount(osFailCount);
         //Report osFailRate
-        String passRate = df.format(1 - totalFailCount / (double)totalCount);
-        String osFailRate = df.format(osFailCount / (double)totalCount);
+        String passRate = df.format(1 - totalFailCount / (double) totalCount);
+        String osFailRate = df.format(osFailCount / (double) totalCount);
         report.setOsFailRate(osFailRate);
         report.setPassPercent(passRate);
         return report;
+    }
+
+    private int removeExtraReportItems(List<ReportItem> reportItems, List<ColumnInfo> columnInfos) {
+        //reportItems columnInfos 顺序相同
+        int removeCount=0;
+        for (ColumnInfo columnInfo : columnInfos) {
+            //如果不需要处理
+            if (Boolean.FALSE.equals(columnInfo.getIsProcess())) {
+                for (int i = 0; i < reportItems.size(); i++) {
+                    ReportItem reportItem = reportItems.get(i);
+                    //找到reportItem 移出
+                    if(columnInfo.getId().equals(reportItem.getCol())){
+                        reportItems.remove(reportItem);
+                        removeCount++;
+                        break;
+                    }
+                }
+            }
+
+        }
+        //整理列编号
+        int testNo=1;
+        for(ReportItem reportItem: reportItems){
+            reportItem.setTestNo(testNo++);
+        }
+        return removeCount;
     }
 
     /**
@@ -261,12 +291,12 @@ public class ReportBuilder {
         String fileName = fileInfo.getLocalFileName();
         Resource dataFile = new FileSystemResource(fileName);
         long startline = fileInfo.getDataStartLine();
-        long ignoreLine=0;
+        long ignoreLine = 0;
         long lineNumber = -1;
         long totalCount = 0;
         String curLine = null;
         BufferedReader br = null;
-        logger.info("开始处理文件 {} <=> {}",fileInfo.getFileName(),fileInfo.getLocalFileName());
+        logger.info("开始处理文件 {} <=> {}", fileInfo.getFileName(), fileInfo.getLocalFileName());
         try {
             br = new BufferedReader(new InputStreamReader(dataFile.getInputStream()));
 
@@ -275,7 +305,7 @@ public class ReportBuilder {
                 br.readLine();
                 lineNumber++;
             }
-            logger.debug("从第{}行开始读取数据",fileInfo.getDataStartLine());
+            logger.debug("从第{}行开始读取数据", fileInfo.getDataStartLine());
             //2.4 逐行读取数据 判断true还是false
             while ((curLine = br.readLine()) != null) {
                 lineNumber++;
@@ -336,7 +366,11 @@ public class ReportBuilder {
                             failChart.setTotalCnt(chartCount);
                             reportItem.setFailCount(failCount);
                             isFailFind = true;
+                            break;
                         }
+                    }
+                    if (isFailFind == false) {
+                        logger.warn("发现Fail 但是此项没有被勾选 CurLine:{}", curLine);
                     }
                     totalCount++;
                 } else {
@@ -350,7 +384,7 @@ public class ReportBuilder {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        logger.debug("处理完毕,忽略了{}行",ignoreLine);
+        logger.debug("处理完毕,忽略了{}行", ignoreLine);
 
         return totalCount;
 
@@ -363,7 +397,7 @@ public class ReportBuilder {
 
             Chart passChart = null;
             if (columnInfo.getTotalCountInLimit() > 0) {
-                Integer passGroups = columnInfo.getPassGroups();
+                int passGroups = columnInfo.getPassGroups();
                 passChart = new Chart(Constants.CHART_PASS, passGroups);
                 double pRealMin = columnInfo.getRealMinInLimit();
                 double pRealMax = columnInfo.getRealMaxInLimit();
@@ -374,7 +408,8 @@ public class ReportBuilder {
                 double spacing = (rangeMax - rangeMin) / (double) passGroups;
                 if (spacing < 0.001) spacing = 0.001;
                 List<Bar> bars = new ArrayList<Bar>();
-                for (double value = rangeMin; value <= rangeMax; value += spacing) {
+                for (int i = 0; i <= passGroups; i++) {
+                    double value = rangeMin + spacing * i;
                     Bar bar = new Bar(value, 0);
                     bars.add(bar);
                 }
@@ -392,7 +427,7 @@ public class ReportBuilder {
             //Fail Chart
             Chart failChart = null;
             if (columnInfo.getTotalCountOutOfLimit() > 0) {
-                Integer failGroups = columnInfo.getFailGroups();
+                int failGroups = columnInfo.getFailGroups();
                 failChart = new Chart(Constants.CHART_FAIL, failGroups);
                 double fRealMin = columnInfo.getRealMinOutOfLimit();
                 double fRealMax = columnInfo.getRealMaxOutOfLimit();
@@ -403,7 +438,9 @@ public class ReportBuilder {
                 double spacing = (rangeMax - rangeMin) / (double) failGroups;
                 if (spacing < 0.001) spacing = 0.001;
                 List<Bar> bars = new ArrayList<Bar>();
-                for (double value = rangeMin; value <= rangeMax; value += spacing) {
+
+                for (int i = 0; i <= failGroups; i++) {
+                    double value = rangeMin + spacing * i;
                     Bar bar = new Bar(value, 0);
                     bars.add(bar);
                 }
@@ -743,7 +780,7 @@ public class ReportBuilder {
             //如果是fail的double limitMin=
             boolean isFailFind = false;
             for (int i = 0; i < length; i++) {
-                ColumnInfo columnInfo = (ColumnInfo)columnInfoList.get(i);
+                ColumnInfo columnInfo = (ColumnInfo) columnInfoList.get(i);
                 if (datas.length <= columnInfo.getId()) {
                     break;
                 }
@@ -779,7 +816,7 @@ public class ReportBuilder {
                     }
                     if ((datas.length > id)
                             && length > id) {
-                        ColumnInfo nextColumn = (ColumnInfo)columnInfoList.get(id);
+                        ColumnInfo nextColumn = (ColumnInfo) columnInfoList.get(id);
                         if (nextColData >= nextColumn.getLimitMin()
                                 && nextColData <= nextColumn.getLimitMax()) {
                             continue;
@@ -925,8 +962,8 @@ public class ReportBuilder {
                 columnInfo.setRealMaxOutOfLimit(-Double.MAX_VALUE);
                 columnInfo.setRealMinInLimit(Double.MAX_VALUE);
                 columnInfo.setRealMinOutOfLimit(Double.MAX_VALUE);
-                columnInfo.setPassGroups(500);
-                columnInfo.setFailGroups(50);
+                columnInfo.setPassGroups(Constants.CHART_GROUPS_PASS_DEFAULT);
+                columnInfo.setFailGroups(Constants.CHART_GRUOPS_FAIL_DEFAULT);
                 columnInfo.setIsProcess(isProcess);
                 columns.add(columnInfo);
 
