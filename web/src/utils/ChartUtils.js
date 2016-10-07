@@ -13,14 +13,14 @@ class ChartUtils{
     console.log("test")
   }
 	static getBarChartOption(chart){
-    
+
     var option = {
     title : {
         text:chart.title, // chart.title
         subtext:'funtest',
         shadowColor: 'rgba(0, 0, 0, 0.5)',
         shadowBlur: 10,
-        
+
         subtextStyle:{
           fontSize:16,
           fontWeight:'bold',
@@ -43,7 +43,7 @@ class ChartUtils{
         }/*
         formatter : function (params) {
             return params.seriesName + ' : [ '
-                   + params.value[0] + ', ' 
+                   + params.value[0] + ', '
                    + params.value[1] + ' ]';
         }*/
     },
@@ -76,7 +76,7 @@ class ChartUtils{
               length:10
             }]*/
         }
-        
+
     ],
     dataZoom: [
                {   // 这个dataZoom组件，默认控制x轴。
@@ -104,41 +104,56 @@ class ChartUtils{
             }
         }
     ],
-    
-    
+
+
     series : [
               {
                   name:chart.title,
-                  type:'bar',          
+                  type:'bar',
                   barWidth:5,
-                  
+
                   data:eval(chart.datas),
                   markLine : {
                       data :[
-                             {
+                            /* [{
                                  name: '平均线',
                                  // 支持 'average', 'min', 'max'
                                  type: 'average',
+                                 symbol:'rect',
                                  value:'gg',
                                  label:{
-                                  
+
                                  }
-                             },
-                             
+                             },{
+                               symbol:'rect'
+                             }],*/
+
                              [{
                                  name: 'LSL',
                                  coord: [chart.limitMin,0],
                                  value:'gg'
                                  //coord: [150,500]
                              }, {
-                               coord: [chart.limitMin, Math.ceil(chart.quantityMax*1.1)]
+                               coord: [chart.limitMin, Math.ceil(chart.quantityMax*1.1)],
+                               label:{
+                                 normal:{
+                                   position:'end',
+                                   formatter:'{b}'
+                                 }
+                               }
                                //coord: [150, 400]
                              }],
                              [{
                                  name: 'LSH',
                                  coord: [chart.limitMax,0]
                              }, {
-                               coord: [chart.limitMax, Math.ceil(chart.quantityMax*1.1)]
+                               coord: [chart.limitMax, Math.ceil(chart.quantityMax*1.1)],
+                               label:{
+                                 normal:{
+                                   position:'end',
+                                   formatter:'{b}'
+                                 }
+                               }
                              }],/*
                              [{
                                  name: 'typical',
@@ -146,28 +161,28 @@ class ChartUtils{
                              }, {
                                coord: [chart.typicalValue, Math.ceil(chart.quantityMax*1.1)]
                              }],*/
-                              
+
                          ]
                   }
               }
           ]
-      
+
     };/*
     if(chart.chartType==0){
-         option.xAxis[0].min=chart.limitMin - Math.abs(chart.limitMin)*0.005;  
-          option.xAxis[0].max=chart.limitMax + Math.abs(chart.limitMax)*0.005;    
+         option.xAxis[0].min=chart.limitMin - Math.abs(chart.limitMin)*0.005;
+          option.xAxis[0].max=chart.limitMax + Math.abs(chart.limitMax)*0.005;
           if((chart.limitMin>=-10000 && chart.limitMin<=-9999) ){
-              option.xAxis[0].min=chart.realMin - Math.abs(chart.realMin)*0.005; 
+              option.xAxis[0].min=chart.realMin - Math.abs(chart.realMin)*0.005;
           }
           if(chart.limitMax>=9999 && chart.limitMax<=10000){
-            option.xAxis[0].max=chart.realMax + Math.abs(chart.realMax)*0.005; 
+            option.xAxis[0].max=chart.realMax + Math.abs(chart.realMax)*0.005;
           }
           option.xAxis[0].min=option.xAxis[0].min.toFixed(4);
           option.xAxis[0].max=option.xAxis[0].max.toFixed(4);
             //option.title.text=chart.title+"的良品分布图";
             option.title.subtext="                  "+ 'Average : '+chart.typicalValue.toFixed(4)+"     "
                 +'N : '+chart.totalCnt+"     "
-                +'Sigma : '+chart.sigma.toFixed(4)+"    " 
+                +'Sigma : '+chart.sigma.toFixed(4)+"    "
                 +'Cpk : '+chart.cpk.toFixed(4);
             //option.color='#26A800';
 
@@ -178,20 +193,20 @@ class ChartUtils{
           //if(chart.realMin == chart.realMax){
               margin= Math.abs(chart.realMin)*0.001;
               margin=margin>0.001?margin:0.001;
-              option.xAxis[0].min=chart.realMin -margin; 
+              option.xAxis[0].min=chart.realMin -margin;
 
               margin= Math.abs(chart.realMax)*0.001;
               margin=margin>0.001?margin:0.001;
-              option.xAxis[0].max=chart.realMax + margin; 
-              
+              option.xAxis[0].max=chart.realMax + margin;
+
           option.xAxis[0].min=option.xAxis[0].min.toFixed(4);
           option.xAxis[0].max=option.xAxis[0].max.toFixed(4);
          // }
           //option.title.text=chart.title+"的不良品分布图";
           option.title.subtext= "                  "+'Average : '+chart.typicalValue.toFixed(4)+"     "
                 +'N : '+chart.totalCnt+"     "
-                +'Sigma : '+chart.sigma.toFixed(4)+"    "; 
-          option.series[0].markLine.data='';     
+                +'Sigma : '+chart.sigma.toFixed(4)+"    ";
+          option.series[0].markLine.data='';
           //console.log(option.series[0].markLine);
        }*/
     return option;

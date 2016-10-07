@@ -161,7 +161,7 @@ class Uploader extends React.Component {
     return (
       <Form ref="form" id="form" horizontal encType="multipart/form-data">
         <FormItem ref="fileItem" label="数据文件" required {...formItemLayout} help={isFieldValidating('dataFiles') ? '校验中...' : (getFieldError('dataFiles') || []).join(', ')} hasFeedback >
-          <Input {...fileProps} name="files" type="file" ref="dataFile" multiple="multiple" accept=".csv" /><Button type="ghost" size="default" ><Icon type="file" />选择</Button>
+          <Input {...fileProps} name="files" type="file" ref="dataFile" multiple="multiple" accept=".csv" />
         </FormItem>
     <FormItem label="报告名称" required {...formItemLayout} help={isFieldValidating('reportName') ? '校验中...' : (getFieldError('reportName') || []).join(', ')} hasFeedback >
           <Input {...nameProps} name="reportName" placeholder="数据处理后产生的报告名称"  />

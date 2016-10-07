@@ -9,18 +9,20 @@ import {Button} from 'antd'
 class Chart extends React.Component{
   constructor(props){
     super(props);
-    
+
   }
   componentDidMount(){
     var option = ChartUtils.getBarChartOption(this.props);
     var element= findDOMNode(this.refs.chart);
     ChartUtils.createChart(element,option);
+
   }
   componentDidUpdate(){
     var option = ChartUtils.getBarChartOption(this.props);
     var element= findDOMNode(this.refs.chart);
     ChartUtils.createChart(element,option);
   }
+
   test(){
     console.log(findDOMNode(this.refs.chart))
     //ChartUtils.test()
@@ -31,7 +33,7 @@ class Chart extends React.Component{
       <Button onClick={this.test.bind(this)} type="primary">defa</Button>
       chartType:{this.props.chartType}
       <div ref="chart" style={{width: "600px",height:"400px"}} >
-      
+
       </div>
       </div>
     )
