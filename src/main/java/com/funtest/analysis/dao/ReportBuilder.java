@@ -783,18 +783,7 @@ public class ReportBuilder {
                     continue;
                 }
                 colData = Double.parseDouble(colDataStr);
-                long totalCountInLimit = columnInfo.getTotalCountInLimit() + 1;
-                double totalValue = columnInfo.getTotalValue() + colData;
-                double realMin = columnInfo.getRealMinInLimit();
-                double realMax = columnInfo.getRealMaxInLimit();
-                realMin = colData < realMin ? colData : realMin;
-                realMax = colData > realMax ? colData : realMax;
-
-
-                columnInfo.setTotalCountInLimit(totalCountInLimit);
-                columnInfo.setTotalValue(totalValue);
-                columnInfo.setRealMinInLimit(realMin);
-                columnInfo.setRealMaxInLimit(realMax);
+                recordPassData(colData,columnInfo);
             }
         } else if (failPattern.matcher(curLine).find()) {
             //如果是fail的double limitMin=
@@ -808,18 +797,18 @@ public class ReportBuilder {
                     datas[columnInfo.getId()] = "";
                     continue;
                 }
+
                 String colDataStr = datas[columnInfo.getId()];
-                double colData = 0.0;
-
-                if (StringUtils.isNotEmpty(colDataStr)) {
-                    colData = Double.parseDouble(colDataStr);
+                if (StringUtils.isEmpty(colDataStr)) {
+                    continue;
                 }
-
+                double colData = Double.parseDouble(colDataStr);
                 double limitMin = columnInfo.getLimitMin();
                 double limitMax = columnInfo.getLimitMax();
 
                 if (colData > limitMin && colData < limitMax) {
                     //如果 数据在判限内
+                    recordPassData(colData,columnInfo);
                     continue;
                 } else if (colData < limitMin || colData > limitMax) {
                     //如果数据在判限外
@@ -830,40 +819,54 @@ public class ReportBuilder {
                     //否则这就是fail列了
                     int id = columnInfo.getId() + 1;
                     String nextColDataStr = datas[columnInfo.getId()];
-                    double nextColData = 0.0;
-                    if (StringUtils.isNotEmpty(nextColDataStr)) {
-                        nextColData = Double.parseDouble(nextColDataStr);
-                    }
-                    if ((datas.length > id)
-                            && length > id) {
+                    if (StringUtils.isNotEmpty(nextColDataStr)
+                    ||((datas.length > id)
+                            && length > id)) {
                         ColumnInfo nextColumn = (ColumnInfo) columnInfoList.get(id);
+                        double nextColData = Double.parseDouble(nextColDataStr);
                         if (nextColData >= nextColumn.getLimitMin()
                                 && nextColData <= nextColumn.getLimitMax()) {
+                            recordPassData(colData,columnInfo);
                             continue;
                         }
                     }
                     isFailFind = true;
                 }
-                double realMax = columnInfo.getRealMaxOutOfLimit();
-                double realMin = columnInfo.getRealMinOutOfLimit();
-                long totalCountOutOfLimit = columnInfo.getTotalCountOutOfLimit() + 1;
-                double totalValue = columnInfo.getTotalValue() + colData;
-
-                realMin = colData < realMin ? colData : realMin;
-                realMax = colData > realMax ? colData : realMax;
-
-                columnInfo.setTotalValue(totalValue);
-                columnInfo.setTotalCountOutOfLimit(totalCountOutOfLimit);
-                columnInfo.setRealMinOutOfLimit(realMin);
-                columnInfo.setRealMaxOutOfLimit(realMax);
+                recordFailData(colData,columnInfo);
             }
         } else {
             //anything else   do nothing
         }
         return StringUtils.join(datas, ",");
     }
-    private void recordPassData(){
+    private void recordPassData(double colData,ColumnInfo columnInfo){
+        long totalCountInLimit = columnInfo.getTotalCountInLimit() + 1;
+        double totalValue = columnInfo.getTotalValue() + colData;
+        double realMin = columnInfo.getRealMinInLimit();
+        double realMax = columnInfo.getRealMaxInLimit();
+        realMin = colData < realMin ? colData : realMin;
+        realMax = colData > realMax ? colData : realMax;
 
+
+        columnInfo.setTotalCountInLimit(totalCountInLimit);
+        columnInfo.setTotalValue(totalValue);
+        columnInfo.setRealMinInLimit(realMin);
+        columnInfo.setRealMaxInLimit(realMax);
+    }
+    private void recordFailData(double colData,ColumnInfo columnInfo){
+        long totalCountOutOfLimit = columnInfo.getTotalCountOutOfLimit() + 1;
+        double totalValue = columnInfo.getTotalValue() + colData;
+        double realMax = columnInfo.getRealMaxOutOfLimit();
+        double realMin = columnInfo.getRealMinOutOfLimit();
+
+
+        realMin = colData < realMin ? colData : realMin;
+        realMax = colData > realMax ? colData : realMax;
+
+        columnInfo.setTotalValue(totalValue);
+        columnInfo.setTotalCountOutOfLimit(totalCountOutOfLimit);
+        columnInfo.setRealMinOutOfLimit(realMin);
+        columnInfo.setRealMaxOutOfLimit(realMax);
     }
     /**
      * 根据dataConfig定义的正则来获取测试项
