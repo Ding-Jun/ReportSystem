@@ -1,4 +1,4 @@
-package com.hexin.core.util;
+package com.funtest.core.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.hexin.core.exceptions.BmsException;
+import com.funtest.core.exceptions.BmsException;
 
 /**
  * 

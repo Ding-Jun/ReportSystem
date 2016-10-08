@@ -1,4 +1,4 @@
-package com.hexin.core.util;
+package com.funtest.core.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

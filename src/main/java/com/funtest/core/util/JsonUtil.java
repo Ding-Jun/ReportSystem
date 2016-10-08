@@ -1,4 +1,4 @@
-package com.hexin.core.util;
+package com.funtest.core.util;
 
 import java.util.List;
 import java.util.Map;

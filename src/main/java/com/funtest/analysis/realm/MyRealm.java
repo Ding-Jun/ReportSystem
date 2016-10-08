@@ -1,10 +1,5 @@
 package com.funtest.analysis.realm;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -22,11 +17,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.funtest.analysis.bean.Admin;
-import com.funtest.analysis.bean.Permission;
-import com.funtest.analysis.dao.AdminDao;
 import com.funtest.analysis.service.AdminService;
 import com.funtest.core.bean.constant.Constants;
-import com.hexin.core.exceptions.BmsException;
+import com.funtest.core.exceptions.BmsException;
 
 public class MyRealm extends AuthorizingRealm {
 

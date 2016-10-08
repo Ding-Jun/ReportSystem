@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.funtest.core.bean.constant.Constants;
-import com.hexin.core.util.LogUtil;
+import com.funtest.core.util.LogUtil;
 import com.hexin.dl.util.CustomSessionUtil;
 
 /**
