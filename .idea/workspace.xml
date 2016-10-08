@@ -5,54 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="433e0881-8cc8-4f89-a871-fe6b556008f0" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/util/CustomDateUtil.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/util/CustomSessionUtil.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/util/PropertyUtil.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/src/components/DocumentView.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/src/components/Gallery.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/hexin/core/exceptions/BmsException.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/hexin/core/util/EncryptUtil.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/hexin/core/util/InjectValueUtil.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/hexin/core/util/JsonUtil$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/hexin/core/util/JsonUtil.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/hexin/core/util/LogUtil.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/hexin/core/util/NamingUtil.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/hexin/dl/HomeController.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/hexin/dl/util/CustomDateUtil.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/hexin/dl/util/CustomObjectUtil.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/hexin/dl/util/CustomSessionUtil.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/hexin/dl/util/DateUtil.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/hexin/dl/util/DigestUtil.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/hexin/dl/util/GsonUtil.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/hexin/dl/util/PropertyUtil.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/hexin/dl/util/PushDataUtil.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/hexin/dl/util/RandomUtil.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/hexin/dl/util/ReviewAuditUtil.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/hexin/dl/util/SpringContextUtil.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/funtest/analysis/bean/Report.class" afterPath="$PROJECT_DIR$/target/classes/com/funtest/analysis/bean/Report.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/funtest/analysis/controller/AdminController.class" afterPath="$PROJECT_DIR$/target/classes/com/funtest/analysis/controller/AdminController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/funtest/analysis/controller/LoginController.class" afterPath="$PROJECT_DIR$/target/classes/com/funtest/analysis/controller/LoginController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/funtest/analysis/realm/MyRealm.class" afterPath="$PROJECT_DIR$/target/classes/com/funtest/analysis/realm/MyRealm.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/funtest/analysis/service/impl/AdminServiceImpl.class" afterPath="$PROJECT_DIR$/target/classes/com/funtest/analysis/service/impl/AdminServiceImpl.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/funtest/analysis/shiro/filter/CustomSessionFilter.class" afterPath="$PROJECT_DIR$/target/classes/com/funtest/analysis/shiro/filter/CustomSessionFilter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/funtest/core/bean/constant/Constants.class" afterPath="$PROJECT_DIR$/target/classes/com/funtest/core/bean/constant/Constants.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/funtest/analysis/bean/ReportItem.class" afterPath="$PROJECT_DIR$/target/classes/com/funtest/analysis/bean/ReportItem.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/bean/Report.java" afterPath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/bean/Report.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/bean/ReportItem.java" afterPath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/bean/ReportItem.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/controller/AdminController.java" afterPath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/controller/AdminController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/controller/LoginController.java" afterPath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/controller/LoginController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/dao/ReportBuilder.java" afterPath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/dao/ReportBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/service/impl/AdminServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/service/impl/AdminServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/shiro/filter/CustomSessionFilter.java" afterPath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/shiro/filter/CustomSessionFilter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/funtest/core/bean/constant/Constants.java" afterPath="$PROJECT_DIR$/src/main/java/com/funtest/core/bean/constant/Constants.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/funtest/analysis/dao/ReportBuilderTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/funtest/analysis/dao/ReportBuilderTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/components/HomeView.js" afterPath="$PROJECT_DIR$/web/src/components/HomeView.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/components/Navigation.js" afterPath="$PROJECT_DIR$/web/src/components/Navigation.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/components/ReportView.js" afterPath="$PROJECT_DIR$/web/src/components/ReportView.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/components/SimpleReport.js" afterPath="$PROJECT_DIR$/web/src/components/SimpleReport.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/components/SimpleReportList.js" afterPath="$PROJECT_DIR$/web/src/components/SimpleReportList.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/components/Transaction.js" afterPath="$PROJECT_DIR$/web/src/components/Transaction.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/index.js" afterPath="$PROJECT_DIR$/web/src/index.js" />
     </list>
     <ignored path="analysis.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -109,8 +64,8 @@
       <file leaf-file-name="ReportBuilder.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/funtest/analysis/dao/ReportBuilder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
-              <caret line="185" column="0" selection-start-line="185" selection-start-column="0" selection-end-line="186" selection-end-column="0" />
+            <state relative-caret-position="350">
+              <caret line="864" column="31" selection-start-line="864" selection-start-column="31" selection-end-line="864" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -119,7 +74,7 @@
       <file leaf-file-name="ReportItem.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/funtest/analysis/bean/ReportItem.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2166">
+            <state relative-caret-position="171">
               <caret line="156" column="11" selection-start-line="156" selection-start-column="11" selection-end-line="156" selection-end-column="11" />
               <folding>
                 <element signature="e#2811#2812#0" expanded="true" />
@@ -204,8 +159,8 @@
       <file leaf-file-name="ReportBuilderTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/funtest/analysis/dao/ReportBuilderTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="235">
-              <caret line="336" column="49" selection-start-line="336" selection-start-column="49" selection-end-line="336" selection-end-column="49" />
+            <state relative-caret-position="-59">
+              <caret line="192" column="25" selection-start-line="192" selection-start-column="25" selection-end-line="192" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -269,8 +224,8 @@
         <option value="$PROJECT_DIR$/src/main/java/com/funtest/core/bean/constant/Constants.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/funtest/analysis/bean/ReportItem.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/funtest/analysis/bean/Report.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/funtest/analysis/dao/ReportBuilder.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/funtest/analysis/dao/ReportBuilderTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/funtest/analysis/dao/ReportBuilder.java" />
       </list>
     </option>
   </component>
@@ -680,7 +635,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="editing.templates" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Console Font" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop" />
@@ -701,33 +656,7 @@
       <recent name="D:\Program Data\eclipse\Analysis\src\main\java\com\funtest\analysis\util" />
     </key>
   </component>
-  <component name="RunManager" selected="Tomcat Server.Tomcat 8.0">
-    <configuration default="false" name="ReportBuilderTest.testGetInitalReportItems" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="com.funtest.analysis.dao.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="analysis" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.funtest.analysis.dao" />
-      <option name="MAIN_CLASS_NAME" value="com.funtest.analysis.dao.ReportBuilderTest" />
-      <option name="METHOD_NAME" value="testGetInitalReportItems" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="JUnit.ReportBuilderTest.testBuildDataInfo">
     <configuration default="false" name="ReportBuilderTest.testBuildReport" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -819,6 +748,32 @@
       <option name="PACKAGE_NAME" value="com.funtest.analysis.dao" />
       <option name="MAIN_CLASS_NAME" value="com.funtest.analysis.dao.ReportBuilderTest" />
       <option name="METHOD_NAME" value="testCalculateReportRank" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="false" name="ReportBuilderTest.testBuildDataInfo" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.funtest.analysis.dao.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="analysis" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.funtest.analysis.dao" />
+      <option name="MAIN_CLASS_NAME" value="com.funtest.analysis.dao.ReportBuilderTest" />
+      <option name="METHOD_NAME" value="testBuildDataInfo" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -1293,19 +1248,19 @@
     </configuration>
     <list size="6">
       <item index="0" class="java.lang.String" itemvalue="Tomcat Server.Tomcat 8.0" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.ReportBuilderTest.testGetInitalReportItems" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.ReportBuilderTest.testBuildReport" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.ReportBuilderTest.testcalculateRestBars" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.ReportBuilderTest.testCalculateReportItemRank" />
-      <item index="5" class="java.lang.String" itemvalue="JUnit.ReportBuilderTest.testCalculateReportRank" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.ReportBuilderTest.testBuildReport" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.ReportBuilderTest.testcalculateRestBars" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.ReportBuilderTest.testCalculateReportItemRank" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.ReportBuilderTest.testCalculateReportRank" />
+      <item index="5" class="java.lang.String" itemvalue="JUnit.ReportBuilderTest.testBuildDataInfo" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.ReportBuilderTest.testCalculateReportRank" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.ReportBuilderTest.testCalculateReportItemRank" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.ReportBuilderTest.testBuildReport" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.ReportBuilderTest.testcalculateRestBars" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.ReportBuilderTest.testGetInitalReportItems" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.ReportBuilderTest.testBuildDataInfo" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.ReportBuilderTest.testCalculateReportRank" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.ReportBuilderTest.testCalculateReportItemRank" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.ReportBuilderTest.testBuildReport" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.ReportBuilderTest.testcalculateRestBars" />
       </list>
     </recent_temporary>
   </component>
@@ -1336,7 +1291,7 @@
       <workItem from="1475636674433" duration="7363000" />
       <workItem from="1475656671466" duration="7567000" />
       <workItem from="1475669410374" duration="4073000" />
-      <workItem from="1475891836251" duration="15127000" />
+      <workItem from="1475891836251" duration="17391000" />
     </task>
     <task id="LOCAL-00001" summary="eeeeee">
       <created>1475667678285</created>
@@ -1359,12 +1314,19 @@
       <option name="project" value="LOCAL" />
       <updated>1475895600106</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="2016年10月8日18:04:08">
+      <created>1475921076513</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1475921076513</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="ReportBuilderTest_testBuildReport - 2016.10.05 at 19h 09m 57s.xml">
-      <configuration name="ReportBuilderTest.testBuildReport" configurationId="JUnit" />
+    <history-entry file="ReportBuilderTest_testBuildDataInfo - 2016.10.08 at 18h 43m 09s.xml">
+      <configuration name="ReportBuilderTest.testBuildDataInfo" configurationId="JUnit" />
     </history-entry>
     <history-entry file="ReportBuilderTest_testBuildReport - 2016.10.05 at 19h 10m 50s.xml">
       <configuration name="ReportBuilderTest.testBuildReport" configurationId="JUnit" />
@@ -1395,11 +1357,11 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="88091000" />
+    <option name="totallyTimeSpent" value="90355000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32807216" sideWeight="0.49785408" order="7" side_tool="false" content_ui="tabs" />
@@ -1408,7 +1370,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32902467" sideWeight="0.50429183" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299356" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32902467" sideWeight="0.49570817" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32807216" sideWeight="0.49570817" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32807216" sideWeight="0.49570817" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32902467" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32807216" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1450,7 +1412,8 @@
     <MESSAGE value="eeeeee" />
     <MESSAGE value="add web" />
     <MESSAGE value="rm cy" />
-    <option name="LAST_COMMIT_MESSAGE" value="rm cy" />
+    <MESSAGE value="2016年10月8日18:04:08" />
+    <option name="LAST_COMMIT_MESSAGE" value="2016年10月8日18:04:08" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1919,19 +1882,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/funtest/analysis/service/impl/AdminServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="17" column="22" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/funtest/analysis/bean/ReportItem.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2166">
+        <state relative-caret-position="171">
           <caret line="156" column="11" selection-start-line="156" selection-start-column="11" selection-end-line="156" selection-end-column="11" />
           <folding>
             <element signature="e#2811#2812#0" expanded="true" />
@@ -1942,10 +1895,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/funtest/analysis/service/impl/AdminServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="17" column="22" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/funtest/analysis/dao/ReportBuilderTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="336" column="49" selection-start-line="336" selection-start-column="49" selection-end-line="336" selection-end-column="49" />
+        <state relative-caret-position="-59">
+          <caret line="192" column="25" selection-start-line="192" selection-start-column="25" selection-end-line="192" selection-end-column="25" />
           <folding />
         </state>
       </provider>
@@ -1964,8 +1927,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/funtest/analysis/dao/ReportBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="185" column="0" selection-start-line="185" selection-start-column="0" selection-end-line="186" selection-end-column="0" />
+        <state relative-caret-position="350">
+          <caret line="864" column="31" selection-start-line="864" selection-start-column="31" selection-end-line="864" selection-end-column="31" />
           <folding />
         </state>
       </provider>

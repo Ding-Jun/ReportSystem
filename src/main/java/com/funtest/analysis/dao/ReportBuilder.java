@@ -862,7 +862,9 @@ public class ReportBuilder {
         }
         return StringUtils.join(datas, ",");
     }
+    private void recordPassData(){
 
+    }
     /**
      * 根据dataConfig定义的正则来获取测试项
      *
