@@ -1,5 +1,9 @@
 package com.funtest.analysis.controller;
 
+import com.funtest.analysis.bean.Admin;
+import com.funtest.analysis.util.CustomSessionUtil;
+import com.funtest.core.bean.ReturnMsg;
+import com.funtest.core.bean.constant.Constants;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -10,12 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.funtest.analysis.bean.Admin;
-import com.funtest.analysis.bean.User;
-import com.funtest.core.bean.ReturnMsg;
-import com.funtest.core.bean.constant.Constants;
-import com.hexin.dl.util.CustomSessionUtil;
 
 /**
  * 
@@ -51,7 +49,7 @@ public class LoginController {
 
             rm.setCode(Constants.RETURN_MSG_SUCCESS);
             curSubject.hasRole("dummy");
-            logger.info("User \"" +CustomSessionUtil.getLoginAdminName()+"\" is log in.");
+            logger.info("User \"" + CustomSessionUtil.getLoginAdminName()+"\" is log in.");
         } catch (AuthenticationException e) {
         	logger.error(e.getMessage(), e);
             rm.setCode(Constants.RETURN_MSG_FAILURE);

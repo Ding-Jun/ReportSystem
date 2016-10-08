@@ -143,7 +143,7 @@ public class ReportBuilder {
         int testNo = 1;
         double totalCount = Double.parseDouble(report.getTestCount());
         for (ReportItem reportItem : reportItems) {
-            String failRate = df.format(reportItem.getFailCount() / (double) reportItem.getPassCount());
+            String failRate = df.format(reportItem.getFailCount() / (double) reportItem.getPassCount()*100);
             if (Long.compare(reportItem.getPassCount(), 0) <= 0) {
                 failRate = "0.0";
             } else {
@@ -151,7 +151,7 @@ public class ReportBuilder {
                 if (osPattern.matcher(reportItem.getColumnName()).find()) {
                     osFailCount += reportItem.getFailCount();
                 }
-                totalFailCount = reportItem.getFailCount();
+                totalFailCount += reportItem.getFailCount();
                 double sigma = Math.sqrt(reportItem.getSigma() / totalCount);
                 double limitMin = reportItem.getLimitMin();
                 double limitMax = reportItem.getLimitMax();
@@ -171,20 +171,57 @@ public class ReportBuilder {
 
             }
 
-
+            reportItem.setRank(calculateReportItemRank(failRate));
             reportItem.setTestNo(testNo++);
             //totalCount  totalValue 没必要  就不算了
         }
         //Report osfailCount
         report.setOsFailCount(osFailCount);
         //Report osFailRate
-        String passRate = df.format(1 - totalFailCount / (double) totalCount);
-        String osFailRate = df.format(osFailCount / (double) totalCount);
+        String passRate = df.format(100 - totalFailCount / (double) totalCount*100);
+        String osFailRate = df.format(osFailCount / (double) totalCount*100);
         report.setOsFailRate(osFailRate);
         report.setPassPercent(passRate);
+        report.setOsRank(calculateReportItemRank(osFailRate));
+        report.setRank(calculateReportRank(passRate));
         return report;
     }
 
+    /**
+     * 计算ReportItem失效等级  超过1%为高
+     * @param failRate  失效率 字符串
+     * @return  ReportItem失效等级
+     */
+    private Integer calculateReportItemRank(String failRate){
+        double rate= Double.parseDouble(failRate);
+        Integer rank;
+        if(rate<1){
+            rank=Constants.RANK_HIGH;
+        }
+        else{
+            rank=Constants.RANK_LOW;
+        }
+        return rank;
+    }
+    private Integer calculateReportRank(String failRate){
+        double rate= Double.parseDouble(failRate);
+        Integer rank;
+        if(rate>95){
+            rank=Constants.RANK_HIGH;
+        }
+        else if(rate>90){
+            rank=Constants.RANK_MEDIUM;
+        }else {
+            rank=Constants.RANK_LOW;
+        }
+        return rank;
+    }
+    /**
+     * 移除isProcess为False的测试项，并重新编号
+     * @param reportItems   完整的reportItem信息
+     * @param columnInfos   有isProcess信息
+     * @return 移除的ReportItem数量
+     */
     private int removeExtraReportItems(List<ReportItem> reportItems, List<ColumnInfo> columnInfos) {
         //reportItems columnInfos 顺序相同
         int removeCount=0;
@@ -225,53 +262,36 @@ public class ReportBuilder {
             Chart failChart = reportItem.getFailChart();
 
             if (passChart != null) {
-                List<Bar> bars = passChart.getBars();
-                StringBuilder sb = new StringBuilder("[");
-                long maxHeight = 0;
-                for (int j = 0; j < bars.size(); j++) {
-                    Bar bar = bars.get(j);
-                    if (bar.getHeight() == 0) {
-                        bars.remove(j);
-                        j--;
-                    } else {
-                        maxHeight = Math.max(maxHeight, bar.getHeight());
-                        double axis = bar.getAxis();
-                        bar.setAxis(0.0);
-                        bar.setAxisStr(df.format(axis));
-                        sb.append(bar.toString() + ",");
-                    }
-                }
-                passChart.setQuantityMax(maxHeight);
-                sb.deleteCharAt(sb.length() - 1);
-                sb.append("]");
-                passChart.setDatas(sb.toString());
+                doCalculateRestBars(passChart,df);
             }
             if (failChart != null) {
-                List<Bar> bars = failChart.getBars();
-                StringBuilder sb = new StringBuilder("[");
-                long maxHeight = 0;
-                for (int j = 0; j < bars.size(); j++) {
-                    Bar bar = bars.get(j);
-                    if (bar.getHeight() == 0) {
-                        bars.remove(j);
-                        j--;
-                    } else {
-                        maxHeight = Math.max(maxHeight, bar.getHeight());
-                        double axis = bar.getAxis();
-                        bar.setAxis(0.0);
-                        bar.setAxisStr(df.format(axis));
-                        sb.append(bar.toString() + ",");
-                    }
-                }
-                failChart.setQuantityMax(maxHeight);
-                sb.deleteCharAt(sb.length() - 1);
-                sb.append("]");
-                failChart.setDatas(sb.toString());
+                doCalculateRestBars(failChart,df);
             }
         }
         return reportItems;
     }
-
+    private void doCalculateRestBars(Chart chart,DecimalFormat df){
+        List<Bar> bars = chart.getBars();
+        StringBuilder sb = new StringBuilder("[");
+        long maxHeight = 0;
+        for (int j = 0; j < bars.size(); j++) {
+            Bar bar = bars.get(j);
+            if (bar.getHeight() == 0) {
+                bars.remove(j);
+                j--;
+            } else {
+                maxHeight = Math.max(maxHeight, bar.getHeight());
+                double axis = bar.getAxis();
+                bar.setAxis(0.0);
+                bar.setAxisStr(df.format(axis));
+                sb.append(bar.toString() + ",");
+            }
+        }
+        chart.setQuantityMax(maxHeight);
+        sb.deleteCharAt(sb.length() - 1);
+        sb.append("]");
+        chart.setDatas(sb.toString());
+    }
     /**
      * 处理单个数据文件
      *

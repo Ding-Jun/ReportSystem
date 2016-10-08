@@ -6,6 +6,7 @@ import App from './components/App';
 import HomeView from './components/HomeView';
 import UploadView from './components/UploadView';
 import ReportView from './components/ReportView';
+import DocumentView from './components/DocumentView'
 import SimpleReportList from './components/SimpleReportList'
 import Report from './components/Report'
 //global vars
@@ -16,13 +17,13 @@ ReactDOM.render(
     <Route path="/" component={App}>
       <IndexRoute component={HomeView}/>
       <Route path="/upload" component={UploadView}>
-        		
+
       </Route>
       <Route path="/report" component={ReportView}>
       	<Route path="/report/reportList" component={SimpleReportList}/>
         <Route path="/report/:id" component={Report} />
       </Route>
-
+      <Route path="/document" component={DocumentView}/>
     </Route>
   </Router>
       , document.getElementById('app'));

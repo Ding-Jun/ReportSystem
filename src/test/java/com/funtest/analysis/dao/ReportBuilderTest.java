@@ -298,25 +298,69 @@ public class ReportBuilderTest {
     }
 
     @Test
+    public void testCalculateReportItemRank() throws InvocationTargetException, IllegalAccessException {
+        ReportBuilder rb = new ReportBuilder();
+        Method calculateReportItemRank = null;
+        try {
+            calculateReportItemRank = rb.getClass().getDeclaredMethod("calculateReportItemRank", String.class);
+            calculateReportItemRank.setAccessible(true);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        String[] rateArr = {"96.7", "1.00", "0.01"};
+        Integer rank0 = (Integer) calculateReportItemRank.invoke(rb, rateArr[0]);
+        Integer rank1 = (Integer) calculateReportItemRank.invoke(rb, rateArr[1]);
+        Integer rank2 = (Integer) calculateReportItemRank.invoke(rb, rateArr[2]);
+
+        assertEquals(Constants.RANK_LOW, rank0);
+        assertEquals(Constants.RANK_LOW, rank1);
+        assertEquals(Constants.RANK_HIGH, rank2);
+        logger.info("Rate: {}, Result: Rank: {}", rateArr[0], rank0);
+        logger.info("Rate: {}, Result: {}", rateArr[1], rank1);
+        logger.info("Rate: {}, Result: {}", rateArr[2], rank2);
+    }
+
+    @Test
+    public void testCalculateReportRank() throws InvocationTargetException, IllegalAccessException {
+        ReportBuilder rb = new ReportBuilder();
+        Method calculateReportRank = null;
+        try {
+            calculateReportRank = rb.getClass().getDeclaredMethod("calculateReportRank", String.class);
+            calculateReportRank.setAccessible(true);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        String[] rateArr = {"96.7", "93.00", "0.01"};
+        Integer[] rank = new Integer[3];
+        for (int i = 0; i < rateArr.length; i++) {
+            rank[i] = (Integer) calculateReportRank.invoke(rb, rateArr[i]);
+            logger.info("ReportRate: {} , Result:rank: {}", rateArr[i], rank[i]);
+        }
+        assertEquals(Constants.RANK_HIGH, rank[0]);
+        assertEquals(Constants.RANK_MEDIUM, rank[1]);
+        assertEquals(Constants.RANK_LOW, rank[2]);
+    }
+
+    @Test
     public void testcalculateRestBars() throws InvocationTargetException, IllegalAccessException {
         ReportBuilder rb = new ReportBuilder();
         List<ReportItem> reportItems = new ArrayList<ReportItem>();
         ReportItem reportItem = new ReportItem("Isw");
-        Chart failChart=new Chart();
-        Bar[] barArrs ={new Bar(50,5),new Bar(60,6),new Bar(70,0)};
-        List<Bar> bars=new ArrayList<Bar>(Arrays.asList(barArrs));
+        Chart failChart = new Chart();
+        Bar[] barArrs = {new Bar(50, 5), new Bar(60, 6), new Bar(70, 0)};
+        List<Bar> bars = new ArrayList<Bar>(Arrays.asList(barArrs));
         failChart.setBars(bars);
         reportItem.setFailChart(failChart);
         reportItems.add(reportItem);
         Method calculateRestBars = null;
         try {
-            calculateRestBars = rb.getClass().getDeclaredMethod("calculateRestBars",List.class);
+            calculateRestBars = rb.getClass().getDeclaredMethod("calculateRestBars", List.class);
             calculateRestBars.setAccessible(true);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
-         calculateRestBars.invoke(rb,reportItems);
-        logger.info("reportItems:{}",new Gson().toJson(reportItems));
+        calculateRestBars.invoke(rb, reportItems);
+        logger.info("reportItems:{}", new Gson().toJson(reportItems));
 
     }
 

@@ -1,24 +1,13 @@
 package com.funtest.analysis.bean;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="t_report")
@@ -30,22 +19,26 @@ public class Report {
 	private Integer mode;
 	//private String testItem;
 	private List<ReportItem> reportItems=new ArrayList<ReportItem>();
-	
+	private long osFailCount=0;
+	private String osFailRate="";
+    private Integer osRank;
+	private String passPercent="%%%";
+	private Integer rank;
 	private Date time;
-	
 	//private int dataTableId;
 	private User user;
 	
 	//private int userId;
 	private Boolean isDeleted=Boolean.FALSE;
 
+
+	//for word report
     private String title="成品测试报告";
     private String chipName="JPXXXX";
     private String finalName="JWXXX";
     private String testCount="total";
     private String lotNo="Lot No";
     private String sealNo="N/A";
-    private String passPercent="%%%";
     private String testMan="Test Engineer";
     private String packageStyle="packageStyle";
     private String sufeng="/";
@@ -63,8 +56,7 @@ public class Report {
     private String reportPreparedBy="";
     private String testManagerName="";
     private String testManagerDate="";
-    private long osFailCount=0;
-    private String osFailRate="";
+
 	
 	@Column(name="id")
 	@Id
@@ -225,6 +217,25 @@ public class Report {
 		this.passPercent = passPercent;
 	}
 	@Column
+	public Integer getRank() {
+		return rank;
+	}
+
+	public Report setRank(Integer rank) {
+		this.rank = rank;
+		return this;
+	}
+    @Column
+    public Integer getOsRank() {
+        return osRank;
+    }
+
+    public Report setOsRank(Integer osRank) {
+        this.osRank = osRank;
+        return this;
+    }
+
+    @Column
 	public String getTestMan() {
 		return testMan;
 	}

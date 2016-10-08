@@ -1,18 +1,18 @@
 package com.funtest.analysis.shiro.filter;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.funtest.analysis.util.CustomSessionUtil;
+import com.funtest.core.bean.constant.Constants;
+import com.funtest.core.util.LogUtil;
 import org.apache.shiro.web.filter.authc.UserFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.funtest.core.bean.constant.Constants;
-import com.funtest.core.util.LogUtil;
-import com.hexin.dl.util.CustomSessionUtil;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 
 /**
  * 

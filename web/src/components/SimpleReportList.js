@@ -6,7 +6,7 @@ class SimpleReportList extends React.Component {
   constructor(props) {
     super(props);
     // Operations usually carried out in componentWillMount go here
-    
+
     this.state = {
       page:{
         rowData:[]
@@ -30,17 +30,17 @@ class SimpleReportList extends React.Component {
   }
   test(){
     this.queryPage(1)
-    
+
   }
 	render(){
-    
+
 
     var list=this.state.page.rowData.map((simpleReport)=>(
         <SimpleReport key={simpleReport.id} {...simpleReport}/>
       ))
 		return (
 	     <div className="SimpleReportList">
-       <Button onClick={this.test.bind(this)} type="primary">defa</Button>
+         {/*<Button onClick={this.test.bind(this)} type="primary">defa</Button>*/}
        {list}
        </div>
 		)

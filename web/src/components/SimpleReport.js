@@ -16,17 +16,17 @@ class SimpleReport extends React.Component{
 			<Card title={this.props.reportName} extra={<Link to={"/report/"+this.props.id}>More</Link>}>
         <Row>
           <Col {...layout}>
-            <p>LiangLv: {this.props.passPercent}</p>
-            <p>testMan: {this.props.testMan}</p>
+            <p>良率: {this.props.passPercent}</p>
+            <p>测试工程师: {this.props.testMan}</p>
           </Col>
 		      <Col {...layout} >
-            <p>Count: {this.props.testCount}</p>
-            <p>time: {this.props.time}</p>
+            <p>测试数量: {this.props.testCount}</p>
+            <p>时间: {this.props.time}</p>
           </Col>
         </Row>
 		  </Card>
     )
-		
+
 	}
 }
 

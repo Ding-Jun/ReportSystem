@@ -1,5 +1,12 @@
 package com.funtest.analysis.controller;
 
+import com.funtest.analysis.bean.Admin;
+import com.funtest.analysis.service.AdminService;
+import com.funtest.analysis.util.CustomSessionUtil;
+import com.funtest.core.bean.ReturnMsg;
+import com.funtest.core.bean.constant.Constants;
+import com.funtest.core.bean.page.Page;
+import com.google.gson.Gson;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,13 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.funtest.analysis.bean.Admin;
-import com.funtest.analysis.service.AdminService;
-import com.funtest.core.bean.ReturnMsg;
-import com.funtest.core.bean.constant.Constants;
-import com.funtest.core.bean.page.Page;
-import com.google.gson.Gson;
-import com.hexin.dl.util.CustomSessionUtil;
 
 @Controller
 @RequestMapping("/admin")
@@ -96,7 +96,7 @@ public class AdminController {
 		ReturnMsg rm = new ReturnMsg();
 		try {
 			
-			String password = service.updateAdminPassword(curUserId==null?CustomSessionUtil.getLoginAdminId():curUserId,oldPassword==null?null:oldPassword.toString(),newPassword.toString());
+			String password = service.updateAdminPassword(curUserId==null? CustomSessionUtil.getLoginAdminId():curUserId,oldPassword==null?null:oldPassword.toString(),newPassword.toString());
 			rm.setData(password);
 			rm.setCode(Constants.RETURN_MSG_SUCCESS);
 		} catch (Exception e) {

@@ -1,22 +1,22 @@
 package com.funtest.analysis.service.impl;
 
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.funtest.analysis.bean.Admin;
 import com.funtest.analysis.bean.Permission;
 import com.funtest.analysis.bean.Resource;
 import com.funtest.analysis.dao.AdminDao;
 import com.funtest.analysis.dao.PermissionDao;
 import com.funtest.analysis.dao.ResourceDao;
+import com.funtest.analysis.util.CustomSessionUtil;
 import com.funtest.core.bean.page.Page;
 import com.funtest.core.bean.page.PageCondition;
-import com.hexin.dl.util.CustomSessionUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Service
 @Transactional
@@ -97,7 +97,7 @@ public class AdminServiceImpl implements com.funtest.analysis.service.AdminServi
 
 	@Override
 	public List<String> queryResources() {
-		Integer adminId=CustomSessionUtil.getLoginAdminId();
+		Integer adminId= CustomSessionUtil.getLoginAdminId();
 		return resourceDao.queryResources(adminId);
 	}
 

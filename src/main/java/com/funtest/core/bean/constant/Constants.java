@@ -6,13 +6,30 @@ package com.funtest.core.bean.constant;
  * @author Administrator 2015年12月10日 下午2:49:15
  */
 public class Constants {
+    /**
+     * for class Chart
+     */
 	public static final Integer CHART_PASS=0;
 	public static final Integer CHART_FAIL=-1;
 	public static final Integer CHART_ALL=1;
 	public static final Integer CHART_GROUPS_PASS_DEFAULT=100;
 	public static final Integer CHART_GRUOPS_FAIL_DEFAULT=20;
+
+    /**
+     * for Class Report and ReportItem    Decide by pass percent
+     */
+    public static final Integer RANK_LOW=0;
+    public static final Integer RANK_MEDIUM=3;
+    public static final Integer RANK_HIGH=5;
+
+    /**
+     * file upload dir
+     */
     public static final String FILE_UPLOAD_DIR="upload";
-	
+
+    /**
+     * for Class FileInfo
+     */
 	public static final Integer PROCESS_MODE_NORMAL=0;
 	public static final Integer PROCESS_MODE_DELETE_FT_FAIL=1;
 	public static final Integer PROCESS_STATUS_ERROR_FORMAT=1001;

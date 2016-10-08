@@ -14,17 +14,17 @@ export default class Transaction extends React.Component {
     return (
       <Row type="flex" justify="center">
         <Col xs={24} sm={4} >
-          <Card title="Card title" extra={<a href="#">More</a>} style={{ width: 300 }}>
+          <Card title="Card title" extra={<a href="#">More</a>} style={{ width: 250 }}>
               <p>Card content</p>
           </Card>
         </Col>
         <Col xs={24} sm={4}>
-          <Card title="Card title" extra={<a href="#">More</a>} style={{ width: 300 }}>
+          <Card title="Card title" extra={<a href="#">More</a>} style={{ width: 250 }}>
               <p>Card content</p>
           </Card>
         </Col>
         <Col xs={24} sm={4}>
-          <Card title="Card title" extra={<a href="#">More</a>} style={{ width: 300 }}>
+          <Card title="Card title" extra={<a href="#">More</a>} style={{ width: 250 }}>
               <p>Card content</p>
           </Card>
         </Col>
