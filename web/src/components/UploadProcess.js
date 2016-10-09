@@ -49,7 +49,7 @@ class UploadProcess extends React.Component {
   handleReturn() {
 
   //var fileNames=_.pluck(_.where(users, { 'age': 36, 'active': false }), 'user');
-    const data=_.map(this.props.dataInfo.columns,(columnInfo,i)=>{
+   /* const data=_.map(this.props.dataInfo.columns,(columnInfo,i)=>{
       return {
         id:i,
         columnName:columnInfo.columnName,
@@ -58,8 +58,8 @@ class UploadProcess extends React.Component {
 
     });
 
-     console.log(this.props.dataInfo.files,data)
-   // this.props.preStep()
+     console.log(this.props.dataInfo.files,data)*/
+    this.props.preStep()
   }
   render() {
     const formItemLayout = {
@@ -78,20 +78,23 @@ class UploadProcess extends React.Component {
       mode='FT&RT';
     }
     const columns = [{
-      title: 'col',
+      title: '列',
       dataIndex: 'id',
     }, {
-      title: 'columnName',
+      title: '测试项',
       dataIndex: 'columnName',
     }, {
-      title: 'limitMin',
+      title: '判限',
       dataIndex: 'limit',
     }, {
-      title: 'passGroups',
-      dataIndex: 'passGroups',
+      title: '失效数量',
+      dataIndex: 'totalCountOutOfLimit',
     }, {
-      title: 'failGroups',
-      dataIndex: 'failGroups',
+      title: '平均值(Pass)',
+      dataIndex: 'realAverageInLimit',
+    }, {
+      title: '平均值(All)',
+      dataIndex: 'realAverageAll',
     }];
     const data=_.map(this.props.dataInfo.columns,(columnInfo)=>{
       var min=(columnInfo.limitMin==-Number.MAX_VALUE)?'':columnInfo.limitMin;
@@ -102,7 +105,10 @@ class UploadProcess extends React.Component {
         limit:'('+min+','+max+')'+columnInfo.limitUnit,
         passGroups:columnInfo.passGroups,
         failGroups:columnInfo.failGroups,
+        totalCountOutOfLimit:columnInfo.totalCountOutOfLimit,
         totalCountAll:columnInfo.totalCountAll,
+        realAverageAll:columnInfo.realAverage.toFixed(2),
+        realAverageInLimit:columnInfo.realAverageInLimit.toFixed(2),
         isProcess:columnInfo.isProcess
       }
 
@@ -114,14 +120,14 @@ class UploadProcess extends React.Component {
            defaultChecked:record.isProcess,    // 配置无法勾选的列
            disabled:record.totalCountAll==0
         }
-       
+
       },
       onChange:function onChange(selectedRowKeys, selectedRows) {
         console.log("dthis",$this.refs.table)
         console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
       },
       onSelect(record, selected, selectedRows) {
-        
+
         console.log(record, selected, selectedRows);
       },
       onSelectAll(selected, selectedRows, changeRows) {
@@ -129,25 +135,36 @@ class UploadProcess extends React.Component {
       },
     };
     //const data =this.props.dataInfo.columns;
+    var status=1111;
+    var fileInfos=_.map(this.props.dataInfo.files,(fileInfo,i) =>(
+      <li key={i}>{fileInfo.fileName+" : "+((status==fileInfo.status)?"可处理":fileInfo.message)}</li>
+    ))
     return (
       <Form horizontal>
         <FormItem  {...formItemLayout} label="数据文件">
           <p className="ant-form-text"  name="userName">{fileNames}</p>
         </FormItem>
-        <FormItem  {...formItemLayout} label="report">
+        <FormItem  {...formItemLayout} label="报告名称">
           <p className="ant-form-text"  name="userName">{this.props.dataInfo.reportName}</p>
         </FormItem>
         <FormItem  {...formItemLayout} label="芯片名称">
           <p className="ant-form-text"  name="userName">{this.props.dataInfo.chipName}</p>
         </FormItem>
-        <FormItem  {...formItemLayout} label="mode">
+        <FormItem  {...formItemLayout} label="处理模式">
           <p className="ant-form-text"  name="userName">{mode}</p>
         </FormItem>
+        <FormItem>
+          详情
+          <ul>
+            {fileInfos}
+          </ul>
+        </FormItem>
+
         <FormItem >
           <Table ref="table" rowKey="id" rowSelection={rowSelection} columns={columns} dataSource={data} pagination={false}/>
         </FormItem>
         <FormItem wrapperCol={{ span: 6 ,offset: 6}}>
-          <Button type="primary" onClick={this.handleSubmit.bind(this)}>确定</Button>
+          <Button type="primary" onClick={this.handleSubmit.bind(this)} disabled={this.props.dataInfo.columns==null ||this.props.dataInfo.columns.length==0}>确定</Button>
           &nbsp;&nbsp;&nbsp;
           <Button type="ghost" onClick={this.handleReturn.bind(this)}>上一步</Button>
         </FormItem>

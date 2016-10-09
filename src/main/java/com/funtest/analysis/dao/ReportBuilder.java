@@ -22,8 +22,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
-import static com.sun.org.apache.xerces.internal.impl.xpath.regex.CaseInsensitiveMap.get;
-
 public class ReportBuilder {
     private final Logger logger = LoggerFactory.getLogger(ReportBuilder.class);
     DataInfo dataInfo;
@@ -41,7 +39,7 @@ public class ReportBuilder {
      */
     public DataInfo buildDataInfo(String[] fileNames, InputStream[] ins,
                                   String reportName, String chipName, Integer mode) throws IOException {
-        //todo
+
         //1.非空验证
         if (ins == null || ins.length == 0) {
             throw new AnalysisException("没有提供数据文件~");
@@ -81,7 +79,9 @@ public class ReportBuilder {
      * @return Report 报告包含测试项 图表元数据
      */
     public Report buildReport(DataInfo dataInfo) {
-        //TODO
+        if(dataInfo.getColumns().size()==0){
+            throw new AnalysisException("没有合法的列");
+        }
         Report report = new Report();
         List<ColumnInfo> columnInfos = dataInfo.getColumns();
         List<FileInfo> files = dataInfo.getFiles();
@@ -142,9 +142,11 @@ public class ReportBuilder {
         long totalFailCount = 0;
         int testNo = 1;
         double totalCount = Double.parseDouble(report.getTestCount());
+
+        //统计失效数 OS失效数 cpk
         for (ReportItem reportItem : reportItems) {
             String failRate = df.format(reportItem.getFailCount() / (double) reportItem.getPassCount()*100);
-            if (Long.compare(reportItem.getPassCount(), 0) <= 0) {
+            if (reportItem.getPassCount() <= 0) {
                 failRate = "0.0";
             } else {
                 reportItem.setFailRate(failRate);
@@ -152,22 +154,29 @@ public class ReportBuilder {
                     osFailCount += reportItem.getFailCount();
                 }
                 totalFailCount += reportItem.getFailCount();
-                double sigma = Math.sqrt(reportItem.getSigma() / totalCount);
+                //deal with pass     如是抽样（即估算样本方差），根号内除以（n-1）（对应excel函数：STDEV）；
+                double passStdev=Math.sqrt(reportItem.getPassStdev() / (double)(reportItem.getPassCount()-1));
+                if(Double.isNaN(passStdev)){passStdev=0.0;}
                 double limitMin = reportItem.getLimitMin();
                 double limitMax = reportItem.getLimitMax();
-                if (!Double.isInfinite(limitMax - limitMin)) {
-                    double ca = CpkUtils.calculateCa(limitMin, limitMax, reportItem.getRealAverage());
-                    double cp = CpkUtils.calculateCp(limitMin, limitMax, sigma);
-                    double cpk = CpkUtils.calculateCpk(cp, ca);
-                    if (Double.isInfinite(ca)) ca = 99.99;
-                    if (Double.isInfinite(cp)) cp = 99.99;
-                    if (Double.isInfinite(cpk)) cpk = 99.99;
-                    reportItem.setCa(ca);
+                if (!Double.isInfinite(limitMax - limitMin) && passStdev!=0.0) {
+                    double cpl = CpkUtils.calculateCpl(limitMin,reportItem.getPassRealAverage(),passStdev);
+                    double cpu =CpkUtils.calculateCpu(limitMax,reportItem.getPassRealAverage(),passStdev);
+                    double cp = CpkUtils.calculateCp(limitMin, limitMax, passStdev);
+                    double cpk = CpkUtils.calculateCpk(cpu, cpl);
+                    reportItem.setCpl(cpl);
+                    reportItem.setCpu(cpu);
                     reportItem.setCp(cp);
                     reportItem.setCpk(cpk);
                 }
                 //System.out.println("debug col:"+reportItem.getColumnname()+" :"+cp+" "+ca+" "+cpk);
-                reportItem.setSigma(sigma);
+                reportItem.setPassStdev(passStdev);
+
+                //deal with fail       如是抽样（即估算样本方差），根号内除以（n-1）（对应excel函数：STDEV）；
+                if(reportItem.getFailCount()>1){
+                    double failStdev =Math.sqrt(reportItem.getFailStdev() / (double)(reportItem.getFailCount()-1));
+                    reportItem.setFailStdev(failStdev);
+                }
 
             }
 
@@ -331,74 +340,15 @@ public class ReportBuilder {
                 lineNumber++;
 
                 if (passPattern.matcher(curLine).find()) {
-                    //若pass  逐列测试项与判限比较 PassChart对应柱子数量+1,pass数量+1 计算标准差
-                    String[] datas = curLine.split(",");
-                    int length = reportItems.size();
-                    for (int i = 0; i < length; i++) {
-                        ReportItem reportItem = reportItems.get(i);
-                        Chart passChart = reportItem.getPassChart();
-                        String colDataStr = datas[reportItem.getCol()];
-                        double colData = 0.0;
-                        if (StringUtils.isEmpty(colDataStr)) {
-                            continue;
-                        }
-                        colData = Double.parseDouble(colDataStr);
-                        //求对应柱子下标
-                        double spacing = passChart.getSpacing();
-                        double rangeMin = passChart.getRangeMin();
-                        long index = Math.round((colData - rangeMin) / spacing);
-                        //pass数量+1
-                        long passCount = reportItem.getPassCount() + 1;
-                        long chartCount = passChart.getTotalCnt() + 1;
-                        //标准差
-                        double average = reportItem.getRealAverage();
-                        double sigma = reportItem.getSigma() + Math.pow((colData - average), 2);
-
-                        //zhuzi +1
-                        passChart.getBars().get((int) index).increase();
-                        passChart.setTotalCnt(chartCount);
-                        reportItem.setSigma(sigma);
-                        reportItem.setPassCount(passCount);
-                    }
-
+                    processPassLine(curLine,reportItems);
                     totalCount++;
                 } else if (failPattern.matcher(curLine).find()) {
-                    //若fail  仅fail的测试项的fail数量+1 FailChart对应柱子数量+1  （已经预处理so fail的就是最后一项）
-                    //TODO
-                    String[] datas = curLine.split(",");
-                    int lastData = datas.length - 1;
-                    String colDataStr = datas[lastData];
-                    boolean isFailFind = false;
-                    for (int i = 0; i < reportItems.size(); i++) {
-                        ReportItem reportItem = reportItems.get(i);
-                        //zhaodao fail data
-                        if (lastData == reportItem.getCol()) {
-                            Chart failChart = reportItem.getFailChart();
-                            double colData = Double.parseDouble(colDataStr);
-                            double spacing = failChart.getSpacing();
-                            double rangeMin = failChart.getRangeMin();
-                            long index = Math.round((colData - rangeMin) / spacing);
-                            //fail的测试项的fail数量+1
-                            long failCount = reportItem.getFailCount() + 1;
-                            long chartCount = failChart.getTotalCnt() + 1;
-                            //FailChart对应柱子数量+1
-                            failChart.getBars().get((int) index).increase();
-                            failChart.setTotalCnt(chartCount);
-                            reportItem.setFailCount(failCount);
-                            isFailFind = true;
-                            break;
-                        }
-                    }
-                    if (isFailFind == false) {
-                        logger.warn("发现Fail 但是此项没有被勾选 CurLine:{}", curLine);
-                    }
+                    processFailLine(curLine,reportItems);
                     totalCount++;
                 } else {
                     //do nothing
                     ignoreLine++;
                 }
-
-
             }
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -410,6 +360,85 @@ public class ReportBuilder {
 
     }
 
+    /**
+     * 生成Report时，对Pass芯片的处理
+     * @param curLine
+     * @param reportItems
+     */
+    private void processPassLine(String curLine,List<ReportItem> reportItems){
+        //若pass  逐列测试项与判限比较 PassChart对应柱子数量+1,pass数量+1 计算标准差
+        String[] datas = curLine.split(",");
+        int length = reportItems.size();
+        for (int i = 0; i < length; i++) {
+            ReportItem reportItem = reportItems.get(i);
+            Chart passChart = reportItem.getPassChart();
+            String colDataStr = datas[reportItem.getCol()];
+            double colData = 0.0;
+            if (StringUtils.isEmpty(colDataStr)) {
+                continue;
+            }
+            colData = Double.parseDouble(colDataStr);
+            //求对应柱子下标
+            double spacing = passChart.getSpacing();
+            double rangeMin = passChart.getRangeMin();
+            long index = Math.round((colData - rangeMin) / spacing);
+            //pass数量+1
+            long passCount = reportItem.getPassCount() + 1;
+            long chartCount = passChart.getTotalCnt() + 1;
+            //标准差
+            double passAverage = reportItem.getPassRealAverage();
+            double passStdev = reportItem.getPassStdev() + Math.pow((colData - passAverage), 2);
+            //总的
+
+            //zhuzi +1
+            passChart.getBars().get((int) index).increase();
+            passChart.setTotalCnt(chartCount);
+            reportItem.setPassStdev(passStdev);
+            reportItem.setPassCount(passCount);
+        }
+    }
+
+    /**
+     * 生成Report时 对Fail芯片的处理
+     * @param curLine
+     * @param reportItems
+     */
+    private void processFailLine(String curLine,List<ReportItem> reportItems){
+        //若fail  仅fail的测试项的fail数量+1 FailChart对应柱子数量+1  （已经预处理so fail的就是最后一项）
+        String[] datas = curLine.split(",");
+        int lastData = datas.length - 1;
+        String colDataStr = datas[lastData];
+        boolean isFailFind = false;
+        for (int i = 0; i < reportItems.size(); i++) {
+            ReportItem reportItem = reportItems.get(i);
+            //zhaodao fail data
+            if (lastData == reportItem.getCol()) {
+                Chart failChart = reportItem.getFailChart();
+                double colData = Double.parseDouble(colDataStr);
+                //求对应柱子下标
+                double spacing = failChart.getSpacing();
+                double rangeMin = failChart.getRangeMin();
+                long index = Math.round((colData - rangeMin) / spacing);
+                //fail的测试项的fail数量+1
+                long failCount = reportItem.getFailCount() + 1;
+                long chartCount = failChart.getTotalCnt() + 1;
+                //标准差
+                double failAverage=reportItem.getFailRealAverage();
+                double failStdev=reportItem.getFailStdev()+ Math.pow((colData - failAverage), 2);
+
+                //FailChart对应柱子数量+1
+                failChart.getBars().get((int) index).increase();
+                failChart.setTotalCnt(chartCount);
+                reportItem.setFailStdev(failStdev);
+                reportItem.setFailCount(failCount);
+                isFailFind = true;
+                break;
+            }
+        }
+        if (isFailFind == false) {
+            logger.warn("发现Fail 但是此项没有被勾选 CurLine:{}", curLine);
+        }
+    }
     private List<ReportItem> getInitialReportItems(List<ColumnInfo> columnInfos) {
         List<ReportItem> reportItemList = new ArrayList<ReportItem>();
         for (ColumnInfo columnInfo : columnInfos) {
@@ -482,6 +511,8 @@ public class ReportBuilder {
             reportItem.setLimitMax(columnInfo.getLimitMax());
             reportItem.setLimitUnit(columnInfo.getLimitUnit());
             reportItem.setRealAverage(columnInfo.getRealAverage());
+            reportItem.setPassRealAverage(columnInfo.getRealAverageInLimit());
+            reportItem.setFailRealAverage(columnInfo.getRealAverageOutOfLimit());
             reportItem.setPassChart(passChart);
             reportItem.setFailChart(failChart);
             reportItemList.add(reportItem);
@@ -520,7 +551,7 @@ public class ReportBuilder {
 
         Pattern[] patternsTestItemLine = {patternDutNoColumn, patternSiteNoColumn, patternDutPassColumn, patternTestItemColumnFlag};
         List<FileInfo> fileInfoList = new ArrayList<FileInfo>();
-        List<ColumnInfo> columnInfoList = null;
+        List<ColumnInfo> columnInfoList = new ArrayList<ColumnInfo>();
 
         for (int i = 0; i < ins.length; i++) {
             //2.1填充FileInfo
@@ -598,7 +629,7 @@ public class ReportBuilder {
                             }
                         }
                         if (curLine == null) {
-                            throw new DataNotFoundException("判限未找到", Constants.PROCESS_STATUS_CANT_FIND_LIMIT);
+                            throw new LimitLineNotMatchException("判限未找到");
                         }
                         if (fileInfo.getStatus() != Constants.PROCESS_STATUS_INITIAL_STATE) {
                             break;//跳出测试项查找
@@ -684,9 +715,12 @@ public class ReportBuilder {
             logger.info("所有文件处理结束 共处理{}个文件 ",
                     fileInfoList.size());
             logger.info("共发现{}个测试项 ", columnInfoList.size());
-            logger.info("从Col:{} name:{}开始",
-                    Integer.toString(columnInfoList.get(0).getId()),
-                    columnInfoList.get(0).getColumnName());
+            if(columnInfoList.size()>0){
+                logger.info("从Col:{} name:{}开始",
+                        Integer.toString(columnInfoList.get(0).getId()),
+                        columnInfoList.get(0).getColumnName());
+            }
+
 
         }
         return dataInfo;
@@ -694,22 +728,40 @@ public class ReportBuilder {
     }
 
     /**
-     * 计算剩余可计算参数  包括  总数=判限内+判限外 平均值=总值/总数  数量为0的列勾选不处理
+     * 计算剩余可计算参数  包括  总数/判限内/判限外 平均值=总值/总数  数量为0的列勾选不处理
      *
      * @param columnInfoList
      * @return
      */
     private List<ColumnInfo> calculateRestColumnInfos(List<ColumnInfo> columnInfoList) {
+        if(columnInfoList ==null){
+            return columnInfoList;
+        }
         for (ColumnInfo columnInfo : columnInfoList) {
-            long total = columnInfo.getTotalCountInLimit() + columnInfo.getTotalCountOutOfLimit();
+            long total = columnInfo.getTotalCountAll();
+            long totalInLimit = columnInfo.getTotalCountInLimit();
+            long totalOutOfLimit = columnInfo.getTotalCountOutOfLimit();
+
             double average = 0.0;
+            double averageInLimit = 0.0;
+            double averageOutOfLimit = 0.0;
+
             if (total != 0) {
                 average = columnInfo.getTotalValue() / (double) total;
             } else {
                 columnInfo.setIsProcess(false);
             }
-            columnInfo.setTotalCountAll(total);
+
+            if(totalInLimit !=0){
+                averageInLimit=columnInfo.getTotalValueInLimit()/(double)totalInLimit;
+            }
+            if(totalOutOfLimit !=0){
+                averageOutOfLimit=columnInfo.getTotalValueOutOfLimit()/(double)totalOutOfLimit;
+            }
+
             columnInfo.setRealAverage(average);
+            columnInfo.setRealAverageInLimit(averageInLimit);
+            columnInfo.setRealAverageOutOfLimit(averageOutOfLimit);
         }
         return columnInfoList;
     }
@@ -783,7 +835,7 @@ public class ReportBuilder {
                     continue;
                 }
                 colData = Double.parseDouble(colDataStr);
-                recordPassData(colData,columnInfo);
+                recordPassData(colData,columnInfo,true);
             }
         } else if (failPattern.matcher(curLine).find()) {
             //如果是fail的double limitMin=
@@ -808,7 +860,7 @@ public class ReportBuilder {
 
                 if (colData > limitMin && colData < limitMax) {
                     //如果 数据在判限内
-                    recordPassData(colData,columnInfo);
+                    recordPassData(colData,columnInfo,false);
                     continue;
                 } else if (colData < limitMin || colData > limitMax) {
                     //如果数据在判限外
@@ -826,7 +878,7 @@ public class ReportBuilder {
                         double nextColData = Double.parseDouble(nextColDataStr);
                         if (nextColData >= nextColumn.getLimitMin()
                                 && nextColData <= nextColumn.getLimitMax()) {
-                            recordPassData(colData,columnInfo);
+                            recordPassData(colData,columnInfo,false);
                             continue;
                         }
                     }
@@ -839,34 +891,65 @@ public class ReportBuilder {
         }
         return StringUtils.join(datas, ",");
     }
-    private void recordPassData(double colData,ColumnInfo columnInfo){
+
+    /**
+     * 记录pass芯片的passData数据 fail芯片不记录
+     * @param colData
+     * @param columnInfo
+     */
+    private void recordPassData(double colData,ColumnInfo columnInfo,boolean isPassChip){
+        //记录数据
+        recordData(colData,columnInfo);
+
+        //fail芯片的pass数据丢弃
+        if(!isPassChip){
+            return;
+        }
         long totalCountInLimit = columnInfo.getTotalCountInLimit() + 1;
-        double totalValue = columnInfo.getTotalValue() + colData;
+        double totalValueInLimit = columnInfo.getTotalValueInLimit() + colData;
         double realMin = columnInfo.getRealMinInLimit();
         double realMax = columnInfo.getRealMaxInLimit();
         realMin = colData < realMin ? colData : realMin;
         realMax = colData > realMax ? colData : realMax;
 
-
+        columnInfo.setTotalValueInLimit(totalValueInLimit);
         columnInfo.setTotalCountInLimit(totalCountInLimit);
-        columnInfo.setTotalValue(totalValue);
         columnInfo.setRealMinInLimit(realMin);
         columnInfo.setRealMaxInLimit(realMax);
     }
+
+    /**
+     * 记录fail芯片的failData的数据
+     * @param colData
+     * @param columnInfo
+     */
     private void recordFailData(double colData,ColumnInfo columnInfo){
+        //记录数据
+        recordData(colData,columnInfo);
+
         long totalCountOutOfLimit = columnInfo.getTotalCountOutOfLimit() + 1;
-        double totalValue = columnInfo.getTotalValue() + colData;
+        double totalValueOutOfLimit = columnInfo.getTotalValueOutOfLimit() + colData;
         double realMax = columnInfo.getRealMaxOutOfLimit();
         double realMin = columnInfo.getRealMinOutOfLimit();
-
-
         realMin = colData < realMin ? colData : realMin;
         realMax = colData > realMax ? colData : realMax;
 
-        columnInfo.setTotalValue(totalValue);
+        columnInfo.setTotalValueOutOfLimit(totalValueOutOfLimit);
         columnInfo.setTotalCountOutOfLimit(totalCountOutOfLimit);
         columnInfo.setRealMinOutOfLimit(realMin);
         columnInfo.setRealMaxOutOfLimit(realMax);
+    }
+
+    /**
+     * 记录数据  不管是pass还是fail都会记录
+     * @param colData
+     * @param columnInfo
+     */
+    private void recordData(double colData,ColumnInfo columnInfo){
+        long totalCount=columnInfo.getTotalCountAll()+1;
+        double totalValue = columnInfo.getTotalValue()+colData;
+        columnInfo.setTotalCountAll(totalCount);
+        columnInfo.setTotalValue(totalValue);
     }
     /**
      * 根据dataConfig定义的正则来获取测试项
@@ -878,7 +961,7 @@ public class ReportBuilder {
         if (dataInfo == null) {
             throw new AnalysisException("dataInfo 为 null");
         }
-        if (dataInfo.getColumns() != null) {
+        if (dataInfo.getColumns()!=null && dataInfo.getColumns().size()>0) {
             return dataInfo.getColumns();
         }
         String testItemStr = dataInfo.getTestItemStr();

@@ -1,7 +1,5 @@
 package com.funtest.analysis.bean;
 
-import java.math.BigDecimal;
-
 public class ColumnInfo {
 	private Integer id;//第几列
 	private String columnName;//列名称
@@ -11,14 +9,17 @@ public class ColumnInfo {
 	private double realMinInLimit;//判限内的实际最小值
 	private double realMaxInLimit;//判限内的实际最大值
 	private double realAverage;//实际平均值 
-	private double realAverageInLimit;//判限内的实际平均值  暂时不用
+	private double realAverageInLimit;//判限内的实际平均值
+	private double realAverageOutOfLimit;//判限外的实际平均值
 	private double realMinOutOfLimit;//判限外的实际最小值
 	private double realMaxOutOfLimit;//判限外的实际最大值
 	private Boolean isProcess;//是否要处理该列
 	private Integer passGroups;//pass的分组数量
 	private Integer failGroups;//fail的分组数量
 	private double totalValue;//总的值
-	private long totalCountAll=0;//总的数量 =pass+fail
+	private double totalValueInLimit;//判限内总的值
+	private double totalValueOutOfLimit;//判限外总的值
+	private long totalCountAll=0;//总的数量 !=pass+fail   因为Fail芯片的passData会丢弃
 	private long totalCountInLimit=0;//Pass的数量
 	private long totalCountOutOfLimit=0;//Fail的数量
 	public Integer getId() {
@@ -75,6 +76,16 @@ public class ColumnInfo {
 	public void setRealAverageInLimit(double realAverageInLimit) {
 		this.realAverageInLimit = realAverageInLimit;
 	}
+
+	public double getRealAverageOutOfLimit() {
+		return realAverageOutOfLimit;
+	}
+
+	public ColumnInfo setRealAverageOutOfLimit(double realAverageOutOfLimit) {
+		this.realAverageOutOfLimit = realAverageOutOfLimit;
+		return this;
+	}
+
 	public double getRealMaxOutOfLimit() {
 		return realMaxOutOfLimit;
 	}
@@ -111,6 +122,25 @@ public class ColumnInfo {
 	public void setTotalValue(double totalValue) {
 		this.totalValue = totalValue;
 	}
+
+	public double getTotalValueInLimit() {
+		return totalValueInLimit;
+	}
+
+	public ColumnInfo setTotalValueInLimit(double totalValueInLimit) {
+		this.totalValueInLimit = totalValueInLimit;
+		return this;
+	}
+
+	public double getTotalValueOutOfLimit() {
+		return totalValueOutOfLimit;
+	}
+
+	public ColumnInfo setTotalValueOutOfLimit(double totalValueOutOfLimit) {
+		this.totalValueOutOfLimit = totalValueOutOfLimit;
+		return this;
+	}
+
 	public long getTotalCountAll() {
 		return totalCountAll;
 	}

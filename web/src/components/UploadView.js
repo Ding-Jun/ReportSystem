@@ -57,25 +57,45 @@ export default class UploadView extends React.Component {
       default:
         step = <UploadForm nextStep={this.nextStep.bind(this)}/>;
     }
+    var viewLayout = {
+      xs:{
+        span:24
+      },
+      sm:{
+        span:16,
+        offset:4
+      }
+    }
+    var rcLayout={
+      xs:{
+        span:24
+      },
+      sm:{
+        span:16,
+        offset:4
+      }
+    }
     return (
-      <div style={{width:"70%",margin:"0 auto"}}>
-        <Card title="上传" bordered={false} >
-          <Row >
-            <Col span={12} offset={6}>
-      				<Steps style={{margin:"0 0px 50px"}} current={this.state.current} status="process">
-      				  <Step title="选择数据"  />
-      				  <Step title="处理"  />
-      					<Step title="报告"  />
-      				</Steps>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={18} offset={4}>
-  				  {step}
-            </Col>
-          </Row>
-        </Card>
-			</div>
+      <Row >
+        <Col {...viewLayout}>
+          <Card title="上传" bordered={false} >
+            <Row >
+              <Col span={12} offset={6}>
+                <Steps style={{margin:"0 0px 50px"}} current={this.state.current} status="process">
+                  <Step title="选择数据"  />
+                  <Step title="处理"  />
+                  <Step title="报告"  />
+                </Steps>
+              </Col>
+            </Row>
+            <Row>
+              <Col {...rcLayout}>
+                {step}
+              </Col>
+            </Row>
+          </Card>
+        </Col>
+			</Row>
     )
   }
 }

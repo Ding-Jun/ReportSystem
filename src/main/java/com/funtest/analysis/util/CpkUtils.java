@@ -3,18 +3,28 @@ package com.funtest.analysis.util;
 public class CpkUtils {
 	
 	/**
-	 * 制程准确度： Ca=(X-U)/(T/2) 
-	 * @param limitMin 规格下限
-	 * @param limitMax 规格上限
+	 * Cpl=(Average-LSL)/3σ
+	 * @param limitMin 规格下限LSL
 	 * @param average  取样数据的平均值
 	 * @return Ca
 	 */
-	public static double calculateCa(double limitMin,double limitMax,double average){
+	public static double calculateCpl(double limitMin, double average,double stdev){
+
+		return (average-limitMin)/(3.0*stdev);
 		
-		double T=Math.abs(limitMax-limitMin);
-		double U=(limitMax+limitMin)/2.0;
-		return (average-U)/(T/2.0);
-		
+	}
+
+	/**
+	 * Cpu=(USL-Average)/3σ
+	 * @param limitMax
+	 * @param average
+	 * @param stdev
+	 * @return
+	 */
+	public static double calculateCpu(double limitMax, double average,double stdev){
+
+		return (limitMax-average)/(3.0*stdev);
+
 	}
 	/**
 	 * 制程精密度：Cp=T/6σ
@@ -23,19 +33,19 @@ public class CpkUtils {
 	 * @param sigma
 	 * @return Cp
 	 */
-	public static double calculateCp(double limitMin,double limitMax,double sigma){
+	public static double calculateCp(double limitMin,double limitMax,double stdev){
 		double T=Math.abs(limitMax-limitMin);
-		return T/(6*sigma);
+		return T/(6*stdev);
 		
 	}
 	/**
-	 * 制程能力指数：Cpk=Cp(1-|Ca|) 
+	 * 制程能力指数：CPK= Min[ (USL- Mu)/3s, (Mu - LSL)/3s]
 	 * @param cp 制程精密度
 	 * @param ca 制程准确度
 	 * @return cpk
 	 */
-	public static double calculateCpk(double cp,double ca){
-		return cp*(1-Math.abs(ca));
+	public static double calculateCpk(double cpu,double cpl){
+		return Math.min(cpu,cpl);
 		
 	}
 }

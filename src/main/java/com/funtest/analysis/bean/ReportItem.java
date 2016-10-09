@@ -17,14 +17,19 @@ public class ReportItem {
     private String failRate = "0.0";
     private Integer rank;
     private double totalValue;//相对于 pass and fail
+    private double passTotalValue;
+    private double failTotalValue;
     private double realAverage;//相对于 pass and fail
+    private double passRealAverage;
+    private double failRealAverage;
     private double limitMin;
     private double limitMax;
     private String limitUnit;
-    private double sigma = 0; //相对于pass
+    private double passStdev = 0; //pass标准差
+    private double failStdev = 0; //fail标准差
     private Double cpk = 0.0;        //相对于pass
     private Double cpu = 0.0;        //相对于pass
-    private Double ca = 0.0;        //相对于pass
+    private Double cpl = 0.0;        //相对于pass
     private Double cp = 0.0;        //相对于pass
     private Chart passChart;
     private Chart failChart;
@@ -163,13 +168,63 @@ public class ReportItem {
         this.rank = rank;
         return this;
     }
-
+    @Column
     public double getTotalValue() {
         return totalValue;
     }
 
     public void setTotalValue(double totalValue) {
         this.totalValue = totalValue;
+    }
+
+    @Column
+    public double getPassTotalValue() {
+        return passTotalValue;
+    }
+
+    public ReportItem setPassTotalValue(double passTotalValue) {
+        this.passTotalValue = passTotalValue;
+        return this;
+    }
+
+    @Column
+    public double getFailTotalValue() {
+        return failTotalValue;
+    }
+
+    public ReportItem setFailTotalValue(double failTotalValue) {
+        this.failTotalValue = failTotalValue;
+        return this;
+    }
+
+    @Column
+    public double getPassRealAverage() {
+        return passRealAverage;
+    }
+
+    public ReportItem setPassRealAverage(double passRealAverage) {
+        this.passRealAverage = passRealAverage;
+        return this;
+    }
+
+    @Column
+    public double getFailRealAverage() {
+        return failRealAverage;
+    }
+
+    public ReportItem setFailRealAverage(double failRealAverage) {
+        this.failRealAverage = failRealAverage;
+        return this;
+    }
+
+    @Column
+    public double getFailStdev() {
+        return failStdev;
+    }
+
+    public ReportItem setFailStdev(double failStdev) {
+        this.failStdev = failStdev;
+        return this;
     }
 
     @Column
@@ -209,12 +264,12 @@ public class ReportItem {
     }
 
     @Column
-    public double getSigma() {
-        return sigma;
+    public double getPassStdev() {
+        return passStdev;
     }
 
-    public void setSigma(double sigma) {
-        this.sigma = sigma;
+    public void setPassStdev(double passStdev) {
+        this.passStdev = passStdev;
     }
 
     @Column
@@ -236,12 +291,12 @@ public class ReportItem {
     }
 
     @Column
-    public Double getCa() {
-        return ca;
+    public Double getCpl() {
+        return cpl;
     }
 
-    public void setCa(Double ca) {
-        this.ca = ca;
+    public void setCpl(Double cpl) {
+        this.cpl = cpl;
     }
 
     @Column

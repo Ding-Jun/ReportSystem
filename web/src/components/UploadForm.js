@@ -139,7 +139,7 @@ class Uploader extends React.Component {
       rules: [{
         required: true,
         min: 1,
-        message: '报告wenjian 至少为 5 个字符'
+        message: '至少选择一个数据文件'
       }, {
         validator: this.validateFile.bind(this)
       }]
@@ -155,7 +155,7 @@ class Uploader extends React.Component {
         span: 6
       },
       wrapperCol: {
-        span: 6
+        span: 10
       }
     };
     return (
@@ -166,7 +166,7 @@ class Uploader extends React.Component {
     <FormItem label="报告名称" required {...formItemLayout} help={isFieldValidating('reportName') ? '校验中...' : (getFieldError('reportName') || []).join(', ')} hasFeedback >
           <Input {...nameProps} name="reportName" placeholder="数据处理后产生的报告名称"  />
         </FormItem>
-          <FormItem label="芯片名称"   {...formItemLayout} help="">
+          <FormItem label={<span>芯片名称 <Tooltip title="暂时没用"><Icon type="question-circle-o" /></Tooltip></span>}   {...formItemLayout} help="">
           <Select combobox
             ref="chipName"
             name="chipName"
@@ -179,12 +179,16 @@ class Uploader extends React.Component {
         </FormItem>
         <FormItem label={<span>其他 <Tooltip title="FT+RT混合提交时   删除FT不良品数据"><Icon type="question-circle-o" /></Tooltip></span>} {...formItemLayout}>
           <Checkbox {...modeProps} name="mode">删除FT不良品数据</Checkbox>
+
         </FormItem>
-        <FormItem wrapperCol={{ span: 6 ,offset: 6}}>
+        <FormItem wrapperCol={{ span: 10 ,offset: 6}}>
           <Button type="primary" onClick={this.handleSubmit.bind(this)}>下一步</Button>
           &nbsp;&nbsp;&nbsp;
-          <Button type="ghost" onClick={this.handleReturn.bind(this)}>返回</Button>
+          {/*<Button type="ghost" onClick={this.handleReturn.bind(this)}>返回首页</Button>*/}
         </FormItem>
+        <ul>
+          <li><span style={{color:"red"}}>*</span> 为必填</li>
+        </ul>
       </Form>
     )
   }

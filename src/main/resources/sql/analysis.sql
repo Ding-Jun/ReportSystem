@@ -71,7 +71,7 @@ CREATE TABLE `t_chart` (
   `realAverage` double DEFAULT NULL,
   `realMax` double DEFAULT NULL,
   `realMin` double DEFAULT NULL,
-  `sigma` double DEFAULT NULL,
+  `passStdev` double DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
   `totalCnt` int(11) DEFAULT NULL,
   `visible` tinyint(1) DEFAULT NULL,
