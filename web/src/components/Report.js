@@ -54,18 +54,19 @@ class Report extends React.Component{
       sm:12
     }
     return (
-        <Card title="Base Info" bordered={false} >
+        <Card title="基本信息" bordered={false}
+        style={{lineHeight:"250%"}}>
           <Row>
             <Col {...layout}>
-              <p>LiangLv: {report.passPercent}</p>
-              <p>testMan: {report.testMan}</p>
+              <p>良率: {report.passPercent}</p>
+              <p>测试工程师: {report.testMan}</p>
             </Col>
             <Col {...layout} >
-              <p>Count: {report.testCount}</p>
-              <p>time: {report.time}</p>
+              <p>总数: {report.testCount}</p>
+              <p>时间: {report.time}</p>
             </Col>
             <Col>
-              <p>SRC: {report.srcFile}</p>
+              <p>原始数据文件: {report.srcFile}</p>
             </Col>
           </Row>
         </Card>
@@ -77,17 +78,17 @@ class Report extends React.Component{
     }
 
     const columns = [{
-      title: 'TestNo',
+      title: '测试序号',
       dataIndex: 'testNo'
 
     },{
-      title: 'Name',
+      title: '测试项',
       dataIndex: 'columnName'
     },{
-      title: 'Fail Count',
+      title: '失效数量',
       dataIndex: 'failCount'
     },{
-      title: 'Fail Rate(%)',
+      title: '失效率(%)',
       dataIndex: 'failRate'
     }];
     const osPreview={
@@ -98,8 +99,9 @@ class Report extends React.Component{
     }
     const data = _.union([osPreview],report.reportItems)
 
+
     return (
-        <Card title="TestItem Preview" bordered={false} >
+        <Card title="测试项预览" bordered={false} >
           <Table ref="table" rowKey="id" columns={columns} dataSource={data} pagination={false}/>
         </Card>
       )
@@ -116,7 +118,7 @@ class Report extends React.Component{
         </Card>
       ));
     return (
-      <Card title="TestItem Detail" bordered={false} >
+      <Card title="测试项详情" bordered={false} >
           {reportItemList}
       </Card>
     )

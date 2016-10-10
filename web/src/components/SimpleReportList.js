@@ -43,7 +43,7 @@ class SimpleReportList extends React.Component {
   }
 	render(){
 
-    console.log("totalRows:",this.state.page.totalRows);
+
     var list=this.state.page.rowData.map((simpleReport)=>(
         <div key={simpleReport.id} style={{margin:"10px 0"}}><SimpleReport  {...simpleReport}/></div>
       ))

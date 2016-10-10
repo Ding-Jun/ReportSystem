@@ -5,31 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="433e0881-8cc8-4f89-a871-fe6b556008f0" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/src/components/Changelog.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/src/components/Footer.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/src/components/GettingStart.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/src/styles/common.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/funtest/analysis/dao/impl/ReportDaoImpl.class" afterPath="$PROJECT_DIR$/target/classes/com/funtest/analysis/dao/impl/ReportDaoImpl.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/funtest/analysis/service/impl/ReportServiceImpl.class" afterPath="$PROJECT_DIR$/target/classes/com/funtest/analysis/service/impl/ReportServiceImpl.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/bean/SimpleReport.java" afterPath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/bean/SimpleReport.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/dao/ReportBuilder.java" afterPath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/dao/ReportBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/dao/impl/ReportDaoImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/dao/impl/ReportDaoImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/service/impl/ReportServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/service/impl/ReportServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/funtest/analysis/dao/ReportBuilderTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/funtest/analysis/dao/ReportBuilderTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/components/App.js" afterPath="$PROJECT_DIR$/web/src/components/App.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/components/DocumentView.js" afterPath="$PROJECT_DIR$/web/src/components/DocumentView.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/components/Gallery.js" afterPath="$PROJECT_DIR$/web/src/components/Gallery.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/components/HomeView.js" afterPath="$PROJECT_DIR$/web/src/components/HomeView.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/components/Navigation.js" afterPath="$PROJECT_DIR$/web/src/components/Navigation.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/components/Report.js" afterPath="$PROJECT_DIR$/web/src/components/Report.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/components/ReportView.js" afterPath="$PROJECT_DIR$/web/src/components/ReportView.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/components/SimpleReport.js" afterPath="$PROJECT_DIR$/web/src/components/SimpleReport.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/components/SimpleReportList.js" afterPath="$PROJECT_DIR$/web/src/components/SimpleReportList.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/components/UploadForm.js" afterPath="$PROJECT_DIR$/web/src/components/UploadForm.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/components/UploadProcess.js" afterPath="$PROJECT_DIR$/web/src/components/UploadProcess.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/components/UploadResult.js" afterPath="$PROJECT_DIR$/web/src/components/UploadResult.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/index.js" afterPath="$PROJECT_DIR$/web/src/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/index.html" afterPath="$PROJECT_DIR$/web/src/index.html" />
     </list>
     <ignored path="analysis.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -451,7 +430,7 @@
       <file leaf-file-name="SimpleReport.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/src/components/SimpleReport.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-57">
+            <state relative-caret-position="228">
               <caret line="14" column="32" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="32" />
               <folding />
             </state>
@@ -461,11 +440,31 @@
       <file leaf-file-name="Report.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web/src/components/Report.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="21" column="37" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="37" />
+            <state relative-caret-position="458">
+              <caret line="100" column="4" selection-start-line="100" selection-start-column="4" selection-end-line="100" selection-end-column="4" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/src/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="247">
+              <caret line="13" column="75" selection-start-line="13" selection-start-column="75" selection-end-line="13" selection-end-column="75" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Footer.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/src/components/Footer.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="418">
+              <caret line="26" column="54" selection-start-line="26" selection-start-column="54" selection-end-line="26" selection-end-column="72" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -483,8 +482,8 @@
       <file leaf-file-name="SimpleReportList.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/src/components/SimpleReportList.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="665">
-              <caret line="50" column="59" selection-start-line="50" selection-start-column="59" selection-end-line="50" selection-end-column="59" />
+            <state relative-caret-position="-190">
+              <caret line="20" column="19" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -502,31 +501,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DocumentView.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/src/components/DocumentView.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="19" column="25" selection-start-line="19" selection-start-column="25" selection-end-line="19" selection-end-column="25" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Navigation.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/src/components/Navigation.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="395">
               <caret line="50" column="43" selection-start-line="50" selection-start-column="43" selection-end-line="50" selection-end-column="43" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UploadResult.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/src/components/UploadResult.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="19">
-              <caret line="1" column="12" selection-start-line="1" selection-start-column="12" selection-end-line="1" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -598,7 +577,6 @@
         <option value="$PROJECT_DIR$/web/src/components/Cha.js" />
         <option value="$PROJECT_DIR$/web/src/components/ChangeLog.js" />
         <option value="$PROJECT_DIR$/web/src/components/DocumentView.js" />
-        <option value="$PROJECT_DIR$/web/src/components/SimpleReportList.js" />
         <option value="$PROJECT_DIR$/src/main/java/com/funtest/analysis/bean/SimpleReport.java" />
         <option value="$PROJECT_DIR$/web/src/components/SimpleReport.js" />
         <option value="$PROJECT_DIR$/src/main/java/com/funtest/analysis/service/impl/ReportServiceImpl.java" />
@@ -610,6 +588,8 @@
         <option value="$PROJECT_DIR$/web/src/index.js" />
         <option value="$PROJECT_DIR$/web/src/components/Navigation.js" />
         <option value="$PROJECT_DIR$/web/src/components/GettingStart.js" />
+        <option value="$PROJECT_DIR$/web/src/index.html" />
+        <option value="$PROJECT_DIR$/web/src/components/SimpleReportList.js" />
         <option value="$PROJECT_DIR$/web/src/components/Report.js" />
       </list>
     </option>
@@ -1568,7 +1548,7 @@
       <workItem from="1475975402501" duration="7854000" />
       <workItem from="1475992551359" duration="3033000" />
       <workItem from="1475995805694" duration="12685000" />
-      <workItem from="1476062330612" duration="24050000" />
+      <workItem from="1476062330612" duration="25762000" />
     </task>
     <task id="LOCAL-00001" summary="eeeeee">
       <created>1475667678285</created>
@@ -1612,7 +1592,14 @@
       <option name="project" value="LOCAL" />
       <updated>1476010771716</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="2016-10-10 18:24:46 增加FT&amp;RT mode">
+      <created>1476095124951</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1476095124951</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1648,7 +1635,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="138435000" />
+    <option name="totallyTimeSpent" value="140147000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1669,8 +1656,8 @@
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32919955" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32902467" sideWeight="0.50429183" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299356" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32731378" sideWeight="0.49570817" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32844242" sideWeight="0.49570817" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32731378" sideWeight="0.49570817" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32844242" sideWeight="0.49570817" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32902467" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2268623" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1733,7 +1720,8 @@
     <MESSAGE value="2016年10月8日18:04:08" />
     <MESSAGE value="2016年10月8日18:59:31" />
     <MESSAGE value="2016年10月9日18:59:12" />
-    <option name="LAST_COMMIT_MESSAGE" value="2016年10月9日18:59:12" />
+    <MESSAGE value="2016-10-10 18:24:46 增加FT&amp;RT mode" />
+    <option name="LAST_COMMIT_MESSAGE" value="2016-10-10 18:24:46 增加FT&amp;RT mode" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1746,14 +1734,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/funtest/aspect/LogAspect.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1216">
-          <caret line="83" column="42" selection-start-line="83" selection-start-column="42" selection-end-line="83" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/funtest/analysis/util/CustomSessionUtil.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-354">
@@ -2243,16 +2223,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/src/components/Footer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="26" column="54" selection-start-line="26" selection-start-column="54" selection-end-line="26" selection-end-column="72" />
-          <folding>
-            <element signature="e#43#68#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/src/components/UploadView.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
@@ -2266,7 +2236,7 @@
         <state relative-caret-position="338">
           <caret line="28" column="69" selection-start-line="28" selection-start-column="69" selection-end-line="28" selection-end-column="69" />
           <folding>
-            <element signature="e#0#34#0" expanded="true" />
+            <element signature="e#0#34#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2314,6 +2284,48 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/components/ReportView.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="19" column="17" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/components/Footer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="26" column="54" selection-start-line="26" selection-start-column="54" selection-end-line="26" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="13" column="75" selection-start-line="13" selection-start-column="75" selection-end-line="13" selection-end-column="75" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/components/SimpleReportList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-190">
+          <caret line="20" column="19" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/components/SimpleReport.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="14" column="32" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/web/src/components/GettingStart.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
@@ -2324,36 +2336,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/src/components/SimpleReportList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="665">
-          <caret line="50" column="59" selection-start-line="50" selection-start-column="59" selection-end-line="50" selection-end-column="59" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/src/components/SimpleReport.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-57">
-          <caret line="14" column="32" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/src/components/ReportView.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="19" column="17" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/src/components/Report.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="21" column="37" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="37" />
+        <state relative-caret-position="458">
+          <caret line="100" column="4" selection-start-line="100" selection-start-column="4" selection-end-line="100" selection-end-column="4" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
