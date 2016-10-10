@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col } from 'antd';
+import { Row, Col,Card } from 'antd';
 export default class ReportView extends React.Component {
 	render() {
     var layout={
@@ -7,20 +7,21 @@ export default class ReportView extends React.Component {
         span:24
       },
       sm:{
-        span:14,
-        offset:5
+        span:16,
+        offset:4
       }
     }
 		return (
       <Row>
-			<div>
-				<Col {...layout}><h3>报告</h3>
-          </Col>
-        <Col {...layout}>
-          {this.props.children}
-        </Col>
 
-			</div>
+				<Col {...layout}>
+          <Card title="报告" bordered={false}>
+            {this.props.children}
+          </Card>
+          </Col>
+
+
+
       </Row>
 		)
 	}

@@ -1,14 +1,5 @@
 package com.funtest.analysis.service.impl;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.funtest.analysis.bean.DataInfo;
 import com.funtest.analysis.bean.Report;
 import com.funtest.analysis.bean.SimpleReport;
@@ -19,6 +10,14 @@ import com.funtest.analysis.exception.PersistException;
 import com.funtest.analysis.service.ReportService;
 import com.funtest.core.bean.page.Page;
 import com.funtest.core.bean.page.PageCondition;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 @Service
 @Transactional
@@ -63,6 +62,8 @@ public class ReportServiceImpl implements ReportService {
 		
 		PageCondition pCondition=new PageCondition();
 		pCondition.setCurPage(curPage);
+		pCondition.setSort("ORDER BY `time`");
+		pCondition.setOrder("DESC");
 		if(pageSize !=null && pageSize >0){
 			pCondition.setPageSize(pageSize);
 		}

@@ -569,7 +569,12 @@ public class ReportBuilder {
                 }
                 continue;
             }
-
+            //当且仅当 FT&RT模式且为FT数据时为true
+            boolean deleteFail=false;
+            if(Constants.PROCESS_MODE_DELETE_FT_FAIL.equals(dataInfo.getMode())
+                    && !fileName.contains("RT")){
+                deleteFail=true;
+            }
             long lineNumber = -1;//当前读取的行号
             String curLine = null;//当前行字符串
             BufferedReader br = new BufferedReader(new InputStreamReader(ins[i]));
@@ -669,7 +674,7 @@ public class ReportBuilder {
                     lineNumber++;
                     //2.3数据预处理   包括尾部冗余数据处理，realMin，realMax，realAverage计算
                     //如果是数据 就预处理
-                    curLine = preprocessData(columnInfoList, patternDutPassTrue, patternDutPassFalse, curLine);
+                    curLine = preprocessData(columnInfoList, patternDutPassTrue, patternDutPassFalse, curLine,deleteFail);
                     pw.println(curLine);
                 } while ((curLine = br.readLine()) != null);
                 //到这说明 测试项判限都匹配上了
@@ -810,9 +815,10 @@ public class ReportBuilder {
      *
      * @param columnInfoList 测试项列表
      * @param curLine        当前行
+     * @param deleteFail     删除fail FT&RT模式且为FT数据时为true
      * @return String 处理后的当前行
      */
-    private String preprocessData(List columnInfoList, Pattern passPattern, Pattern failPattern, String curLine) {
+    private String preprocessData(List columnInfoList, Pattern passPattern, Pattern failPattern, String curLine,boolean deleteFail) {
         if (columnInfoList == null) {
             throw new DataNotFoundException("没有提供测试项信息");
         }
@@ -839,6 +845,10 @@ public class ReportBuilder {
             }
         } else if (failPattern.matcher(curLine).find()) {
             //如果是fail的double limitMin=
+            //FT&RT模式且为FT数据时  返回"" 即删除当前行 且不记录任何数据
+            if(deleteFail){
+                return "";
+            }
             boolean isFailFind = false;
             for (int i = 0; i < length; i++) {
                 ColumnInfo columnInfo = (ColumnInfo) columnInfoList.get(i);

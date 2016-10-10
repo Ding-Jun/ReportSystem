@@ -6,7 +6,7 @@ export default class HomeView extends React.Component {
 		return (
 		  <div>
         <Gallery/>
-        <Transaction/>
+        {/*<Transaction/>*/}
       </div>
 
     )

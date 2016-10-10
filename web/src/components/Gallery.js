@@ -12,9 +12,9 @@ class Gallery extends React.Component {
     return (
       <div>
         <Carousel afterChange={this.onChange}>
-          <div><h3>About FUNTEST</h3></div>
-          <div><h3>About 数据分析</h3></div>
-          <div><h3>广告1</h3></div>
+          <div style={{height:"500px"}}><h3>占坑 About FUNTEST</h3></div>
+          <div style={{height:"500px"}}><h3>占坑 About 数据分析</h3></div>
+          <div style={{height:"500px"}}><h3>占坑1</h3></div>
 
         </Carousel>
       </div>

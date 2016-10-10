@@ -2,12 +2,26 @@
  * Created by admin on 2016/10/8.
  */
 import React from 'react'
-class DocumentView extends React.Component{
-  render(){
+import {Row, Col, Card} from 'antd';
+class DocumentView extends React.Component {
+  render() {
+    var layout = {
+      xs: {
+        span: 24
+      },
+      sm: {
+        span: 16,
+        offset: 4
+      }
+    }
     return (
-      <div>
-        说明
-      </div>
+      <Row>
+
+        <Col {...layout}>
+            {this.props.children}
+        </Col>
+      </Row>
+
     )
   }
 }

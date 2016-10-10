@@ -1,17 +1,15 @@
 package com.funtest.analysis.dao.impl;
 
-import java.math.BigInteger;
-
-import org.hibernate.SQLQuery;
-import org.springframework.stereotype.Repository;
-
 import com.funtest.analysis.bean.Report;
 import com.funtest.analysis.bean.SimpleReport;
-import com.funtest.analysis.bean.User;
 import com.funtest.analysis.dao.BaseDao;
 import com.funtest.analysis.dao.ReportDao;
 import com.funtest.core.bean.page.Page;
 import com.funtest.core.bean.page.PageCondition;
+import org.hibernate.SQLQuery;
+import org.springframework.stereotype.Repository;
+
+import java.math.BigInteger;
 
 @Repository
 public class ReportDaoImpl extends BaseDao<Report> implements ReportDao{
@@ -50,13 +48,15 @@ public class ReportDaoImpl extends BaseDao<Report> implements ReportDao{
 	}
 	
 	public Page<SimpleReport> queryPage(PageCondition pCondition){
+
 		Long records=((BigInteger)super.currentSession().createSQLQuery(QUERY_RECORDS).uniqueResult()).longValue();
 		int pageSize=pCondition.getPageSize();
 		int totalPages=(int)Math.ceil(records/(double)pageSize);
 		int curPage=pCondition.getCurPage();
 		if(curPage<=0) curPage=1;
 		if(curPage>totalPages) curPage=totalPages;
-		SQLQuery query =currentSession().createSQLQuery(QUERY_PAGE);
+		String sql =QUERY_PAGE+" "+pCondition.getSort()+" "+pCondition.getOrder();
+		SQLQuery query =currentSession().createSQLQuery(sql);
 		query.setFirstResult((curPage-1)*pageSize);
 		query.setMaxResults(pCondition.getPageSize());
 		

@@ -169,7 +169,8 @@ public class ReportBuilderTest {
             preprocessData = rb.getClass().getDeclaredMethod("preprocessData",
                     List.class,
                     Pattern.class, Pattern.class,
-                    String.class);
+                    String.class,
+                    boolean.class);
             preprocessData.setAccessible(true);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
@@ -179,12 +180,15 @@ public class ReportBuilderTest {
                 "2,0,TRUE,1,17,-0.5068,-0.4791,-0.607,49.6151,297.2035,,,4.3829,7.7596,-30.5558,-18.284,78.697,3.82,3.64,10.9637,3.4,0,1.214,83.6636",
                 "43,0,FALSE,3,4,-0.5059,-0.4706,-0.61,61.8249,22222,,,,,,,,,,,,,,"
         };
-        String str0 = (String) preprocessData.invoke(rb, columnInfos, passPattern, failPattern, lines[0]);
-        String str1 = (String) preprocessData.invoke(rb, columnInfos, passPattern, failPattern, lines[1]);
+        boolean deleteFail=false;
+        String str0 = (String) preprocessData.invoke(rb, columnInfos, passPattern, failPattern, lines[0],deleteFail);
+        String str1 = (String) preprocessData.invoke(rb, columnInfos, passPattern, failPattern, lines[1],deleteFail);
+        String str2 = (String) preprocessData.invoke(rb, columnInfos, passPattern, failPattern, lines[1],!deleteFail);
         logger.info("columnInfos:{}", new Gson().toJson(columnInfos));
         assertEquals(lines[0], str0);
         assertEquals("43,0,FALSE,3,4,-0.5059,-0.4706,-0.61,61.8249,", str1);
         assertEquals(1, columnInfos.get(3).getTotalCountOutOfLimit());
+        assertEquals("",str2);
         logger.info("columnInfos:{}", new Gson().toJson(columnInfos));
 
     }

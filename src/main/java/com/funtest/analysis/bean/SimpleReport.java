@@ -1,15 +1,9 @@
 package com.funtest.analysis.bean;
 
-import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class SimpleReport {
@@ -20,6 +14,7 @@ public class SimpleReport {
 	String lotNo;
 	Integer mode;
 	String passPercent;
+	Integer rank;
 	String sealNo;
 	String srcFile;
 	String testCount;
@@ -80,6 +75,17 @@ public class SimpleReport {
 	public void setPassPercent(String passPercent) {
 		this.passPercent = passPercent;
 	}
+
+	@Column
+	public Integer getRank() {
+		return rank;
+	}
+
+	public SimpleReport setRank(Integer rank) {
+		this.rank = rank;
+		return this;
+	}
+
 	@Column
 	public String getSealNo() {
 		return sealNo;

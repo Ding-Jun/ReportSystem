@@ -3,6 +3,7 @@ import Messager from './Messager'
 import {
   Input,
   Form,
+  Card,
   Button,
   Icon,
   Upload,
@@ -60,6 +61,9 @@ class UploadProcess extends React.Component {
 
      console.log(this.props.dataInfo.files,data)*/
     this.props.preStep()
+  }
+  getFileInfo(fileInfo){
+
   }
   render() {
     const formItemLayout = {
@@ -135,33 +139,39 @@ class UploadProcess extends React.Component {
       },
     };
     //const data =this.props.dataInfo.columns;
+
     var status=1111;
     var fileInfos=_.map(this.props.dataInfo.files,(fileInfo,i) =>(
-      <li key={i}>{fileInfo.fileName+" : "+((status==fileInfo.status)?"可处理":fileInfo.message)}</li>
+      <li key={i}><span>{fileInfo.fileName+" : "}</span>{((status==fileInfo.status)?<span className="blue-text text-lighten-1">可处理</span>:<span className="red-text">{fileInfo.message}</span>)}</li>
     ))
     return (
       <Form horizontal>
         <FormItem  {...formItemLayout} label="数据文件">
-          <p className="ant-form-text"  name="userName">{fileNames}</p>
+          <p className="ant-form-text "  name="userName">{fileNames}</p>
         </FormItem>
         <FormItem  {...formItemLayout} label="报告名称">
-          <p className="ant-form-text"  name="userName">{this.props.dataInfo.reportName}</p>
+          <p className="ant-form-text "  name="userName">{this.props.dataInfo.reportName}</p>
         </FormItem>
         <FormItem  {...formItemLayout} label="芯片名称">
-          <p className="ant-form-text"  name="userName">{this.props.dataInfo.chipName}</p>
+          <p className="ant-form-text "  name="userName">{this.props.dataInfo.chipName}</p>
         </FormItem>
         <FormItem  {...formItemLayout} label="处理模式">
-          <p className="ant-form-text"  name="userName">{mode}</p>
+          <p className="ant-form-text "  name="userName">{mode}</p>
         </FormItem>
         <FormItem>
-          详情
-          <ul>
-            {fileInfos}
-          </ul>
+          <h3 className="blue-text text-lighten-1 ">详情</h3>
+            <hr/>
+            <ul>
+              {fileInfos}
+            </ul>
+
         </FormItem>
 
         <FormItem >
-          <Table ref="table" rowKey="id" rowSelection={rowSelection} columns={columns} dataSource={data} pagination={false}/>
+          <h3 className="blue-text text-lighten-1">请勾选需要图表展示的测试项(以debug结尾的测试项默认不勾选)</h3>
+          <hr/><br/>
+            <Table ref="table" rowKey="id" rowSelection={rowSelection} columns={columns} dataSource={data} pagination={false}/>
+
         </FormItem>
         <FormItem wrapperCol={{ span: 6 ,offset: 6}}>
           <Button type="primary" onClick={this.handleSubmit.bind(this)} disabled={this.props.dataInfo.columns==null ||this.props.dataInfo.columns.length==0}>确定</Button>

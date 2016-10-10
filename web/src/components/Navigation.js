@@ -26,6 +26,7 @@ export default class Navigation extends React.Component {
 
   render() {
     return (
+      <div>
       <Menu onClick={this.handleClick}
             selectedKeys={[this.state.current]}
             mode="horizontal"
@@ -47,14 +48,17 @@ export default class Navigation extends React.Component {
         </Menu.Item>
 
         <Menu.Item key="document">
-          <Link to="/document"><Icon type="file-text"/>说明</Link>
+          <Link to="/document/getting-start"><Icon type="file-text"/>说明</Link>
         </Menu.Item>
 
         <Menu.Item key="config" disabled>
           <Link to="/config"><Icon type="setting"/>配置</Link>
         </Menu.Item>
-        <Button type="primary" icon="user">登录</Button>
+        <Menu.Item className="right" key="login" disabled>
+          <Button type="primary" icon="user" disabled>登录</Button>
+        </Menu.Item>
       </Menu>
+      </div>
     )
   }
 

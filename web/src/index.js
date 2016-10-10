@@ -9,6 +9,8 @@ import ReportView from './components/ReportView';
 import DocumentView from './components/DocumentView'
 import SimpleReportList from './components/SimpleReportList'
 import Report from './components/Report'
+import ChangeLog from './components/Changelog'
+import GettingStart from './components/GettingStart'
 //global vars
 var root="/analysis/rs/";
 // Render the main component into the dom
@@ -23,7 +25,10 @@ ReactDOM.render(
       	<Route path="/report/reportList" component={SimpleReportList}/>
         <Route path="/report/:id" component={Report} />
       </Route>
-      <Route path="/document" component={DocumentView}/>
+      <Route path="/document" component={DocumentView}>
+        <Route path="/document/getting-start" component={GettingStart} />
+        <Route path="/document/changeLog" component={ChangeLog} />
+        </Route>
     </Route>
   </Router>
       , document.getElementById('app'));

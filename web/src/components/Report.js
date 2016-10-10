@@ -2,7 +2,7 @@ import React from 'react'
 import { findDOMNode } from 'react-dom'
 import _ from 'lodash'
 import $ from 'jquery'
-import {Button, Card, Row, Col,Table  } from 'antd'
+import {Button, Card, Row, Col,Table,Spin  } from 'antd'
 import echarts from 'echarts/lib/echarts'
 import 'echarts/lib/chart/bar'
 import 'echarts/lib/component/tooltip'
@@ -13,8 +13,9 @@ class Report extends React.Component{
   constructor(props){
     super(props);
     this.state={
+      loading:true,
       report:{
-        reportName:"u",
+        reportName:"加载中...",
         time:""
       }
     }
@@ -28,10 +29,10 @@ class Report extends React.Component{
     _.forEach(this.state.report.reportItems,reportItem=>{
       var passchart=reportItem.passChart;
     })
-    
+
   }
   queryReport(id){
-    
+
       $.ajax({
         type: 'GET',
         url:'/analysis/rs/report/queryReport/'+id,
@@ -39,12 +40,13 @@ class Report extends React.Component{
           if(rm.code==1){
             console.log("debug",rm.data);
             this.setState({
-              report:rm.data
+              report:rm.data,
+              loading:false
             })
           }
         }.bind(this)
       })
-    
+
   }
   doShowReportHead(report){
     var layout={
@@ -95,7 +97,7 @@ class Report extends React.Component{
       failRate:report.osFailRate
     }
     const data = _.union([osPreview],report.reportItems)
-    
+
     return (
         <Card title="TestItem Preview" bordered={false} >
           <Table ref="table" rowKey="id" columns={columns} dataSource={data} pagination={false}/>
@@ -132,9 +134,11 @@ class Report extends React.Component{
     return (
       <div>
         <h1>{report.reportName}</h1>
+        <Spin spinning={this.state.loading}>
         {head}
         {preview}
         {detail}
+        </Spin>
       </div>
     )
   }
@@ -145,13 +149,11 @@ class Report extends React.Component{
 	render(){
     var report=this.showReport(this.state.report)
 		return (
-			<div>
-        Report:{this.props.params.id}
-        <Button onClick={this.test.bind(this)} type="primary">defa</Button>
+			<div >
         {report}
       </div>
 		)
 	}
 }
 
-export default Report
+export default Report;

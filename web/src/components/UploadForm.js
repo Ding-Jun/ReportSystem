@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/common.css'
 import {
   findDOMNode
 } from 'react-dom'
@@ -178,7 +179,7 @@ class Uploader extends React.Component {
           </Select>
         </FormItem>
         <FormItem label={<span>其他 <Tooltip title="FT+RT混合提交时   删除FT不良品数据"><Icon type="question-circle-o" /></Tooltip></span>} {...formItemLayout}>
-          <Checkbox {...modeProps} name="mode">删除FT不良品数据</Checkbox>
+          <Checkbox {...modeProps} name="mode">删除FT不良品数据,保留RT不良</Checkbox>
 
         </FormItem>
         <FormItem wrapperCol={{ span: 10 ,offset: 6}}>
@@ -187,7 +188,7 @@ class Uploader extends React.Component {
           {/*<Button type="ghost" onClick={this.handleReturn.bind(this)}>返回首页</Button>*/}
         </FormItem>
         <ul>
-          <li><span style={{color:"red"}}>*</span> 为必填</li>
+          <li><span className="red-text" >*</span> 为必填</li>
         </ul>
       </Form>
     )
