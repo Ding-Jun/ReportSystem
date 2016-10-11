@@ -6,14 +6,17 @@ import 'echarts/lib/component/title'
 import 'echarts/lib/component/markLine'
 import 'echarts/lib/component/legend'
 import 'echarts/lib/component/dataZoom'
+import 'echarts/lib/component/markArea'
 
-const CHART_PASS=0;
-const CHART_FAIL=-1;
-const CHART_ALL=1;
+const CHART_PASS = 0;
+const CHART_FAIL = -1;
+const CHART_ALL = 1;
 class ChartUtils {
   static createChart(element, option) {
-    var myChart = echarts.init(element);
-    myChart.setOption(option);
+    var chartInstance = echarts.init(element);
+    chartInstance.setOption(option);
+    console.log("in createChart:",chartInstance);
+    return chartInstance;
   }
 
   static test() {
@@ -21,21 +24,43 @@ class ChartUtils {
   }
 
   static getBarChartOption(chart) {
-    var themeColor=CHART_PASS==chart.chartType?"#4c8fdd":"#c23531";
+    var themeColor = CHART_PASS == chart.chartType ? "#4c8fdd" : "#c23531";
+    var subtext="";
+    if(chart.chartType==CHART_PASS){
+      subtext="LSL : {}       N : {}       Sigma : {}\nUSL : {}       Average : {}       Cpk : {}";
+      subtext = subtext.replace(/\{\}/,chart.limitMin);
+      subtext = subtext.replace(/\{\}/,chart.totalCnt);
+      subtext = subtext.replace(/\{\}/,chart.stdev.toFixed(4));
+      subtext = subtext.replace(/\{\}/,chart.limitMax);
+      subtext = subtext.replace(/\{\}/,chart.realAverage.toFixed(2));
+      subtext = subtext.replace(/\{\}/,chart.cpk.toFixed(2));
+    }else if(chart.chartType==CHART_FAIL){
+      subtext="LSL : {}       N : {}       Sigma : {}\nUSL : {}       Average : {}       ";
+      subtext = subtext.replace(/\{\}/,chart.limitMin);
+      subtext = subtext.replace(/\{\}/,chart.totalCnt);
+      subtext = subtext.replace(/\{\}/,chart.stdev.toFixed(4));
+      subtext = subtext.replace(/\{\}/,chart.limitMax);
+      subtext = subtext.replace(/\{\}/,chart.realAverage.toFixed(2));
+    }
     var option = {
       title: {
         text: chart.title, // chart.title
-        subtext: 'funtest',
+        subtext: subtext,
         shadowColor: 'rgba(0, 0, 0, 0.5)',
         shadowBlur: 10,
         x: 'center',
         align: 'right',
-
+        textAlign:'left',
+        subtextStyle:{
+          fontWeight:'bold',
+          fontSize:14
+        }
       },
       backgroundColor: '#f3f3f3',
-      grid: {
-        top: '15%'
-      },
+      grid: [
+        {top: '20%'}
+
+      ],
       tooltip: {
         trigger: 'axis',
         /*
@@ -58,6 +83,7 @@ class ChartUtils {
       },
       xAxis: [
         {
+          gridIndex: 0,
           type: 'value',
           scale: true,
           //min:'dataMin' ,
@@ -72,6 +98,25 @@ class ChartUtils {
            length:10
            }]*/
         }
+      ],
+      yAxis: [
+        {
+          gridIndex:0,
+          name: 'frequency',
+          type: 'value',
+          nameLocation: 'middle',
+          nameGap: 45,
+          nameTextStyle: {
+            color: themeColor
+          },
+          max: Math.ceil(chart.quantityMax * 1.1),
+          axisLine: {
+            show: false,
+            lineStyle: {
+              color: themeColor
+            }
+          }
+        },
 
       ],
       dataZoom: [
@@ -88,34 +133,16 @@ class ChartUtils {
          //end: 90         // 右边在 60% 的位置。
          }*/
       ],
-      yAxis: [
-        {
-          name: 'frequency',
-          type: 'value',
-          nameLocation:'middle',
-          nameGap:50,
-          nameTextStyle:{
-            color:themeColor
-          },
-          max: Math.ceil(chart.quantityMax * 1.1),
-          axisLine: {
-            show: false,
-            lineStyle: {
-              color: themeColor
-            }
-          }
-        }
-      ],
-
 
       series: [
+        //for chart
         {
           name: chart.title,
           type: 'bar',
           barWidth: 5,
-          itemStyle:{
-            normal:{
-              color:themeColor
+          itemStyle: {
+            normal: {
+              color: themeColor
             }
           },
           data: eval(chart.datas),
@@ -150,7 +177,7 @@ class ChartUtils {
                 //coord: [150, 400]
               }],
               [{
-                name: 'LSH',
+                name: 'USL',
                 coord: [chart.limitMax, 0]
               }, {
                 coord: [chart.limitMax, Math.ceil(chart.quantityMax * 1.1)],
@@ -167,7 +194,6 @@ class ChartUtils {
                }, {
                coord: [chart.typicalValue, Math.ceil(chart.quantityMax*1.1)]
                }],*/
-
             ]
           }
         }

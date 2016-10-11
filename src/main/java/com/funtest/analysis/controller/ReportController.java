@@ -1,24 +1,25 @@
 package com.funtest.analysis.controller;
 
-import java.io.InputStream;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.funtest.analysis.bean.DataInfo;
+import com.funtest.analysis.bean.Report;
 import com.funtest.analysis.service.ReportService;
 import com.funtest.core.bean.ReturnMsg;
 import com.funtest.core.bean.constant.Constants;
 import com.google.gson.Gson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.InputStream;
+import java.io.PrintWriter;
+
+import static javafx.scene.input.KeyCode.R;
 
 @Controller
 @RequestMapping(value = "report")
@@ -161,7 +162,29 @@ public class ReportController {
 		}
 		return rm;
 	}
-	
+	@RequestMapping(value="downloadReport")
+	@ResponseBody
+	public Object downloadReport(@RequestParam("report")String reportJson,@RequestParam("type")String type,
+								 final HttpServletResponse response){
+		ReturnMsg rm = new ReturnMsg();
+		try {
+
+			File file = new File(Constants.FILE_UPLOAD_DIR+"/report.json");
+			PrintWriter pw=new PrintWriter(new FileWriter(file));
+			logger.info("to:{}",file.getAbsolutePath());
+			pw.write(reportJson);
+			pw.close();
+			Report report=new Gson().fromJson(reportJson,Report.class);
+			service.downloadReport(report,type,response.getOutputStream());
+			rm.setCode(Constants.RETURN_MSG_SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			rm.setCode(Constants.RETURN_MSG_FAILURE);
+			rm.setMessage(e.getMessage());
+		}
+		return rm;
+	}
+
 	@RequestMapping(value="test")
 	@ResponseBody
 	public Object test(){

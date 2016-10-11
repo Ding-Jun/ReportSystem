@@ -9,20 +9,30 @@ import {Button} from 'antd'
 class Chart extends React.Component{
   constructor(props){
     super(props);
-
+    this.state={
+      charts:[]
+    }
   }
   componentDidMount(){
-    var option = ChartUtils.getBarChartOption(this.props);
-    var element= findDOMNode(this.refs.chart);
-    ChartUtils.createChart(element,option);
+    this.drawChart();
 
   }
   componentDidUpdate(){
+    //给自己挖个坑
+  }
+  drawChart(){
     var option = ChartUtils.getBarChartOption(this.props);
     var element= findDOMNode(this.refs.chart);
-    ChartUtils.createChart(element,option);
+    var chartInstance = ChartUtils.createChart(element,option);
+    console.log("in drawChart:",chartInstance);
+    this.props.setChartInstance("chart"+this.props.id,chartInstance);
+    /*var charts=this.state.charts;
+    charts=chartInstance;
+    console.log("in drawChart Charts:",charts);
+    this.setState({
+      charts:charts
+    })*/
   }
-
   test(){
     console.log(findDOMNode(this.refs.chart))
     //ChartUtils.test()

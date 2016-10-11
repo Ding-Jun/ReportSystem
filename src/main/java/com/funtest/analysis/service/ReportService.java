@@ -1,13 +1,13 @@
 package com.funtest.analysis.service;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import com.funtest.analysis.bean.DataInfo;
 import com.funtest.analysis.bean.Report;
 import com.funtest.analysis.bean.SimpleReport;
 import com.funtest.core.bean.page.Page;
-import com.funtest.core.bean.page.PageCondition;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public interface ReportService {
 	public Integer createReport(DataInfo dataInfo);
@@ -16,4 +16,5 @@ public interface ReportService {
 	public Report queryReport(Integer id);
 	public Page<SimpleReport> queryPage(Integer curPage,Integer pageSize);
 	public boolean queryExists(String reportName);
+	public Integer downloadReport(Report report, String type,OutputStream out);
 }

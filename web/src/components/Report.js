@@ -17,7 +17,8 @@ class Report extends React.Component{
       report:{
         reportName:"加载中...",
         time:""
-      }
+      },
+      chartInstances:[]
     }
     console.log(this.props.params.id)
     this.queryReport(this.props.params.id);
@@ -100,12 +101,16 @@ class Report extends React.Component{
     const RANK_LOW=0;
     var data = _.union([osPreview],report.reportItems);
     data = _.forEach(data,function(reportItem){
-
+      var rankCls="";
       if(reportItem.rank==RANK_LOW){
-        reportItem.failRate=<span className="red-text">{reportItem.failRate}</span>;
-        reportItem.failCount=<span className="red-text">{reportItem.failCount}</span>;
+        rankCls="red-text";
       }
-      return reportItem;
+      return {
+        testNo:reportItem.testNo,
+        columnName:reportItem.columnName,
+        failCount:<span className={rankCls}>reportItem.failCount</span>,
+        failRate:<span className={rankCls}>reportItem.failRate</span>
+      };
     })
 
     return (
@@ -121,8 +126,8 @@ class Report extends React.Component{
     var reportItemList=report.reportItems.map(reportItem=>(
         <Card key={reportItem.id} title={<span>{reportItem.columnName}<a href="#" disabled> {"#"+reportItem.testNo}</a></span>} bordered={false} >
 
-          {reportItem.passChart?<Chart {...reportItem.passChart}/>:null}
-          {reportItem.failChart?<Chart {...reportItem.failChart}/>:null}
+          {reportItem.passChart?<Chart ref={"chart"+reportItem.passChart.id} {...reportItem.passChart} setChartInstance={this.setChartInstance.bind(this)}/>:null}
+          {reportItem.failChart?<Chart ref={"chart"+reportItem.failChart.id} {...reportItem.failChart} setChartInstance={this.setChartInstance.bind(this)}/>:null}
         </Card>
       ));
     return (
@@ -131,7 +136,14 @@ class Report extends React.Component{
       </Card>
     )
   }
-
+  setChartInstance(chartRef,instance){
+    var chartInstances=this.state.chartInstances;
+    chartInstances[chartRef]=instance;
+    console.log(chartRef);
+   /* this.setState({
+      chartInstances:chartInstances
+    })*/
+  }
 
   showReport(report){
     var layout={
@@ -154,13 +166,52 @@ class Report extends React.Component{
   }
   test(){
     //this.queryReport(6)
-    ChartUtils.test()
+    //ChartUtils.test()
+    console.log("test");
+    console.log("1",this.state.chartInstances)
+    this.downloadReport();
+  }
+  downloadReport(){
+    var report=this.state.report;
+    console.log("debug downloadReport report:",report);
+    _.map(report.reportItems,(reportItem)=>{
+      var passChart =reportItem.passChart;
+      var failChart= reportItem.failChart;
+      if(passChart!=null){
+        passChart.chartImg=this.state.chartInstances["chart"+passChart.id].getDataURL();
+      }
+      if(failChart!=null){
+        failChart.chartImg=this.state.chartInstances["chart"+failChart.id].getDataURL();
+      }
+
+    })
+
+    //report.reportItems=[];
+    console.log("debug downloadReport report:",report);
+    $.ajax({
+      type: 'POST',
+      url:'/analysis/rs/report/downloadReport',
+      data:{
+        report:JSON.stringify(this.state.report),
+        type:"xml"
+      },
+      success:function(rm){
+        if(rm.code==1){
+          console.log("debug downloadReport",rm.data);
+          /*this.setState({
+            report:rm.data,
+            loading:false
+          })*/
+        }
+      }.bind(this)
+    })
   }
 	render(){
 
     var report=this.showReport(this.state.report)
 		return (
 			<div >
+        <Button onClick={this.test.bind(this)}/>
         {report}
       </div>
 		)

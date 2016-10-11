@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 @Service
 @Transactional
@@ -73,4 +74,10 @@ public class ReportServiceImpl implements ReportService {
 	public boolean queryExists(String reportName){
 		return dao.queryExists(reportName);
 	}
+
+
+	public Integer downloadReport(Report report, String type, OutputStream out) {
+		return null;
+	}
+
 }
