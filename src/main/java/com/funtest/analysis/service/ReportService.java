@@ -16,5 +16,5 @@ public interface ReportService {
 	public Report queryReport(Integer id);
 	public Page<SimpleReport> queryPage(Integer curPage,Integer pageSize);
 	public boolean queryExists(String reportName);
-	public Integer downloadReport(Report report, String type,OutputStream out);
+	public Integer downloadReport(Report report, String type,OutputStream out) throws IOException;
 }
