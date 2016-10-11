@@ -14,6 +14,7 @@ import com.funtest.core.bean.page.Page;
 import com.funtest.core.bean.page.PageCondition;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
+import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,9 +83,12 @@ public class ReportServiceImpl implements ReportService {
 
 
 	public Integer downloadReport(Report report, String type, OutputStream out) throws IOException {
+		Integer status=null;
+		if("xml".equals(type)){
+			status =downloadXmlReport(report,out);
+		}
 
-		downloadXmlReport(report,out);
-		return null;
+		return status;
 	}
 	private Integer downloadXmlReport(Report report, OutputStream out) throws IOException {
 		Document doc;
@@ -93,6 +97,8 @@ public class ReportServiceImpl implements ReportService {
 		} catch (DocumentException e) {
 			throw new AnalysisException(e.getMessage(),e);
 		}
+		OutputFormat format = OutputFormat.createPrettyPrint();
+		format.setEncoding("UTF-8");    // 指定XML编码
 		XMLWriter writer=new XMLWriter(out);
 		writer.write(doc);
 		writer.close();

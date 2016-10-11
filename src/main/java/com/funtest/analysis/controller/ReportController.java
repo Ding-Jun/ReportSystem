@@ -6,6 +6,7 @@ import com.funtest.analysis.service.ReportService;
 import com.funtest.core.bean.ReturnMsg;
 import com.funtest.core.bean.constant.Constants;
 import com.google.gson.Gson;
+import org.dom4j.io.OutputFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.InputStream;
-import java.io.PrintWriter;
-
-import static javafx.scene.input.KeyCode.R;
+import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 @Controller
 @RequestMapping(value = "report")
@@ -163,12 +161,12 @@ public class ReportController {
 		return rm;
 	}
 	@RequestMapping(value="downloadReport")
-	@ResponseBody
-	public Object downloadReport(@RequestParam("report")String reportJson,@RequestParam("type")String type,
+
+	public void downloadReport(@RequestParam("report")String reportJson,@RequestParam("type")String type,
 								 final HttpServletResponse response){
 		ReturnMsg rm = new ReturnMsg();
 		try {
-
+			/*
 			File file = new File(Constants.FILE_UPLOAD_DIR+"/report.json");
 			PrintWriter pw=new PrintWriter(new FileWriter(file));
 			logger.info("to:{}",file.getAbsolutePath());
@@ -176,13 +174,29 @@ public class ReportController {
 			pw.close();
 			Report report=new Gson().fromJson(reportJson,Report.class);
 			service.downloadReport(report,type,response.getOutputStream());
-			rm.setCode(Constants.RETURN_MSG_SUCCESS);
+			rm.setCode(Constants.RETURN_MSG_SUCCESS);*/
+			Report report=new Gson().fromJson(reportJson,Report.class);
+			//set filename
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(report.getTime());
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			String time = sdf.format(calendar.getTime());
+			String sourseFile="FT_Template.xml";
+			String downFilename=time+"_FT_"+report.getFinalName()+"("+report.getChipName()+")_"+(int)Math.ceil(new Double(report.getTestCount())/1000.0)+"K.xml";
+
+			response.setContentType("text/plain");
+			response.setHeader("Location",downFilename);
+			response.setHeader("Content-Disposition", "attachment; filename=" + downFilename);
+
+			service.downloadReport(report,type,response.getOutputStream());
+
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			rm.setCode(Constants.RETURN_MSG_FAILURE);
 			rm.setMessage(e.getMessage());
 		}
-		return rm;
+
+		//return rm;
 	}
 
 	@RequestMapping(value="test")

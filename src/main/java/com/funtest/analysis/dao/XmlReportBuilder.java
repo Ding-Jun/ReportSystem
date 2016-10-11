@@ -18,6 +18,7 @@ import java.util.List;
  * @create 2016-10-11 19:03
  */
 public class XmlReportBuilder {
+    public static final String ONE_PX_IMG="Qk06AAAAAAAAADYAAAAoAAAAAQAAAAEAAAABABgAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAA////AA==";
     public Document createXmlReport(String templateName, Report report) throws DocumentException{
         Document doc=null;
         SAXReader reader=new SAXReader();
@@ -132,16 +133,23 @@ public class XmlReportBuilder {
             //replace img id
             List<Element> imgList =XmlUtils.findElements(testItemCopy, "tr/tc/p/r/pict/shape/imagedata");
             //System.out.println("image list:size"+imgList.size());
+            imgList.get(0).attribute(0).setData("imgId"+ri.getTestNo()*2);
+            WordUtils.reportImageBind(doc,"passChart"+ri.getTestNo()+".png","imgId"+ri.getTestNo()*2);
+            imgList.get(1).attribute(0).setData("imgId"+ri.getTestNo()*2+1);
+
+            WordUtils.reportImageBind(doc,"failChart"+ri.getTestNo()+".png","imgId"+ri.getTestNo()*2+1);
             if(ri.getPassChart()!=null){
-                imgList.get(0).attribute(0).setData("imgId"+ri.getTestNo()*2);
                 //add img
                 WordUtils.reportAddImage(doc,"passChart"+ri.getTestNo()+".png",ri.getPassChart().getChartImg());
-                WordUtils.reportImageBind(doc,"passChart"+ri.getTestNo()+".png","imgId"+ri.getTestNo()*2);
+            }else{
+                //add 1px mock img
+                WordUtils.reportAddImage(doc,"passChart"+ri.getTestNo()+".png",ONE_PX_IMG);
             }
+
             if(ri.getFailChart()!=null){
-                imgList.get(1).attribute(0).setData("imgId"+ri.getTestNo()*2+1);
                 WordUtils.reportAddImage(doc,"failChart"+ri.getTestNo()+".png",ri.getFailChart().getChartImg());
-                WordUtils.reportImageBind(doc,"failChart"+ri.getTestNo()+".png","imgId"+ri.getTestNo()*2+1);
+            }else {
+                WordUtils.reportAddImage(doc,"failChart"+ri.getTestNo()+".png",ONE_PX_IMG);
             }
 
             //imgList.get(0).addAttribute("r:id", "imgId"+ri.getTestNo()*2);

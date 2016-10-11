@@ -2,7 +2,7 @@ import React from 'react'
 import { findDOMNode } from 'react-dom'
 import _ from 'lodash'
 import $ from 'jquery'
-import {Button, Card, Row, Col,Table,Spin  } from 'antd'
+import {Button, Card, Row, Col,Table,Spin,Affix,BackTop  } from 'antd'
 import echarts from 'echarts/lib/echarts'
 import 'echarts/lib/chart/bar'
 import 'echarts/lib/component/tooltip'
@@ -178,16 +178,28 @@ class Report extends React.Component{
       var passChart =reportItem.passChart;
       var failChart= reportItem.failChart;
       if(passChart!=null){
-        passChart.chartImg=this.state.chartInstances["chart"+passChart.id].getDataURL();
+        passChart.chartImg=this.state.chartInstances["chart"+passChart.id].getDataURL().replace(/^data:image\/(png|jpg);base64,/, "");
       }
       if(failChart!=null){
-        failChart.chartImg=this.state.chartInstances["chart"+failChart.id].getDataURL();
+        failChart.chartImg=this.state.chartInstances["chart"+failChart.id].getDataURL().replace(/^data:image\/(png|jpg);base64,/, "");
       }
 
     })
 
     //report.reportItems=[];
     console.log("debug downloadReport report:",report);
+    var inputs = '';
+    inputs+='<input type="hidden" name="'+ 'type' +'" value="'+ 'xml' +'" />';
+    inputs+="<input type='hidden' name='"+ "report" +"' value='"+ JSON.stringify(report)+"' />";
+    console.log(inputs);
+    var method='post';
+    var url='/analysis/rs/report/downloadReport';
+    // request发送请求
+    var form =$('<form enctype="application/json" action="'+ url +'" method="'+ (method||'post') +'">'+inputs+'</form>')
+      .appendTo('body')
+
+    form.submit().remove();
+    /*
     $.ajax({
       type: 'POST',
       url:'/analysis/rs/report/downloadReport',
@@ -198,21 +210,23 @@ class Report extends React.Component{
       success:function(rm){
         if(rm.code==1){
           console.log("debug downloadReport",rm.data);
-          /*this.setState({
-            report:rm.data,
-            loading:false
-          })*/
+
         }
       }.bind(this)
-    })
+    })*/
   }
 	render(){
 
     var report=this.showReport(this.state.report)
 		return (
 			<div >
-        <Button onClick={this.test.bind(this)}/>
+        <Affix  offsetTop={75}>
+          <Button style={{margin:"5px"}} className="right" type="primary" onClick={this.test.bind(this)}>下载<br/>报告</Button>
+          <Button style={{margin:"5px"}} className="right" type="primary" onClick={this.test.bind(this)}>下载<br/>6Sigma</Button>
+        </Affix>
         {report}
+        {/*<BackTop />*/}
+
       </div>
 		)
 	}
