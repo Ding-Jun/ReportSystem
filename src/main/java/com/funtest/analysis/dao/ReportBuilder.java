@@ -149,33 +149,35 @@ public class ReportBuilder {
             if (reportItem.getPassCount() <= 0) {
                 failRate = "0.0";
             } else {
+                Chart passChart=reportItem.getPassChart();
                 reportItem.setFailRate(failRate);
                 if (osPattern.matcher(reportItem.getColumnName()).find()) {
                     osFailCount += reportItem.getFailCount();
                 }
                 totalFailCount += reportItem.getFailCount();
                 //deal with pass     如是抽样（即估算样本方差），根号内除以（n-1）（对应excel函数：STDEV）；
-                double passStdev=Math.sqrt(reportItem.getPassStdev() / (double)(reportItem.getPassCount()-1));
+                double passStdev=Math.sqrt(passChart.getStdev() / (double)(passChart.getTotalCnt()-1));
                 if(Double.isNaN(passStdev)){passStdev=0.0;}
                 double limitMin = reportItem.getLimitMin();
                 double limitMax = reportItem.getLimitMax();
                 if (!Double.isInfinite(limitMax - limitMin) && passStdev!=0.0) {
-                    double cpl = CpkUtils.calculateCpl(limitMin,reportItem.getPassRealAverage(),passStdev);
-                    double cpu =CpkUtils.calculateCpu(limitMax,reportItem.getPassRealAverage(),passStdev);
+                    double cpl = CpkUtils.calculateCpl(limitMin,passChart.getRealAverage(),passStdev);
+                    double cpu =CpkUtils.calculateCpu(limitMax,passChart.getRealAverage(),passStdev);
                     double cp = CpkUtils.calculateCp(limitMin, limitMax, passStdev);
                     double cpk = CpkUtils.calculateCpk(cpu, cpl);
-                    reportItem.setCpl(cpl);
-                    reportItem.setCpu(cpu);
-                    reportItem.setCp(cp);
-                    reportItem.setCpk(cpk);
+                    passChart.setCpl(cpl);
+                    passChart.setCpu(cpu);
+                    passChart.setCp(cp);
+                    passChart.setCpk(cpk);
                 }
                 //System.out.println("debug col:"+reportItem.getColumnname()+" :"+cp+" "+ca+" "+cpk);
-                reportItem.setPassStdev(passStdev);
+                passChart.setStdev(passStdev);
 
                 //deal with fail       如是抽样（即估算样本方差），根号内除以（n-1）（对应excel函数：STDEV）；
                 if(reportItem.getFailCount()>1){
-                    double failStdev =Math.sqrt(reportItem.getFailStdev() / (double)(reportItem.getFailCount()-1));
-                    reportItem.setFailStdev(failStdev);
+                    Chart failChart = reportItem.getFailChart();
+                    double failStdev =Math.sqrt(failChart.getStdev() / (double)(failChart.getTotalCnt()-1));
+                    failChart.setStdev(failStdev);
                 }
 
             }
@@ -386,14 +388,14 @@ public class ReportBuilder {
             long passCount = reportItem.getPassCount() + 1;
             long chartCount = passChart.getTotalCnt() + 1;
             //标准差
-            double passAverage = reportItem.getPassRealAverage();
-            double passStdev = reportItem.getPassStdev() + Math.pow((colData - passAverage), 2);
+            double passAverage = passChart.getRealAverage();
+            double passStdev = passChart.getStdev() + Math.pow((colData - passAverage), 2);
             //总的
 
             //zhuzi +1
             passChart.getBars().get((int) index).increase();
             passChart.setTotalCnt(chartCount);
-            reportItem.setPassStdev(passStdev);
+            passChart.setStdev(passStdev);
             reportItem.setPassCount(passCount);
         }
     }
@@ -423,13 +425,13 @@ public class ReportBuilder {
                 long failCount = reportItem.getFailCount() + 1;
                 long chartCount = failChart.getTotalCnt() + 1;
                 //标准差
-                double failAverage=reportItem.getFailRealAverage();
-                double failStdev=reportItem.getFailStdev()+ Math.pow((colData - failAverage), 2);
+                double failAverage=failChart.getRealAverage();
+                double failStdev=failChart.getStdev()+ Math.pow((colData - failAverage), 2);
 
                 //FailChart对应柱子数量+1
                 failChart.getBars().get((int) index).increase();
                 failChart.setTotalCnt(chartCount);
-                reportItem.setFailStdev(failStdev);
+                failChart.setStdev(failStdev);
                 reportItem.setFailCount(failCount);
                 isFailFind = true;
                 break;
@@ -469,6 +471,7 @@ public class ReportBuilder {
                 passChart.setRealMax(pRealMax);
                 passChart.setRangeMin(rangeMin);
                 passChart.setRangeMax(rangeMax);
+                passChart.setRealAverage(columnInfo.getRealAverageInLimit());
                 passChart.setLimit(limitMin, limitMax);
                 passChart.setTitle(columnInfo.getColumnName() + "的良品分布图");
             }
@@ -499,6 +502,7 @@ public class ReportBuilder {
                 failChart.setRealMax(fRealMax);
                 failChart.setRangeMin(rangeMin);
                 failChart.setRangeMax(rangeMax);
+                failChart.setRealAverage(columnInfo.getRealAverageOutOfLimit());
                 failChart.setLimit(limitMin, limitMax);
                 failChart.setTitle(columnInfo.getColumnName() + "的不良品分布图");
             }
@@ -511,8 +515,6 @@ public class ReportBuilder {
             reportItem.setLimitMax(columnInfo.getLimitMax());
             reportItem.setLimitUnit(columnInfo.getLimitUnit());
             reportItem.setRealAverage(columnInfo.getRealAverage());
-            reportItem.setPassRealAverage(columnInfo.getRealAverageInLimit());
-            reportItem.setFailRealAverage(columnInfo.getRealAverageOutOfLimit());
             reportItem.setPassChart(passChart);
             reportItem.setFailChart(failChart);
             reportItemList.add(reportItem);

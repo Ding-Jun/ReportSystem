@@ -21,13 +21,19 @@ public class Chart {
 	private Double spacing;//柱状图柱子间距
 	private Double realMax;
 	private Double realMin;
-	
+	private Double realAverage;
 	private Integer groupCnt=500;			//分组数  
 	private Double limitMin;
 	private Double limitMax;
 	private Double rangeMin;
 	private Double rangeMax;
-	
+	private double totalValue;
+	private double stdev = 0; 		//标准差
+	private Double cpk = 0.0;        //相对于pass
+	private Double cpu = 0.0;        //相对于pass
+	private Double cpl = 0.0;        //相对于pass
+	private Double cp = 0.0;        //相对于pass
+
 	private long totalCnt=0;				//该测试项Pass/Fail总颗数   即样本数
 	private long quantityMax=0;			//数量最多的柱子
 	
@@ -105,7 +111,70 @@ public class Chart {
 	public void setRealMin(Double realMin) {
 		this.realMin = realMin;
 	}
-	
+	@Column
+	public double getTotalValue() {
+		return totalValue;
+	}
+
+	public Chart setTotalValue(double totalValue) {
+		this.totalValue = totalValue;
+		return this;
+	}
+	@Column
+	public double getStdev() {
+		return stdev;
+	}
+
+	public Chart setStdev(double stdev) {
+		this.stdev = stdev;
+		return this;
+	}
+	@Column
+	public Double getCpk() {
+		return cpk;
+	}
+
+	public Chart setCpk(Double cpk) {
+		this.cpk = cpk;
+		return this;
+	}
+	@Column
+	public Double getCpu() {
+		return cpu;
+	}
+
+	public Chart setCpu(Double cpu) {
+		this.cpu = cpu;
+		return this;
+	}
+	@Column
+	public Double getCpl() {
+		return cpl;
+	}
+
+	public Chart setCpl(Double cpl) {
+		this.cpl = cpl;
+		return this;
+	}
+	@Column
+	public Double getCp() {
+		return cp;
+	}
+
+	public Chart setCp(Double cp) {
+		this.cp = cp;
+		return this;
+	}
+	@Column
+	public Double getRealAverage() {
+		return realAverage;
+	}
+
+	public Chart setRealAverage(Double realAverage) {
+		this.realAverage = realAverage;
+		return this;
+	}
+
 	@Column
 	public Integer getGroupCnt() {
 		return groupCnt;

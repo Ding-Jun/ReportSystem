@@ -1,7 +1,7 @@
 import React from 'react';
 import SimpleReport from './SimpleReport'
 import $ from 'jquery'
-import {Pagination } from 'antd'
+import {Pagination,Icon } from 'antd'
 class SimpleReportList extends React.Component {
   constructor(props) {
     super(props);
@@ -47,6 +47,10 @@ class SimpleReportList extends React.Component {
     var list=this.state.page.rowData.map((simpleReport)=>(
         <div key={simpleReport.id} style={{margin:"10px 0"}}><SimpleReport  {...simpleReport}/></div>
       ))
+    if(list.length==0){
+      list=<div className="center"><Icon type="frown" /> <span>没有报告</span></div>
+    }
+    console.log("list:",list)
 		return (
 	     <div className="SimpleReportList" style={{padding:"10px 30px 50px"}}>
          {/*<Button onClick={this.test.bind(this)} type="primary">defa</Button>*/}

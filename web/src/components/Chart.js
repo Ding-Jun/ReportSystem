@@ -30,9 +30,8 @@ class Chart extends React.Component{
 	render(){
 		return (
       <div>
-      <Button onClick={this.test.bind(this)} type="primary">defa</Button>
-      chartType:{this.props.chartType}
-      <div ref="chart" style={{width: "600px",height:"400px"}} >
+
+      <div ref="chart" style={{width: "600px",height:"400px",margin:"30px auto"}} >
 
       </div>
       </div>

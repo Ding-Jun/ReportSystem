@@ -95,10 +95,18 @@ class Report extends React.Component{
       testNo:0,
       columnName:"OPENSHUT",
       failCount:report.osFailCount,
-      failRate:report.osFailRate
+      failRate:report.osFailRate+"%"
     }
-    const data = _.union([osPreview],report.reportItems)
+    const RANK_LOW=0;
+    var data = _.union([osPreview],report.reportItems);
+    data = _.forEach(data,function(reportItem){
 
+      if(reportItem.rank==RANK_LOW){
+        reportItem.failRate=<span className="red-text">{reportItem.failRate}</span>;
+        reportItem.failCount=<span className="red-text">{reportItem.failCount}</span>;
+      }
+      return reportItem;
+    })
 
     return (
         <Card title="测试项预览" bordered={false} >
@@ -111,8 +119,8 @@ class Report extends React.Component{
       return null;
     }
     var reportItemList=report.reportItems.map(reportItem=>(
-        <Card key={reportItem.id} title={<span>{reportItem.columnName}<a href="#"> {"#"+reportItem.testNo}</a></span>} bordered={false} >
-          <p>{"TestNo: "+reportItem.testNo}</p>
+        <Card key={reportItem.id} title={<span>{reportItem.columnName}<a href="#" disabled> {"#"+reportItem.testNo}</a></span>} bordered={false} >
+
           {reportItem.passChart?<Chart {...reportItem.passChart}/>:null}
           {reportItem.failChart?<Chart {...reportItem.failChart}/>:null}
         </Card>
@@ -149,6 +157,7 @@ class Report extends React.Component{
     ChartUtils.test()
   }
 	render(){
+
     var report=this.showReport(this.state.report)
 		return (
 			<div >

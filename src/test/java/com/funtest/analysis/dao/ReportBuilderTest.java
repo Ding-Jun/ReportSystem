@@ -429,17 +429,19 @@ public class ReportBuilderTest {
         //等级：危险
         assertEquals(Constants.RANK_LOW,reportItem.getRank());
         //Cp Cpk
-        assertEquals(3.25,reportItem.getCpu(),0.005);
-        assertEquals(3.83,reportItem.getCpl(),0.005);
-        assertEquals(3.25,reportItem.getCpk(),0.005);
-        assertEquals(3.54,reportItem.getCp(),0.005);
+        Chart passChart=reportItem.getPassChart();
+        Chart failChart= reportItem.getFailChart();
+        assertEquals(3.25,passChart.getCpu(),0.005);
+        assertEquals(3.83,passChart.getCpl(),0.005);
+        assertEquals(3.25,passChart.getCpk(),0.005);
+        assertEquals(3.54,passChart.getCp(),0.005);
         //average
         double accuracy=0.0001;
-        assertEquals(343.5754,reportItem.getFailRealAverage(),accuracy);
-        assertEquals(50.8271,reportItem.getPassRealAverage(),accuracy);
+        assertEquals(343.5754,failChart.getRealAverage(),accuracy);
+        assertEquals(50.8271,passChart.getRealAverage(),accuracy);
         //标准差stdev
-        assertEquals(0.94199658,reportItem.getPassStdev(),accuracy);
-        assertEquals(195.8187466,reportItem.getFailStdev(),accuracy);
+        assertEquals(0.94199658,passChart.getStdev(),accuracy);
+        assertEquals(195.8187466,failChart.getStdev(),accuracy);
 
         assertEquals(1334, report.getReportItems().get(0).getPassCount());
         assertEquals(0, report.getReportItems().get(0).getFailCount());

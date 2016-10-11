@@ -24,7 +24,7 @@ class Footer extends React.Component {
       }
     }
     return (
-      <Row className="white" style={{lineHeight:"250%",margin:"20px 0px"}}>
+      <Row className="white" style={{lineHeight:"250%",margin:"20px 30px"}}>
         <Col {...layout}>
 
           <Col {...itemLayout}>
