@@ -132,8 +132,18 @@ public class XmlReportBuilder {
             //replace img id
             List<Element> imgList =XmlUtils.findElements(testItemCopy, "tr/tc/p/r/pict/shape/imagedata");
             //System.out.println("image list:size"+imgList.size());
-            imgList.get(0).attribute(0).setData("imgId"+ri.getTestNo()*2);
-            imgList.get(1).attribute(0).setData("imgId"+ri.getTestNo()*2+1);
+            if(ri.getPassChart()!=null){
+                imgList.get(0).attribute(0).setData("imgId"+ri.getTestNo()*2);
+                //add img
+                WordUtils.reportAddImage(doc,"passChart"+ri.getTestNo()+".png",ri.getPassChart().getChartImg());
+                WordUtils.reportImageBind(doc,"passChart"+ri.getTestNo()+".png","imgId"+ri.getTestNo()*2);
+            }
+            if(ri.getFailChart()!=null){
+                imgList.get(1).attribute(0).setData("imgId"+ri.getTestNo()*2+1);
+                WordUtils.reportAddImage(doc,"failChart"+ri.getTestNo()+".png",ri.getFailChart().getChartImg());
+                WordUtils.reportImageBind(doc,"failChart"+ri.getTestNo()+".png","imgId"+ri.getTestNo()*2+1);
+            }
+
             //imgList.get(0).addAttribute("r:id", "imgId"+ri.getTestNo()*2);
             //imgList.get(1).addAttribute("r:id", "imgId"+ri.getTestNo()*2+1);
 			/*
@@ -144,13 +154,6 @@ public class XmlReportBuilder {
 			WordUtils.reportImageBind(doc,ri.getColumnname()+"passChart.png","imgId"+ri.getTestNo()*2);
 			WordUtils.reportImageBind(doc,ri.getColumnname()+"failChart.png","imgId"+ri.getTestNo()*2+1);
 			*/
-            //add img
-            WordUtils.reportAddImage(doc,"passChart"+ri.getTestNo()+".png",ri.getPassChart().getChartImg());
-            WordUtils.reportAddImage(doc,"failChart"+ri.getTestNo()+".png",ri.getFailChart().getChartImg());
-            //bind
-            WordUtils.reportImageBind(doc,"passChart"+ri.getTestNo()+".png","imgId"+ri.getTestNo()*2);
-            WordUtils.reportImageBind(doc,"failChart"+ri.getTestNo()+".png","imgId"+ri.getTestNo()*2+1);
-
             parent.elements().add(testItemCopy);
         }
         //remove reportItemTemplate

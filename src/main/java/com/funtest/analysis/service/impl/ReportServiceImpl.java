@@ -7,11 +7,14 @@ import com.funtest.analysis.dao.DataConfigDao;
 import com.funtest.analysis.dao.ReportBuilder;
 import com.funtest.analysis.dao.ReportDao;
 import com.funtest.analysis.dao.XmlReportBuilder;
+import com.funtest.analysis.exception.AnalysisException;
 import com.funtest.analysis.exception.PersistException;
 import com.funtest.analysis.service.ReportService;
 import com.funtest.core.bean.page.Page;
 import com.funtest.core.bean.page.PageCondition;
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.io.XMLWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,10 +87,15 @@ public class ReportServiceImpl implements ReportService {
 		return null;
 	}
 	private Integer downloadXmlReport(Report report, OutputStream out) throws IOException {
-		Document doc=new XmlReportBuilder().createXmlReport("/file/FT_Template.xml",report);
-		if(out !=null){
-			out.close();
+		Document doc;
+		try {
+			doc=new XmlReportBuilder().createXmlReport("/file/FT_Template.xml",report);
+		} catch (DocumentException e) {
+			throw new AnalysisException(e.getMessage(),e);
 		}
+		XMLWriter writer=new XMLWriter(out);
+		writer.write(doc);
+		writer.close();
 
 		return 0;
 	}

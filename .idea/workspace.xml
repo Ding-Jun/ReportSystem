@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="433e0881-8cc8-4f89-a871-fe6b556008f0" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/dao/XmlReportBuilder.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/util/WordUtils.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/util/XmlUtils.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/file/FT_Template.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/service/ReportService.java" afterPath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/service/ReportService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/dao/XmlReportBuilder.java" afterPath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/dao/XmlReportBuilder.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/service/impl/ReportServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/funtest/analysis/service/impl/ReportServiceImpl.java" />
     </list>
     <ignored path="analysis.iws" />
@@ -418,67 +414,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="ReportServiceTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/com/funtest/analysis/service/ReportServiceTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="369">
-              <caret line="36" column="34" selection-start-line="36" selection-start-column="34" selection-end-line="36" selection-end-column="34" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Reader.java" pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.7.0_80/src.zip!/java/io/Reader.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3232">
-              <caret line="50" column="22" selection-start-line="50" selection-start-column="22" selection-end-line="50" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BufferedReader.java" pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.7.0_80/src.zip!/java/io/BufferedReader.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="179">
-              <caret line="107" column="11" selection-start-line="107" selection-start-column="11" selection-end-line="107" selection-end-column="11" />
-              <folding>
-                <element signature="e#2805#2806#0" expanded="true" />
-                <element signature="e#2852#2853#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ReportServiceTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/com/funtest/analysis/ReportServiceTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="95">
-              <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ReportService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/funtest/analysis/service/ReportService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="18" column="78" selection-start-line="18" selection-start-column="78" selection-end-line="18" selection-end-column="78" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="ReportServiceImpl.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/funtest/analysis/service/impl/ReportServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="486">
-              <caret line="93" column="0" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
+            <state relative-caret-position="467">
+              <caret line="96" column="26" selection-start-line="96" selection-start-column="26" selection-end-line="96" selection-end-column="26" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ReportServiceTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/funtest/analysis/service/ReportServiceTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="129">
+              <caret line="23" column="27" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="27" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -486,31 +439,11 @@
       <file leaf-file-name="XmlReportBuilder.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/funtest/analysis/dao/XmlReportBuilder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="179">
-              <caret line="20" column="20" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
+            <state relative-caret-position="597">
+              <caret line="155" column="14" selection-start-line="155" selection-start-column="14" selection-end-line="155" selection-end-column="14" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="WordUtils.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/funtest/analysis/util/WordUtils.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="XmlUtils.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/funtest/analysis/util/XmlUtils.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="26" column="24" selection-start-line="26" selection-start-column="24" selection-end-line="26" selection-end-column="24" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -585,8 +518,8 @@
         <option value="$PROJECT_DIR$/src/main/java/com/funtest/analysis/service/ReportService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/funtest/analysis/util/WordUtils.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/funtest/analysis/util/XmlUtils.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/funtest/analysis/dao/XmlReportBuilder.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/funtest/analysis/service/impl/ReportServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/funtest/analysis/dao/XmlReportBuilder.java" />
       </list>
     </option>
   </component>
@@ -820,32 +753,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="analysis" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Analysis" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="file" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1693,7 +1600,7 @@
       <workItem from="1475992551359" duration="3033000" />
       <workItem from="1475995805694" duration="12685000" />
       <workItem from="1476062330612" duration="26690000" />
-      <workItem from="1476148420432" duration="29652000" />
+      <workItem from="1476148420432" duration="30981000" />
     </task>
     <task id="LOCAL-00001" summary="eeeeee">
       <created>1475667678285</created>
@@ -1765,18 +1672,19 @@
       <option name="project" value="LOCAL" />
       <updated>1476183342736</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="2016年10月11日18:55:29 制作报告详情页 包括失效率高的颜色 图表颜色 ＣＰＫ">
+      <created>1476184350919</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1476184350919</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TestHistory">
     <history-entry file="ReportBuilderTest - 2016.10.11 at 12h 13m 19s.xml">
       <configuration name="ReportBuilderTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ReportBuilderTest_testBuildReport - 2016.10.09 at 15h 08m 01s.xml">
-      <configuration name="ReportBuilderTest.testBuildReport" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ReportBuilderTest_testBuildReport - 2016.10.09 at 15h 20m 59s.xml">
-      <configuration name="ReportBuilderTest.testBuildReport" configurationId="JUnit" />
     </history-entry>
     <history-entry file="ReportBuilderTest_testBuildReport - 2016.10.09 at 15h 22m 29s.xml">
       <configuration name="ReportBuilderTest.testBuildReport" configurationId="JUnit" />
@@ -1799,9 +1707,15 @@
     <history-entry file="ReportServiceTest_testDownloadXmlReport - 2016.10.11 at 18h 24m 06s.xml">
       <configuration name="ReportServiceTest.testDownloadXmlReport" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="ReportServiceTest_testDownloadXmlReport - 2016.10.11 at 19h 25m 02s.xml">
+      <configuration name="ReportServiceTest.testDownloadXmlReport" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ReportServiceTest_testDownloadXmlReport - 2016.10.11 at 19h 29m 54s.xml">
+      <configuration name="ReportServiceTest.testDownloadXmlReport" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="170727000" />
+    <option name="totallyTimeSpent" value="172056000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -2291,31 +2205,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/funtest/analysis/service/ReportServiceTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="36" column="34" selection-start-line="36" selection-start-column="34" selection-end-line="36" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/funtest/analysis/ReportServiceTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.7.0_80/src.zip!/java/io/BufferedReader.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="179">
           <caret line="107" column="11" selection-start-line="107" selection-start-column="11" selection-end-line="107" selection-end-column="11" />
           <folding>
-            <element signature="e#2805#2806#0" expanded="true" />
-            <element signature="e#2852#2853#0" expanded="true" />
+            <element signature="e#2805#2806#0" expanded="false" />
+            <element signature="e#2852#2853#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2352,10 +2248,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/funtest/analysis/ReportServiceTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/funtest/analysis/dao/XmlReportBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="20" column="20" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
+        <state relative-caret-position="597">
+          <caret line="155" column="14" selection-start-line="155" selection-start-column="14" selection-end-line="155" selection-end-column="14" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/funtest/analysis/service/ReportServiceTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="129">
+          <caret line="23" column="27" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -2364,8 +2278,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/funtest/analysis/service/impl/ReportServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="93" column="0" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
+        <state relative-caret-position="467">
+          <caret line="96" column="26" selection-start-line="96" selection-start-column="26" selection-end-line="96" selection-end-column="26" />
           <folding />
         </state>
       </provider>
