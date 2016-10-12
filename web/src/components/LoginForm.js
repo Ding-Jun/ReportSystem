@@ -2,13 +2,16 @@
  * Created by admin on 2016/10/12.
  */
 import React from 'react'
-import {Modal} from 'antd'
+import {Modal, Form, Input, Button,Checkbox,Row ,Col,Tabs} from 'antd'
+const FormItem = Form.Item;
+const TabPane = Tabs.TabPane;
 class LoginForm extends React.Component{
   constructor(props) {
     super(props);
     // Operations usually carried out in componentWillMount go here
     this.state={
-      visible: false
+      visible: false,
+      isLogin:false
     }
   }
   showModal() {
@@ -36,18 +39,58 @@ class LoginForm extends React.Component{
   }
     render(){
       const text=this.props.text||'login';
+      var view;
+      if(this.state.isLogin){
+       // view=<div onClick={this.showModal.bind(this)}>{text}</div>
+      }else{
+        view=<div onClick={this.showModal.bind(this)}>{text}</div>
+      }
+      const style={
+        margin:'10px auto'
+        //width:'90%'
+      }
         return (
          <div>
-           <div onClick={this.showModal.bind(this)}>{text}</div>
-           <Modal title="Title of the modal dialog"
+           {view}
+           <Modal title="登录"
                   visible={this.state.visible}
-                  onOk={this.handleOk.bind(this)}
+                footer={null}
                   confirmLoading={this.state.confirmLoading}
-                  onCancel={this.handleCancel.bind(this)}
+
            >
+             <Tabs defaultActiveKey="1" >
+               <TabPane tab="login" key="1">
+                 <Input style={style} placeholder="Please input the account" /><br/>
+
+
+
+                 <Input style={style} type="password" placeholder="Please input the password" /><br/>
+
+                 <Checkbox style={style}>Remember me</Checkbox>
+
+
+                 <Button style={style}  type="primary" htmlType="submit">Submit</Button>
+               </TabPane>
+               <TabPane tab="register" key="2">
+                 <Input style={style} placeholder="Please input the account" />
+
+
+
+                 <Input style={style} type="password" placeholder="Please input the password" />
+
+
+                 <Button style={style} className="right" type="primary" htmlType="submit">Submit</Button>
+               </TabPane>
+             </Tabs>
+
+
+
+
+
            </Modal>
          </div>
         )
     }
 }
+LoginForm = Form.create()(LoginForm);
 export default LoginForm;

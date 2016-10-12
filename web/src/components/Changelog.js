@@ -31,9 +31,9 @@ class Changelog extends React.Component {
           </Timeline.Item>
         </Timeline>
         <h2>ToDo List</h2>
-        <Alert message="2016-10-24 登陆、注册" type="info" />
-        <Alert message="2016-10-25 使用说明" type="info" />
-        <Alert message="2016-10-26 首页Banner制作" type="info" />
+        <Alert message="1. 登陆、注册" type="info" />
+        <Alert message="2. 使用说明" type="info" />
+        <Alert message="3. 首页Banner制作" type="info" />
       </Card>
     )
   }

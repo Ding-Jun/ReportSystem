@@ -52,14 +52,7 @@ export default class Navigation extends React.Component {
           <Link to="/config"><Icon type="setting"/>配置</Link>
         </Menu.Item>
 
-        <Menu.Item className="right" key="register" disabled>
-
-          <Icon type="user" />注册
-        </Menu.Item>
-        <Menu.Item className="right" key="login" disabled>
-          <Icon type="smile" />登录
-        </Menu.Item>
-        <Menu.Item className="right" key="register1" >
+        <Menu.Item className="right" key="register"disabled >
 
           <LoginForm text="登录 · 注册"/>
         </Menu.Item>
