@@ -12,7 +12,7 @@ export default class ReportView extends React.Component {
       }
     }
 		return (
-      <Row style={{minWidth:"700px"}}>
+      <Row style={{minWidth:'700px'}}>
 
 				<Col {...layout}>
           <Card title="报告" bordered={false}>

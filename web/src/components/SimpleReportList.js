@@ -21,10 +21,10 @@ class SimpleReportList extends React.Component {
   queryPage(curPage){
     $.ajax({
       type: 'GET',
-      url:'/analysis/rs/report/queryPage/'+curPage+"?size=5",
+      url:'/analysis/rs/report/queryPage/'+curPage+'?size=5',
       success:function(rm){
         if(rm.code==1){
-          console.log("debug",rm.data);
+          console.log('debug',rm.data);
           this.setState({
             page:rm.data
           })
@@ -33,7 +33,7 @@ class SimpleReportList extends React.Component {
     })
   }
   handlePageChange(targetPage){
-    console.log("page:",targetPage);
+    console.log('page:',targetPage);
     this.queryPage(targetPage);
   }
 
@@ -45,17 +45,17 @@ class SimpleReportList extends React.Component {
 
 
     var list=this.state.page.rowData.map((simpleReport)=>(
-        <div key={simpleReport.id} style={{margin:"10px 0"}}><SimpleReport  {...simpleReport}/></div>
+        <div key={simpleReport.id} style={{margin:'10px 0'}}><SimpleReport  {...simpleReport}/></div>
       ))
     if(list.length==0){
-      list=<div className="center"><Icon type="frown" /> <span>没有报告</span></div>
+      list=<div className='center'><Icon type='frown' /> <span>没有报告</span></div>
     }
-    console.log("list:",list)
+    console.log('list:',list)
 		return (
-	     <div className="SimpleReportList" style={{padding:"10px 30px 50px"}}>
-         {/*<Button onClick={this.test.bind(this)} type="primary">defa</Button>*/}
+	     <div className='SimpleReportList' style={{padding:'10px 30px 50px'}}>
+         {/*<Button onClick={this.test.bind(this)} type='primary'>defa</Button>*/}
        {list}
-         <Pagination className="right"
+         <Pagination className='right'
 
                      onChange={this.handlePageChange.bind(this)}
                      defaultCurrent={this.state.curPage}

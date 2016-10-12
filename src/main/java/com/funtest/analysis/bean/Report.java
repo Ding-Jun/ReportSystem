@@ -34,8 +34,8 @@ public class Report {
 
 	//for word report
     private String title="成品测试报告";
-    private String chipName="JPXXXX";
-    private String finalName="JWXXX";
+    private String chipName="FTXXXX";
+    private String finalName="FTXXX";
     private String testCount="total";
     private String lotNo="Lot No";
     private String sealNo="N/A";

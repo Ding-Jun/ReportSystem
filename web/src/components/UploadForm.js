@@ -1,9 +1,7 @@
 import React from 'react';
 import '../styles/common.css'
-import {
-  findDOMNode
-} from 'react-dom'
-import _ from 'lodash'
+//import {findDOMNode} from 'react-dom'
+//import _ from 'lodash'
 import $ from 'jquery'
 import Messager from './Messager'
 import {
@@ -11,7 +9,6 @@ import {
   Form,
   Button,
   Icon,
-  Upload,
   Checkbox,
   Select,
   Tooltip
@@ -31,16 +28,16 @@ class Uploader extends React.Component {
     this.props.form.validateFieldsAndScroll((errors, values) => {
       if (!!errors) {
         Messager.error('发现错误，请修改！')
-        console.log('Errors in form!!!');
+        console.log('Errors in form!!!',values);
         return;
       }
       Messager.info('提交。。。')
       //var form=findDOMNode(this.refs.form);
-      var form=$("#form")[0];
-       console.log("$form:",form);
+      var form=$('#form')[0];
+       console.log('$form:',form);
       var formData= new FormData(form);
       formData.append('username', 'Chris');
-      console.log("formdata:",formData)
+      console.log('formdata:',formData)
       $.ajax({
         type: 'POST',
         url:'/analysis/rs/report/buildDataInfo',
@@ -52,7 +49,7 @@ class Uploader extends React.Component {
             this.props.nextStep();
             this.props.setDataInfo(rm.data);
           }
-          console.log("result",rm.data)
+          console.log('result',rm.data)
         }.bind(this)
         //console.log(this.props.form.getFieldsValue());
         //console.log(JSON.stringify(this.props.form.getFieldsValue()));
@@ -68,7 +65,7 @@ class Uploader extends React.Component {
     } else {
       if(value.length>=5){
          $.ajax({
-          type: "GET",
+          type: 'GET',
           url:'/analysis/rs/report/isExists',
           data:{
             reportName:value
@@ -95,7 +92,7 @@ class Uploader extends React.Component {
       isCompleted = true;
     } else {
 
-      console.log("file", this.refs.dataFile.refs.input.files)
+      console.log('file', this.refs.dataFile.refs.input.files)
       var fileList = this.refs.dataFile.refs.input.files;
 
       for (let i = 0; i < fileList.length; i++) {
@@ -119,14 +116,14 @@ class Uploader extends React.Component {
 
   }
   render() {
-    console.log("render:");
+    console.log('render:');
     const {
       getFieldProps,
       getFieldError,
       isFieldValidating
     } = this.props.form;
     const nameProps = getFieldProps('reportName', {
-      //ref: "fileaa",
+      //ref: 'fileaa',
       rules: [{
         required: true,
         min: 1,
@@ -136,7 +133,7 @@ class Uploader extends React.Component {
       }]
     });
     const fileProps = getFieldProps('dataFiles', {
-      //ref: "fileaa",
+      //ref: 'fileaa',
       rules: [{
         required: true,
         min: 1,
@@ -146,7 +143,7 @@ class Uploader extends React.Component {
       }]
     });
     const chipNameProps = getFieldProps('chipName', {
-      initialValue: "undefined"
+      initialValue: 'undefined'
     });
     const modeProps = getFieldProps('mode', {
       initialValue: false
@@ -160,35 +157,35 @@ class Uploader extends React.Component {
       }
     };
     return (
-      <Form ref="form" id="form" horizontal encType="multipart/form-data">
-        <FormItem ref="fileItem" label="数据文件" required {...formItemLayout} help={isFieldValidating('dataFiles') ? '校验中...' : (getFieldError('dataFiles') || []).join(', ')} hasFeedback >
-          <Input {...fileProps} name="files" type="file" ref="dataFile" multiple="multiple" accept=".csv" />
+      <Form ref='form' id='form' horizontal encType='multipart/form-data'>
+        <FormItem ref='fileItem' label='数据文件' required {...formItemLayout} help={isFieldValidating('dataFiles') ? '校验中...' : (getFieldError('dataFiles') || []).join(', ')} hasFeedback >
+          <Input {...fileProps} name='files' type='file' ref='dataFile' multiple='multiple' accept='.csv' />
         </FormItem>
-    <FormItem label="报告名称" required {...formItemLayout} help={isFieldValidating('reportName') ? '校验中...' : (getFieldError('reportName') || []).join(', ')} hasFeedback >
-          <Input {...nameProps} name="reportName" placeholder="数据处理后产生的报告名称"  />
+    <FormItem label='报告名称' required {...formItemLayout} help={isFieldValidating('reportName') ? '校验中...' : (getFieldError('reportName') || []).join(', ')} hasFeedback >
+          <Input {...nameProps} name='reportName' placeholder='数据处理后产生的报告名称'  />
         </FormItem>
-          <FormItem label={<span>芯片名称 <Tooltip title="暂时没用"><Icon type="question-circle-o" /></Tooltip></span>}   {...formItemLayout} help="">
+          <FormItem label={<span>芯片名称 <Tooltip title='暂时没用'><Icon type='question-circle-o' /></Tooltip></span>}   {...formItemLayout} help=''>
           <Select combobox
-            ref="chipName"
-            name="chipName"
+            ref='chipName'
+            name='chipName'
             {...chipNameProps}
             filterOption={false}
-            placeholder="暂时没用"
+            placeholder='暂时没用'
           >
             {options}
           </Select>
         </FormItem>
-        <FormItem label={<span>其他 <Tooltip title="FT+RT混合提交时   删除FT不良品数据"><Icon type="question-circle-o" /></Tooltip></span>} {...formItemLayout}>
-          <Checkbox {...modeProps} name="mode">删除FT不良品数据,保留RT不良</Checkbox>
+        <FormItem label={<span>其他 <Tooltip title='FT+RT混合提交时   删除FT不良品数据'><Icon type='question-circle-o' /></Tooltip></span>} {...formItemLayout}>
+          <Checkbox {...modeProps} name='mode'>删除FT不良品数据,保留RT不良</Checkbox>
 
         </FormItem>
         <FormItem wrapperCol={{ span: 10 ,offset: 6}}>
-          <Button type="primary" onClick={this.handleSubmit.bind(this)}>下一步</Button>
+          <Button type='primary' onClick={this.handleSubmit.bind(this)}>下一步</Button>
           &nbsp;&nbsp;&nbsp;
-          {/*<Button type="ghost" onClick={this.handleReturn.bind(this)}>返回首页</Button>*/}
+          {/*<Button type='ghost' onClick={this.handleReturn.bind(this)}>返回首页</Button>*/}
         </FormItem>
         <ul>
-          <li><span className="red-text" >*</span> 为必填</li>
+          <li><span className='red-text' >*</span> 为必填</li>
         </ul>
       </Form>
     )

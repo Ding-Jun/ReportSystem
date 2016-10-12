@@ -109,7 +109,7 @@ public class AdminServiceImpl implements com.funtest.analysis.service.AdminServi
 
 	@Override
 	public String queryAdminName() {
-		return CustomSessionUtil.getLoginAdminName();
+		return CustomSessionUtil.getLoginUserName();
 	}
 
 	@Override

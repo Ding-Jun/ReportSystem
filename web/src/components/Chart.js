@@ -1,11 +1,7 @@
 import React from 'react'
 import { findDOMNode } from 'react-dom'
-import echarts from 'echarts/lib/echarts'
-import 'echarts/lib/chart/bar'
-import 'echarts/lib/component/tooltip'
-import 'echarts/lib/component/title'
 import ChartUtils from '../utils/ChartUtils'
-import {Button} from 'antd'
+//import {Button} from 'antd'
 class Chart extends React.Component{
   constructor(props){
     super(props);
@@ -24,11 +20,11 @@ class Chart extends React.Component{
     var option = ChartUtils.getBarChartOption(this.props);
     var element= findDOMNode(this.refs.chart);
     var chartInstance = ChartUtils.createChart(element,option);
-    console.log("in drawChart:",chartInstance);
-    this.props.setChartInstance("chart"+this.props.id,chartInstance);
+    console.log('in drawChart:',chartInstance);
+    this.props.setChartInstance('chart'+this.props.id,chartInstance);
     /*var charts=this.state.charts;
     charts=chartInstance;
-    console.log("in drawChart Charts:",charts);
+    console.log('in drawChart Charts:',charts);
     this.setState({
       charts:charts
     })*/
@@ -41,7 +37,7 @@ class Chart extends React.Component{
 		return (
       <div>
 
-      <div ref="chart" style={{width: "600px",height:"400px",margin:"30px auto"}} >
+      <div ref='chart' style={{width: '600px',height:'400px',margin:'30px auto'}} >
 
       </div>
       </div>

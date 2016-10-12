@@ -37,4 +37,19 @@ public class ReportServiceTest {
         //service.downloadReport()
         Assert.assertEquals(1,1);
     }
+    @Test
+    public void testDownloadSpec() throws IOException {
+        ReportService service=new ReportServiceImpl();
+        Resource resource=new ClassPathResource("report.json");
+        BufferedReader reader= new BufferedReader(new FileReader(resource.getFile()));
+        StringBuilder reportJson=new StringBuilder();
+        String line;
+        while((line=reader.readLine())!=null){
+            reportJson.append(line);
+        }
+        Report report=new Gson().fromJson(reportJson.toString(),Report.class);
+
+        OutputStream out = new FileOutputStream(new File(Constants.FILE_UPLOAD_DIR+"/spec1011.csv"));
+        service.downloadReport(report,"spec",out);
+    }
 }

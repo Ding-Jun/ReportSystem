@@ -3,10 +3,7 @@ package com.funtest.analysis.service.impl;
 import com.funtest.analysis.bean.DataInfo;
 import com.funtest.analysis.bean.Report;
 import com.funtest.analysis.bean.SimpleReport;
-import com.funtest.analysis.dao.DataConfigDao;
-import com.funtest.analysis.dao.ReportBuilder;
-import com.funtest.analysis.dao.ReportDao;
-import com.funtest.analysis.dao.XmlReportBuilder;
+import com.funtest.analysis.dao.*;
 import com.funtest.analysis.exception.AnalysisException;
 import com.funtest.analysis.exception.PersistException;
 import com.funtest.analysis.service.ReportService;
@@ -87,7 +84,9 @@ public class ReportServiceImpl implements ReportService {
 		if("xml".equals(type)){
 			status =downloadXmlReport(report,out);
 		}
-
+		if("spec".equals(type)){
+			status=downloadSpec(report,out);
+		}
 		return status;
 	}
 	private Integer downloadXmlReport(Report report, OutputStream out) throws IOException {
@@ -103,6 +102,11 @@ public class ReportServiceImpl implements ReportService {
 		writer.write(doc);
 		writer.close();
 
+		return 0;
+	}
+	private Integer downloadSpec(Report report,OutputStream out) throws IOException{
+		out.write(new SpecBuilder().creatSpec(report,out).getBytes("utf-8"));
+		out.close();
 		return 0;
 	}
 

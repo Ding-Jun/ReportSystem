@@ -12,7 +12,7 @@ import Report from './components/Report'
 import ChangeLog from './components/Changelog'
 import GettingStart from './components/GettingStart'
 //global vars
-var root="/analysis/rs/";
+//var root="/analysis/rs/";
 // Render the main component into the dom
 ReactDOM.render(
 	<Router history={hashHistory}>

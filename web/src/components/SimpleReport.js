@@ -12,10 +12,10 @@ class SimpleReport extends React.Component{
 	render(){
     var rankCls;
     switch (this.props.rank){
-      case RANK_LOW:rankCls="red lighten-5";break;
-      case RANK_MEDIUM:rankCls="orange lighten-5";break;
-      case RANK_HIGH:rankCls="light-green lighten-5";break;
-      default:;
+      case RANK_LOW:rankCls='red lighten-5';break;
+      case RANK_MEDIUM:rankCls='orange lighten-5';break;
+      case RANK_HIGH:rankCls='light-green lighten-5';break;
+      default:break;
     }
     var layout={
       xs:24,
@@ -26,7 +26,7 @@ class SimpleReport extends React.Component{
             className={rankCls}
             title={this.props.reportName}
             bordered={true}
-            extra={<Link to={"/report/"+this.props.id}>更多</Link>}
+            extra={<Link to={'/report/'+this.props.id}>更多</Link>}
       >
 
         <Row>

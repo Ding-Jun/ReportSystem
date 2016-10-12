@@ -2,11 +2,8 @@ import React from 'react';
 import {
   Link
 } from 'react-router'
-import {
-  Menu,
-  Icon,
-  Button
-} from 'antd'
+import {Menu, Icon} from 'antd'
+import LoginForm from './LoginForm'
 export default class Navigation extends React.Component {
   constructor(props) {
     super(props);
@@ -32,7 +29,7 @@ export default class Navigation extends React.Component {
             mode="horizontal"
       >
         <Menu.Item key="logo">
-          <Icon type="aliwangwang"/>FUNTEST数据分析
+          <Icon type="eye"/>FUNTEST数据分析
         </Menu.Item>
 
         <Menu.Item key="index">
@@ -54,9 +51,19 @@ export default class Navigation extends React.Component {
         <Menu.Item key="config" disabled>
           <Link to="/config"><Icon type="setting"/>配置</Link>
         </Menu.Item>
-        <Menu.Item className="right" key="login" disabled>
-          <Button type="primary" icon="user" disabled>登录</Button>
+
+        <Menu.Item className="right" key="register" disabled>
+
+          <Icon type="user" />注册
         </Menu.Item>
+        <Menu.Item className="right" key="login" disabled>
+          <Icon type="smile" />登录
+        </Menu.Item>
+        <Menu.Item className="right" key="register1" >
+
+          <LoginForm text="登录 · 注册"/>
+        </Menu.Item>
+
       </Menu>
       </div>
     )

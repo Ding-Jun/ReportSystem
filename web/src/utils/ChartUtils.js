@@ -10,24 +10,24 @@ import 'echarts/lib/component/markArea'
 
 const CHART_PASS = 0;
 const CHART_FAIL = -1;
-const CHART_ALL = 1;
+//const CHART_ALL = 1;
 class ChartUtils {
   static createChart(element, option) {
     var chartInstance = echarts.init(element);
     chartInstance.setOption(option);
-    console.log("in createChart:",chartInstance);
+    console.log('in createChart:',chartInstance);
     return chartInstance;
   }
 
   static test() {
-    console.log("test")
+    console.log('test')
   }
 
   static getBarChartOption(chart) {
-    var themeColor = CHART_PASS == chart.chartType ? "#4c8fdd" : "#c23531";
-    var subtext="";
+    var themeColor = CHART_PASS == chart.chartType ? '#4c8fdd' : '#c23531';
+    var subtext='';
     if(chart.chartType==CHART_PASS){
-      subtext="LSL : {}       N : {}       Sigma : {}\nUSL : {}       Average : {}       Cpk : {}";
+      subtext='LSL : {}       N : {}       Sigma : {}\nUSL : {}       Average : {}       Cpk : {}';
       subtext = subtext.replace(/\{\}/,chart.limitMin);
       subtext = subtext.replace(/\{\}/,chart.totalCnt);
       subtext = subtext.replace(/\{\}/,chart.stdev.toFixed(4));
@@ -35,7 +35,7 @@ class ChartUtils {
       subtext = subtext.replace(/\{\}/,chart.realAverage.toFixed(2));
       subtext = subtext.replace(/\{\}/,chart.cpk.toFixed(2));
     }else if(chart.chartType==CHART_FAIL){
-      subtext="LSL : {}       N : {}       Sigma : {}\nUSL : {}       Average : {}       ";
+      subtext='LSL : {}       N : {}       Sigma : {}\nUSL : {}       Average : {}       ';
       subtext = subtext.replace(/\{\}/,chart.limitMin);
       subtext = subtext.replace(/\{\}/,chart.totalCnt);
       subtext = subtext.replace(/\{\}/,chart.stdev.toFixed(4));
@@ -62,7 +62,7 @@ class ChartUtils {
 
       ],
       tooltip: {
-        trigger: 'axis',
+        trigger: 'axis'
         /*
          formatter : function (params) {
          return params.seriesName + ' : [ '
@@ -116,7 +116,7 @@ class ChartUtils {
               color: themeColor
             }
           }
-        },
+        }
 
       ],
       dataZoom: [
@@ -187,7 +187,7 @@ class ChartUtils {
                     formatter: '{b}'
                   }
                 }
-              }], /*
+              }] /*
                [{
                name: 'typical',
                coord: [chart.typicalValue, 0]
@@ -213,10 +213,10 @@ class ChartUtils {
      option.xAxis[0].min=option.xAxis[0].min.toFixed(4);
      option.xAxis[0].max=option.xAxis[0].max.toFixed(4);
 
-     //option.title.text=chart.title+"的良品分布图";
-     //option.title.subtext="                  "+ 'Average : '+chart.typicalValue.toFixed(4)+"     "
-     //+'N : '+chart.totalCnt+"     "
-     //+'Sigma : '+chart.sigma.toFixed(4)+"    "
+     //option.title.text=chart.title+'的良品分布图';
+     //option.title.subtext='                  '+ 'Average : '+chart.typicalValue.toFixed(4)+'     '
+     //+'N : '+chart.totalCnt+'     '
+     //+'Sigma : '+chart.sigma.toFixed(4)+'    '
      //+'Cpk : '+chart.cpk.toFixed(4);
      //option.color='#26A800';
 
@@ -236,10 +236,10 @@ class ChartUtils {
      option.xAxis[0].min=option.xAxis[0].min.toFixed(4);
      option.xAxis[0].max=option.xAxis[0].max.toFixed(4);
      // }
-     //option.title.text=chart.title+"的不良品分布图";
-     //option.title.subtext= "                  "+'Average : '+chart.typicalValue.toFixed(4)+"     "
-     //+'N : '+chart.totalCnt+"     "
-     //+'Sigma : '+chart.sigma.toFixed(4)+"    ";
+     //option.title.text=chart.title+'的不良品分布图';
+     //option.title.subtext= '                  '+'Average : '+chart.typicalValue.toFixed(4)+'     '
+     //+'N : '+chart.totalCnt+'     '
+     //+'Sigma : '+chart.sigma.toFixed(4)+'    ';
      //option.series[0].markLine.data='';
      //console.log(option.series[0].markLine);
      }*/

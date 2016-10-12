@@ -2,10 +2,10 @@ package com.funtest.analysis.util;
 
 
 import com.funtest.analysis.bean.Admin;
+import com.funtest.analysis.bean.User;
 import com.funtest.core.bean.constant.Constants;
 import com.funtest.core.exceptions.BmsException;
 import com.funtest.core.util.LogUtil;
-
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
@@ -65,7 +65,7 @@ public class CustomSessionUtil {
      * @return Admin
      */
     public static Integer getLoginAdminId() {
-        Admin curAdmin = (Admin) SecurityUtils.getSubject().getSession()
+        User curAdmin = (User) SecurityUtils.getSubject().getSession()
                 .getAttribute(Constants.SESSION_USER_KEY);
 
         if (curAdmin != null) {
@@ -75,12 +75,12 @@ public class CustomSessionUtil {
         return null;
     }
 
-    public static String getLoginAdminName() {
-        Admin curAdmin = (Admin) SecurityUtils.getSubject().getSession()
+    public static String getLoginUserName() {
+        User curUser = (User) SecurityUtils.getSubject().getSession()
                 .getAttribute(Constants.SESSION_USER_KEY);
 
-        if (curAdmin != null) {
-            return curAdmin.getName();
+        if (curUser != null) {
+            return curUser.getName();
         }
 
         return null;
@@ -131,7 +131,7 @@ public class CustomSessionUtil {
             forcedLogoutMap.remove(userId);
 
             LogUtil.info(logger, "############## remove kick out user 【{}-{}】 ------ {} #################",
-                    getSessionId(), getLoginAdminName(), CustomDateUtil.getCurrentTime());
+                    getSessionId(), getLoginUserName(), CustomDateUtil.getCurrentTime());
         }
     }
 

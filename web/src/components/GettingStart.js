@@ -6,8 +6,8 @@ import {Card} from 'antd'
 class GettingStart extends React.Component {
   render() {
     return (
-      <Card title="快速上手" bordered={false}>
-        <div style={{height:"500px"}}>暂无说明</div>
+      <Card title='快速上手' bordered={false}>
+        <div style={{height:'500px'}}>暂无说明</div>
       </Card>
 
     )

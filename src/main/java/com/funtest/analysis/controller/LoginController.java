@@ -1,6 +1,7 @@
 package com.funtest.analysis.controller;
 
-import com.funtest.analysis.bean.Admin;
+import com.funtest.analysis.bean.SimpleUser;
+import com.funtest.analysis.bean.User;
 import com.funtest.analysis.util.CustomSessionUtil;
 import com.funtest.core.bean.ReturnMsg;
 import com.funtest.core.bean.constant.Constants;
@@ -49,7 +50,7 @@ public class LoginController {
 
             rm.setCode(Constants.RETURN_MSG_SUCCESS);
             curSubject.hasRole("dummy");
-            logger.info("User \"" + CustomSessionUtil.getLoginAdminName()+"\" is log in.");
+            logger.info("User \"" + CustomSessionUtil.getLoginUserName()+"\" is log in.");
         } catch (AuthenticationException e) {
         	logger.error(e.getMessage(), e);
             rm.setCode(Constants.RETURN_MSG_FAILURE);
@@ -70,7 +71,7 @@ public class LoginController {
         ReturnMsg rm = new ReturnMsg();
 
         try {
-        	String userName=CustomSessionUtil.getLoginAdminName();
+        	String userName=CustomSessionUtil.getLoginUserName();
             SecurityUtils.getSubject().logout();
 
             //设置数据权限拦截中的登录用户为空
@@ -100,17 +101,18 @@ public class LoginController {
         ReturnMsg rm = new ReturnMsg();
 
         try {
-        	Admin curUser = (Admin) SecurityUtils.getSubject().getSession()
+            User curUser = (User) SecurityUtils.getSubject().getSession()
                     .getAttribute(Constants.SESSION_USER_KEY);
-        	
 
-            Integer userId = curUser.getId();
+            SimpleUser user=new SimpleUser();
+            user.setId(curUser.getId());
+            user.setName(curUser.getName());
 
-            if (userId == null) {
+            if (user.getId()== null) {
                 rm.setCode(Constants.RETURN_MSG_FAILURE);
             } else {
                 rm.setCode(Constants.RETURN_MSG_SUCCESS);
-                rm.setData(userId);
+                rm.setData(user);
             }
 
         } catch (Exception e) {

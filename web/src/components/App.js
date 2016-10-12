@@ -6,7 +6,7 @@ import React from 'react';
 
 import Navigation from '../components/Navigation'
 import Footer from '../components/Footer'
-let yeomanImage = require('../images/yeoman.png');
+//let yeomanImage = require('../images/yeoman.png');
 
 class AppComponent extends React.Component {
 
@@ -16,7 +16,7 @@ class AppComponent extends React.Component {
 			<div className="index" >
         <Navigation/>
 
-        <div style={{ background:"#ECECEC", padding: '30px' }}>
+        <div style={{ background:'#ECECEC', padding: '30px' }}>
         {this.props.children}
         </div>
         <Footer></Footer>

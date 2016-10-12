@@ -1,13 +1,8 @@
 import React from 'react'
-import { findDOMNode } from 'react-dom'
+//import { findDOMNode } from 'react-dom'
 import _ from 'lodash'
 import $ from 'jquery'
-import {Button, Card, Row, Col,Table,Spin,Affix,BackTop  } from 'antd'
-import echarts from 'echarts/lib/echarts'
-import 'echarts/lib/chart/bar'
-import 'echarts/lib/component/tooltip'
-import 'echarts/lib/component/title'
-import ChartUtils from '../utils/ChartUtils'
+import {Button, Card, Row, Col,Table,Spin,Affix } from 'antd'
 import Chart from './Chart'
 class Report extends React.Component{
   constructor(props){
@@ -15,14 +10,15 @@ class Report extends React.Component{
     this.state={
       loading:true,
       report:{
-        reportName:"加载中...",
-        time:""
+        reportName:'加载中...',
+        time:''
       },
       chartInstances:[]
     }
     console.log(this.props.params.id)
     this.queryReport(this.props.params.id);
   }
+  /*
   componentDidUpdate(){
     if(! this.state.report.reportItems){
       return;
@@ -31,7 +27,7 @@ class Report extends React.Component{
       var passchart=reportItem.passChart;
     })
 
-  }
+  }*/
   queryReport(id){
 
       $.ajax({
@@ -39,7 +35,7 @@ class Report extends React.Component{
         url:'/analysis/rs/report/queryReport/'+id,
         success:function(rm){
           if(rm.code==1){
-            console.log("debug",rm.data);
+            console.log('debug',rm.data);
             this.setState({
               report:rm.data,
               loading:false
@@ -55,8 +51,8 @@ class Report extends React.Component{
       sm:12
     }
     return (
-        <Card title="基本信息" bordered={false}
-        style={{lineHeight:"250%"}}>
+        <Card title='基本信息' bordered={false}
+        style={{lineHeight:'250%'}}>
           <Row>
             <Col {...layout}>
               <p>良率: {report.passPercent}</p>
@@ -94,16 +90,16 @@ class Report extends React.Component{
     }];
     const osPreview={
       testNo:0,
-      columnName:"OPENSHUT",
+      columnName:'OPENSHUT',
       failCount:report.osFailCount,
-      failRate:report.osFailRate+"%"
+      failRate:report.osFailRate+'%'
     }
     const RANK_LOW=0;
     var data = _.union([osPreview],report.reportItems);
     data = _.forEach(data,function(reportItem){
-      var rankCls="";
+      var rankCls='';
       if(reportItem.rank==RANK_LOW){
-        rankCls="red-text";
+        rankCls='red-text';
       }
       return {
         testNo:reportItem.testNo,
@@ -114,8 +110,8 @@ class Report extends React.Component{
     })
 
     return (
-        <Card title="测试项预览" bordered={false} >
-          <Table ref="table" rowKey="id" columns={columns} dataSource={data} pagination={false}/>
+        <Card title='测试项预览' bordered={false} >
+          <Table ref='table' rowKey='id' columns={columns} dataSource={data} pagination={false}/>
         </Card>
       )
   }
@@ -124,14 +120,14 @@ class Report extends React.Component{
       return null;
     }
     var reportItemList=report.reportItems.map(reportItem=>(
-        <Card key={reportItem.id} title={<span>{reportItem.columnName}<a href="#" disabled> {"#"+reportItem.testNo}</a></span>} bordered={false} >
+        <Card key={reportItem.id} title={<span>{reportItem.columnName}<a href='#' disabled> {'#'+reportItem.testNo}</a></span>} bordered={false} >
 
-          {reportItem.passChart?<Chart ref={"chart"+reportItem.passChart.id} {...reportItem.passChart} setChartInstance={this.setChartInstance.bind(this)}/>:null}
-          {reportItem.failChart?<Chart ref={"chart"+reportItem.failChart.id} {...reportItem.failChart} setChartInstance={this.setChartInstance.bind(this)}/>:null}
+          {reportItem.passChart?<Chart ref={'chart'+reportItem.passChart.id} {...reportItem.passChart} setChartInstance={this.setChartInstance.bind(this)}/>:null}
+          {reportItem.failChart?<Chart ref={'chart'+reportItem.failChart.id} {...reportItem.failChart} setChartInstance={this.setChartInstance.bind(this)}/>:null}
         </Card>
       ));
     return (
-      <Card title="测试项详情" bordered={false} >
+      <Card title='测试项详情' bordered={false} >
           {reportItemList}
       </Card>
     )
@@ -146,10 +142,7 @@ class Report extends React.Component{
   }
 
   showReport(report){
-    var layout={
-      xs:24,
-      sm:12
-    }
+
     var head=this.doShowReportHead(report);
     var preview=this.doShowReportPreview(report);
     var detail=this.doShowReportDetail(report);
@@ -167,30 +160,55 @@ class Report extends React.Component{
   test(){
     //this.queryReport(6)
     //ChartUtils.test()
-    console.log("test");
-    console.log("1",this.state.chartInstances)
+    console.log('test');
+    console.log('1',this.state.chartInstances)
     this.downloadReport();
   }
-  downloadReport(){
+  downloadSpec(){
     var report=this.state.report;
-    console.log("debug downloadReport report:",report);
     _.map(report.reportItems,(reportItem)=>{
       var passChart =reportItem.passChart;
       var failChart= reportItem.failChart;
       if(passChart!=null){
-        passChart.chartImg=this.state.chartInstances["chart"+passChart.id].getDataURL().replace(/^data:image\/(png|jpg);base64,/, "");
+        passChart.chartImg=null;
       }
       if(failChart!=null){
-        failChart.chartImg=this.state.chartInstances["chart"+failChart.id].getDataURL().replace(/^data:image\/(png|jpg);base64,/, "");
+        failChart.chartImg=null;
+      }
+
+    })
+    var inputs = '';
+    inputs+='<input type="hidden" name="'+ 'type' +'" value="'+ 'spec' +'" />';
+    inputs+='<input type="hidden" name="'+ 'report' +'" value="'+ JSON.stringify(report)+'" />';
+    console.log(inputs);
+    var method='post';
+    var url='/analysis/rs/report/downloadSpec';
+    // request发送请求
+    var form =$('<form enctype="application/json" action="'+ url +'" method="'+ (method||'post') +'">'+inputs+'</form>')
+      .appendTo('body')
+
+    form.submit().remove();
+  }
+  downloadReport(){
+    var report=this.state.report;
+    console.log('debug downloadReport report:',report);
+    _.map(report.reportItems,(reportItem)=>{
+      var passChart =reportItem.passChart;
+      var failChart= reportItem.failChart;
+      if(passChart!=null){
+        passChart.chartImg=this.state.chartInstances['chart'+passChart.id].getDataURL().replace(/^data:image\/(png|jpg);base64,/, '');
+      }
+      if(failChart!=null){
+        failChart.chartImg=this.state.chartInstances['chart'+failChart.id].getDataURL().replace(/^data:image\/(png|jpg);base64,/, '');
       }
 
     })
 
     //report.reportItems=[];
-    console.log("debug downloadReport report:",report);
+    console.log('debug downloadReport report:',report);
     var inputs = '';
-    inputs+='<input type="hidden" name="'+ 'type' +'" value="'+ 'xml' +'" />';
-    inputs+="<input type='hidden' name='"+ "report" +"' value='"+ JSON.stringify(report)+"' />";
+    inputs+='<input type="hidden" name="'+ 'type' +'" value="'+ 'xml' +'"/>';
+    inputs+='<input type="hidden" name="'+ 'report' +'" value="'+ JSON.stringify(report)+'" />';
     console.log(inputs);
     var method='post';
     var url='/analysis/rs/report/downloadReport';
@@ -205,11 +223,11 @@ class Report extends React.Component{
       url:'/analysis/rs/report/downloadReport',
       data:{
         report:JSON.stringify(this.state.report),
-        type:"xml"
+        type:'xml'
       },
       success:function(rm){
         if(rm.code==1){
-          console.log("debug downloadReport",rm.data);
+          console.log('debug downloadReport',rm.data);
 
         }
       }.bind(this)
@@ -220,9 +238,9 @@ class Report extends React.Component{
     var report=this.showReport(this.state.report)
 		return (
 			<div >
-        <Affix  offsetTop={75}>
-          <Button style={{margin:"5px"}} className="right" type="primary" onClick={this.test.bind(this)}>下载<br/>报告</Button>
-          <Button style={{margin:"5px"}} className="right" type="primary" onClick={this.test.bind(this)}>下载<br/>6Sigma</Button>
+        <Affix  >
+          <Button style={{margin:'5px'}} className='right' type='primary' onClick={this.downloadReport.bind(this)}>下载<br/>报告</Button>
+          <Button style={{margin:'5px'}} className='right' type='primary' onClick={this.downloadSpec.bind(this)}>下载<br/>6Sigma</Button>
         </Affix>
         {report}
         {/*<BackTop />*/}

@@ -160,8 +160,8 @@ public class ReportController {
 		}
 		return rm;
 	}
-	@RequestMapping(value="downloadReport")
 
+	@RequestMapping(value="downloadReport")
 	public void downloadReport(@RequestParam("report")String reportJson,@RequestParam("type")String type,
 								 final HttpServletResponse response){
 		ReturnMsg rm = new ReturnMsg();
@@ -181,8 +181,35 @@ public class ReportController {
 			calendar.setTime(report.getTime());
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 			String time = sdf.format(calendar.getTime());
-			String sourseFile="FT_Template.xml";
 			String downFilename=time+"_FT_"+report.getFinalName()+"("+report.getChipName()+")_"+(int)Math.ceil(new Double(report.getTestCount())/1000.0)+"K.xml";
+
+			response.setContentType("text/plain");
+			response.setHeader("Location",downFilename);
+			response.setHeader("Content-Disposition", "attachment; filename=" + downFilename);
+
+			service.downloadReport(report,type,response.getOutputStream());
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			rm.setCode(Constants.RETURN_MSG_FAILURE);
+			rm.setMessage(e.getMessage());
+		}
+
+		//return rm;
+	}
+
+	@RequestMapping(value="downloadSpec")
+	public void downloadSpec(@RequestParam("report")String reportJson,@RequestParam("type")String type,
+							   final HttpServletResponse response){
+		ReturnMsg rm = new ReturnMsg();
+		try {
+			Report report=new Gson().fromJson(reportJson,Report.class);
+			//set filename
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(report.getTime());
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			String time = sdf.format(calendar.getTime());
+			String downFilename=time+"_SPEC_"+report.getFinalName()+"("+report.getChipName()+")_"+(int)Math.ceil(new Double(report.getTestCount())/1000.0)+"K.csv";
 
 			response.setContentType("text/plain");
 			response.setHeader("Location",downFilename);

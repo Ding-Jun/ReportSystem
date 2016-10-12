@@ -2,7 +2,7 @@
  * Created by admin on 2016/10/8.
  */
 import React from 'react'
-import {Row, Col, Card} from 'antd';
+import {Row, Col} from 'antd';
 class DocumentView extends React.Component {
   render() {
     var layout = {

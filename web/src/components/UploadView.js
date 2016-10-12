@@ -6,9 +6,7 @@ import {
   Steps,
   Row,
   Col,
-  Card,
-  Icon
-
+  Card
 } from 'antd';
 const Step = Steps.Step;
 export default class UploadView extends React.Component {
@@ -78,13 +76,13 @@ export default class UploadView extends React.Component {
     return (
       <Row >
         <Col {...viewLayout}>
-          <Card title="上传" bordered={false} >
+          <Card title='上传' bordered={false} >
             <Row >
               <Col span={12} offset={6}>
-                <Steps style={{margin:"0 0px 50px"}} current={this.state.current} status="process">
-                  <Step title="选择数据"  />
-                  <Step title="处理"  />
-                  <Step title="报告"  />
+                <Steps style={{margin:'0 0px 50px'}} current={this.state.current} status='process'>
+                  <Step title='选择数据'  />
+                  <Step title='处理'  />
+                  <Step title='报告'  />
                 </Steps>
               </Col>
             </Row>

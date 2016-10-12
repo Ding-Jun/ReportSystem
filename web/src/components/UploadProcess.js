@@ -1,15 +1,8 @@
 import React from 'react';
-import Messager from './Messager'
+//import Messager from './Messager'
 import {
-  Input,
   Form,
-  Card,
   Button,
-  Icon,
-  Upload,
-  Checkbox,
-  Select,
-  Tooltip,
   Table
 } from 'antd'
 import _ from 'lodash'
@@ -25,8 +18,9 @@ class UploadProcess extends React.Component {
     var dirty=this.refs.table.selectionDirty;
     var dataInfo=this.props.dataInfo;
     var selected=this.refs.table.selectedRowKeys;
-    if(dirty){
 
+    if(dirty){
+      if(selected);
     }
     $.ajax({
       type: 'POST',
@@ -41,7 +35,7 @@ class UploadProcess extends React.Component {
           this.props.nextStep();
           this.props.setResult(rm.data);
         }
-        console.log("result",rm.data)
+        console.log('result',rm.data)
       }.bind(this)
 
     });
@@ -62,9 +56,7 @@ class UploadProcess extends React.Component {
      console.log(this.props.dataInfo.files,data)*/
     this.props.preStep()
   }
-  getFileInfo(fileInfo){
 
-  }
   render() {
     const formItemLayout = {
       labelCol: {
@@ -74,7 +66,7 @@ class UploadProcess extends React.Component {
         span: 14
       }
     };
-    var fileNames=_.join(_.map(this.props.dataInfo.files,'fileName')," , ")
+    var fileNames=_.join(_.map(this.props.dataInfo.files,'fileName'),' , ')
     //var fileNames=_.pluck(_.where(this.props.files, { 'status': 36}), 'fileName');
     console.log(this.props.files,fileNames)
     var mode='normal';
@@ -83,22 +75,22 @@ class UploadProcess extends React.Component {
     }
     const columns = [{
       title: '列',
-      dataIndex: 'id',
+      dataIndex: 'id'
     }, {
       title: '测试项',
-      dataIndex: 'columnName',
+      dataIndex: 'columnName'
     }, {
       title: '判限',
-      dataIndex: 'limit',
+      dataIndex: 'limit'
     }, {
       title: '失效数量',
-      dataIndex: 'totalCountOutOfLimit',
+      dataIndex: 'totalCountOutOfLimit'
     }, {
       title: '平均值(Pass)',
-      dataIndex: 'realAverageInLimit',
+      dataIndex: 'realAverageInLimit'
     }, {
       title: '平均值(All)',
-      dataIndex: 'realAverageAll',
+      dataIndex: 'realAverageAll'
     }];
     const data=_.map(this.props.dataInfo.columns,(columnInfo)=>{
       var min=(columnInfo.limitMin==-Number.MAX_VALUE)?'':columnInfo.limitMin;
@@ -127,7 +119,7 @@ class UploadProcess extends React.Component {
 
       },
       onChange:function onChange(selectedRowKeys, selectedRows) {
-        console.log("dthis",$this.refs.table)
+        console.log('dthis',$this.refs.table)
         console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
       },
       onSelect(record, selected, selectedRows) {
@@ -136,30 +128,30 @@ class UploadProcess extends React.Component {
       },
       onSelectAll(selected, selectedRows, changeRows) {
         console.log(selected, selectedRows, changeRows);
-      },
+      }
     };
     //const data =this.props.dataInfo.columns;
 
     var status=1111;
     var fileInfos=_.map(this.props.dataInfo.files,(fileInfo,i) =>(
-      <li key={i}><span>{fileInfo.fileName+" : "}</span>{((status==fileInfo.status)?<span className="blue-text text-lighten-1">可处理</span>:<span className="red-text">{fileInfo.message}</span>)}</li>
+      <li key={i}><span>{fileInfo.fileName+' : '}</span>{((status==fileInfo.status)?<span className='blue-text text-lighten-1'>可处理</span>:<span className='red-text'>{fileInfo.message}</span>)}</li>
     ))
     return (
       <Form horizontal>
-        <FormItem  {...formItemLayout} label="数据文件">
-          <p className="ant-form-text "  name="userName">{fileNames}</p>
+        <FormItem  {...formItemLayout} label='数据文件'>
+          <p className='ant-form-text '  name='userName'>{fileNames}</p>
         </FormItem>
-        <FormItem  {...formItemLayout} label="报告名称">
-          <p className="ant-form-text "  name="userName">{this.props.dataInfo.reportName}</p>
+        <FormItem  {...formItemLayout} label='报告名称'>
+          <p className='ant-form-text '  name='userName'>{this.props.dataInfo.reportName}</p>
         </FormItem>
-        <FormItem  {...formItemLayout} label="芯片名称">
-          <p className="ant-form-text "  name="userName">{this.props.dataInfo.chipName}</p>
+        <FormItem  {...formItemLayout} label='芯片名称'>
+          <p className='ant-form-text '  name='userName'>{this.props.dataInfo.chipName}</p>
         </FormItem>
-        <FormItem  {...formItemLayout} label="处理模式">
-          <p className="ant-form-text "  name="userName">{mode}</p>
+        <FormItem  {...formItemLayout} label='处理模式'>
+          <p className='ant-form-text '  name='userName'>{mode}</p>
         </FormItem>
         <FormItem>
-          <h3 className="blue-text text-lighten-1 ">详情</h3>
+          <h3 className='blue-text text-lighten-1 '>详情</h3>
             <hr/>
             <ul>
               {fileInfos}
@@ -168,15 +160,15 @@ class UploadProcess extends React.Component {
         </FormItem>
 
         <FormItem >
-          <h3 className="blue-text text-lighten-1">请勾选需要图表展示的测试项(以debug结尾的测试项默认不勾选)</h3>
+          <h3 className='blue-text text-lighten-1'>请勾选需要图表展示的测试项(以debug结尾的测试项默认不勾选)</h3>
           <hr/><br/>
-            <Table ref="table" rowKey="id" rowSelection={rowSelection} columns={columns} dataSource={data} pagination={false}/>
+            <Table ref='table' rowKey='id' rowSelection={rowSelection} columns={columns} dataSource={data} pagination={false}/>
 
         </FormItem>
         <FormItem wrapperCol={{ span: 6 ,offset: 6}}>
-          <Button type="primary" onClick={this.handleSubmit.bind(this)} disabled={this.props.dataInfo.columns==null ||this.props.dataInfo.columns.length==0}>确定</Button>
+          <Button type='primary' onClick={this.handleSubmit.bind(this)} disabled={this.props.dataInfo.columns==null ||this.props.dataInfo.columns.length==0}>确定</Button>
           &nbsp;&nbsp;&nbsp;
-          <Button type="ghost" onClick={this.handleReturn.bind(this)}>上一步</Button>
+          <Button type='ghost' onClick={this.handleReturn.bind(this)}>上一步</Button>
         </FormItem>
       </Form>
     )
