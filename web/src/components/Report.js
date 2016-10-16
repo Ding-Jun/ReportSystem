@@ -179,8 +179,8 @@ class Report extends React.Component{
     })
     var inputs = '';
     inputs+='<input type="hidden" name="'+ 'type' +'" value="'+ 'spec' +'" />';
-    inputs+='<input type="hidden" name="'+ 'report' +'" value="'+ JSON.stringify(report)+'" />';
-    console.log(inputs);
+    inputs+='<input type="hidden" name="'+ 'report' +'" value=\''+ JSON.stringify(report)+'\' />';
+    //console.log(inputs);
     var method='post';
     var url='/analysis/rs/report/downloadSpec';
     // request发送请求
@@ -205,15 +205,16 @@ class Report extends React.Component{
     })
 
     //report.reportItems=[];
-    console.log('debug downloadReport report:',report);
+
+    //console.log('debug downloadReport report:',report);
     var inputs = '';
     inputs+='<input type="hidden" name="'+ 'type' +'" value="'+ 'xml' +'"/>';
-    inputs+='<input type="hidden" name="'+ 'report' +'" value="'+ JSON.stringify(report)+'" />';
-    console.log(inputs);
+    inputs+='<input type="hidden" name="'+ 'report' +'" value=\''+ JSON.stringify(report)+'\' />';
+    //console.log(inputs);
     var method='post';
     var url='/analysis/rs/report/downloadReport';
     // request发送请求
-    var form =$('<form enctype="application/json" action="'+ url +'" method="'+ (method||'post') +'">'+inputs+'</form>')
+    var form =$('<form enctype="application/x-www-form-urlencoded" action="'+ url +'" method="'+ (method||'post') +'">'+inputs+'</form>')
       .appendTo('body')
 
     form.submit().remove();

@@ -53,8 +53,8 @@ export default class Navigation extends React.Component {
         </Menu.Item>
 
         <Menu.Item className="right" key="register"disabled >
-
-          <LoginForm text="登录 · 注册"/>
+          <Link to="/config"><Icon type="user"/>登录 · 注册</Link>
+          {/* <LoginForm text="登录 · 注册"/>*/}
         </Menu.Item>
 
       </Menu>

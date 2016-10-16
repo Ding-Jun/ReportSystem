@@ -1,3 +1,6 @@
+require('es5-shim');
+require('es5-shim/es5-sham');
+require('console-polyfill');
 import 'core-js/fn/object/assign';
 import React from 'react';
 import ReactDOM from 'react-dom';
