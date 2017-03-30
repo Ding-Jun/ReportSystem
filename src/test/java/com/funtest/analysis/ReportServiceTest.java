@@ -1,10 +1,12 @@
 package com.funtest.analysis;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
+import com.funtest.analysis.bean.DataInfo;
+import com.funtest.analysis.bean.Report;
+import com.funtest.analysis.bean.SimpleReport;
+import com.funtest.analysis.service.impl.ReportServiceImpl;
+import com.funtest.core.bean.constant.Constants;
+import com.funtest.core.bean.page.Page;
+import com.google.gson.Gson;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -15,13 +17,10 @@ import org.springframework.core.io.Resource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.funtest.analysis.bean.DataInfo;
-import com.funtest.analysis.bean.Report;
-import com.funtest.analysis.bean.SimpleReport;
-import com.funtest.analysis.service.impl.ReportServiceImpl;
-import com.funtest.core.bean.constant.Constants;
-import com.funtest.core.bean.page.Page;
-import com.google.gson.Gson;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class ReportServiceTest {
@@ -32,7 +31,7 @@ public class ReportServiceTest {
 	@Test
 	public void testCreateReport() throws IOException {
 		String configJson="{\"id\":1,\"dutNoColumnFlag\":\"(?i)Dut_NO\",\"limitMinLineFlag\":\"(?i)^(-1|Min),\",\"limitMaxLineFlag\":\"(?i)^(0|Max),\",\"dutPassTrueString\":\"(?i)TRUE\",\"dutPassFalseString\":\"(?i)FALSE\",\"dutPassColumnFlag\":\"(?i)Dut_Pass\",\"siteNoColumnFlag\":\"(?i)Site_No\",\"password\":\"joulwatt\",\"testItemColumnFlag\":\"(?i),(OS|PIN)\",\"ignoreColumnFlag\":\"(?i)_debug$\"}";
-		String[] fileNames={"hello.txt","JW7707.csv","JW7707v2.csv","rubbish.csv"};
+		String[] fileNames={"hello.txt","JW7707.csv","JW7707v2.csv","rubbish.csv","FT5222.csv"};
 		List<InputStream> ins=new ArrayList<InputStream>();
 		for(String fileName:fileNames){
 			Resource resource=new ClassPathResource("file/"+fileName);

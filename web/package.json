@@ -68,7 +68,7 @@
     "antd": "^1.11.0",
     "console-polyfill": "^0.2.3",
     "core-js": "^2.0.0",
-    "echarts": "^3.2.3",
+    "echarts": "^3.5.1",
     "es5-shim": "^4.5.9",
     "jquery": "1.11.x",
     "lodash": "^4.15.0",

@@ -34,7 +34,7 @@ class Footer extends React.Component {
           <Col {...itemLayout} >
             <p>BUG反馈：<a href='mailto:dj_dmtsai@163.com?subject=BUG%20Feedback' >dj_dmtsai@163.com</a></p>
             <p>Powered by <a href='#' disabled>FUNTEST</a></p>
-            <p>当前版本：<Link to='/document/changelog'>1.3.0</Link></p>
+            <p>当前版本：<Link to='/document/changelog'>1.3.1</Link></p>
           </Col>
 
           </Col>

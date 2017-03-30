@@ -9,6 +9,11 @@ class Changelog extends React.Component {
       <Card title="更新日志" bordered={false}>
         <Timeline>
           <Timeline.Item>
+            <h2>V1.3.1</h2>
+            <p>2016-03-30&nbsp;&nbsp;&nbsp;数据处理逻辑优化</p>
+            <p>2016-03-30&nbsp;&nbsp;&nbsp;上传文件时没反应多半是因为没有删除QA data</p>
+          </Timeline.Item>
+          <Timeline.Item>
             <h2>V1.3.0</h2>
             <p>2016-10-11&nbsp;&nbsp;&nbsp;UI更新</p>
             <p>2016-10-10&nbsp;&nbsp;&nbsp;以颜色区分良率 95%~100%绿色 90%~95%黄色 90%以下红色</p>

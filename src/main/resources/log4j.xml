@@ -24,17 +24,17 @@
 	<logger name="com.funtest">
 		<level value="info" />
 	</logger>
-	
+
 	<!-- 3rdparty Loggers -->
 	<!-- spring -->
 	<logger name="org.springframework.core">
 		<level value="info" />
-	</logger>	
-	
+	</logger>
+
 	<logger name="org.springframework.beans">
 		<level value="info" />
 	</logger>
-	
+
 	<logger name="org.springframework.context">
 		<level value="info" />
 	</logger>
@@ -42,15 +42,15 @@
 	<logger name="org.springframework.web">
 		<level value="info" />
 	</logger>
-	
+
 	<logger name="org.springframework.transaction">
 		<level value="info" />
 	</logger>
-	
+
 	<logger name="org.springframework.aop">
 		<level value="info" />
 	</logger>
-	
+
 	<logger name="org.springframework.orm">
 		<level value="info" />
 	</logger>
@@ -63,6 +63,7 @@
 	<root>
 		<priority value="info" />
 		<appender-ref ref="linuxFile" />
+		<appender-ref ref="console"/>
 	</root>
-	
+
 </log4j:configuration>

@@ -28,7 +28,7 @@ class Uploader extends React.Component {
     this.props.form.validateFieldsAndScroll((errors, values) => {
       if (!!errors) {
         Messager.error('发现错误，请修改！')
-        console.log('Errors in form!!!',values);
+        console.log('Errors in form!!!',values,errors);
         return;
       }
       Messager.info('提交。。。')

@@ -9,7 +9,6 @@
       <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower" />
       <secret-storage>master_key</secret-storage>
       <user-name>funtest</user-name>
-      <introspection-scope>analysis:</introspection-scope>
       <resolve-scope>analysis:</resolve-scope>
     </data-source>
   </component>
